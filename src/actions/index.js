@@ -1,3 +1,4 @@
+/* eslint  import/prefer-default-export: "off" */
 import * as types from '../constants';
 
 /**
@@ -7,5 +8,5 @@ import * as types from '../constants';
  */
 export const getExampleDataRequest = data => ({
   type: types.EXAMPLE_RESPONSE,
-  data: data
+  data,
 });

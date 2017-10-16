@@ -1,3 +1,4 @@
+/* eslint react/prefer-stateless-function: "off" */
 import React, { Component } from 'react';
 import Routes from './Routes';
 

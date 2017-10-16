@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux-immutable';
+import { authReducer } from 'web-component-authentication';
 import { fromJS } from 'immutable';
 import * as types from '../constants';
-import { authReducer } from 'web-component-authentication';
 
 /**
  * [exampleData]
@@ -23,7 +23,7 @@ const exampleData = (state = fromJS({}), action) => {
  */
 const exampleReducer = combineReducers({
   exampleData,
-  authentication: authReducer
+  authentication: authReducer,
 });
 
 export default exampleReducer;

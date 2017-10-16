@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import toJS from '../helpers/toJS';
 
+/* eslint react/prefer-stateless-function: "off" */
 class ExampleContainer extends Component {
+  static propTypes = {
+    exampleData: PropTypes.shape({
+      genome: PropTypes.string,
+    }).isRequired,
+    addToState: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <div className="container">
@@ -12,15 +20,19 @@ class ExampleContainer extends Component {
           <nav>
             <ul className="nav nav-pills float-right">
               <li className="nav-item">
-                <a className="nav-link active">
+                <a className="nav-link active" href="#/">
                   Home <span className="sr-only">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">About</a>
+                <a className="nav-link" href="#/">
+                  About
+                </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Contact</a>
+                <a className="nav-link" href="#/">
+                  Contact
+                </a>
               </li>
             </ul>
           </nav>
@@ -31,10 +43,7 @@ class ExampleContainer extends Component {
           <h1 className="display-3">Replace Me Please</h1>
           <p className="lead">Web base</p>
           <p>
-            <button
-              className="btn btn-lg btn-success"
-              onClick={this.props.addToState}
-            >
+            <button className="btn btn-lg btn-success" onClick={this.props.addToState}>
               Display state
             </button>
           </p>
@@ -42,12 +51,8 @@ class ExampleContainer extends Component {
 
         <div className="row marketing">
           <div className="col-lg-6">
-            <h4>
-              {this.props.exampleData.genome}
-            </h4>
-            <pre>
-              {JSON.stringify(this.props.exampleData, null, 2)}
-            </pre>
+            <h4>{this.props.exampleData.genome}</h4>
+            <pre>{JSON.stringify(this.props.exampleData, null, 2)}</pre>
           </div>
         </div>
 
@@ -59,20 +64,18 @@ class ExampleContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const exampleData = selectors.getMyExampleData(state);
   return {
-    exampleData
+    exampleData,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   addToState: () => {
     dispatch(actions.getExampleDataRequest({ genome: 'Happy coding :D' }));
   },
-  dispatch
+  dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  toJS(ExampleContainer)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(ExampleContainer));
