@@ -6,13 +6,19 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import 'bootstrap/dist/css/bootstrap.css';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { apiMiddleware } from 'redux-api-middleware';
+import { errorHandleMiddleware, normalizrMiddleware } from './middlewares';
 import App from './App';
 import reducer from './reducers';
 import './index.css';
 
 // redux
-const middleware = [];
-middleware.push(thunk);
+const middleware = [
+  thunk,
+  apiMiddleware,
+  normalizrMiddleware,
+  errorHandleMiddleware
+];
 
 // logging (only in development)
 if (process.env.NODE_ENV === 'development') {
@@ -23,12 +29,12 @@ if (process.env.NODE_ENV === 'development') {
 // create patient portal store
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(...middleware)), // add logging in as middleware
+  composeWithDevTools(applyMiddleware(...middleware)) // add logging in as middleware
 );
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
