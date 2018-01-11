@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -ex
 
 PART_OF_BRANCH_NAME=`echo "${bamboo_repository_git_branch}" | cut -d'/' -f2 | cut -d'-' -f1,2`
 BRANCH_NAME=`echo "${bamboo_repository_git_branch}"`

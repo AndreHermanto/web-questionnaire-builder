@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -ex
 
 # Get the branch
 #./repo.sh

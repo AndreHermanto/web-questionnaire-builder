@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -ex
 
 branch_name="$bamboo_planRepository_branch"
 app_name="$bamboo_planRepository_name"

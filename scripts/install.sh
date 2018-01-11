@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -ex
 
 echo "Installing"
 npm install
