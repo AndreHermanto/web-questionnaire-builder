@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux-immutable';
-import { authReducer } from 'web-component-authentication';
+import { authReducer } from 'web-component';
 import { fromJS } from 'immutable';
 import * as types from '../constants';
 

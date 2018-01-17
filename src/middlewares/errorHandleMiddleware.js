@@ -1,4 +1,4 @@
-import { logout } from 'web-component-authentication';
+import { logout } from 'web-component';
 
 export const errorHandleMiddleware = store => next => action => {
   if (

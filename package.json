@@ -29,7 +29,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "styled-components": "^2.1.1",
-    "web-component-authentication": "GenomeOne/web-component-authentication.git#master"
+    "web-component": "GenomeOne/web-component.git#master"
   },
   "scripts": {
     "postcommit": "git fetch upstream && git merge upstream/master",
