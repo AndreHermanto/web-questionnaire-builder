@@ -19,13 +19,13 @@ if [ "$PART_OF_BRANCH_NAME" == "develop" ] || [ "$PART_OF_BRANCH_NAME" == "uat" 
             REACT_APP_BASE_URL=/api/gw-$clean_app_name/v1 CI=true npm run build > build.txt 2>&1
         fi
 
-        printf "FROM kccg.garvan.org.au:18082/nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
+        printf "FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
 
         echo "Creating Docker Image for Web Application" $bamboo_planRepository_name "with Tag:latest-"$PART_OF_BRANCH_NAME
+        eval `aws ecr get-login --region ap-southeast-2`
         docker build --force-rm=true --tag=822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME .
         docker rmi $(docker images -f "dangling=true" -q)
         aws ecr batch-delete-image --repository-name $bamboo_planRepository_name --image-ids imageTag=latest-$PART_OF_BRANCH_NAME
-        eval `aws ecr get-login --region ap-southeast-2`
         docker push 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
 
         rm Dockerfile
