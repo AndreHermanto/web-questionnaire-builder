@@ -1,7 +1,7 @@
 /**
 Copy and paste this into your application
 */
-import { authActions, authSelectors, EnsureLoggedIn } from 'web-component-authentication';
+import { authActions, authSelectors, EnsureLoggedIn } from 'web-components';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
