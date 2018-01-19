@@ -24,7 +24,12 @@ if [ "$PART_OF_BRANCH_NAME" == "develop" ] || [ "$PART_OF_BRANCH_NAME" == "uat" 
         echo "Creating Docker Image for Web Application" $bamboo_planRepository_name "with Tag:latest-"$PART_OF_BRANCH_NAME
         eval `aws ecr get-login --region ap-southeast-2`
         docker build --force-rm=true --tag=822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME .
-        docker rmi $(docker images -f "dangling=true" -q)
+        
+        # clean up dangling images
+        dangling_docker_images=`docker images -f "dangling=true" -q`
+        if [ ${#dangling_docker_images} -gt 0 ]; then docker rmi $(docker images -f "dangling=true" -q) ; 
+        fi
+        
         aws ecr batch-delete-image --repository-name $bamboo_planRepository_name --image-ids imageTag=latest-$PART_OF_BRANCH_NAME
         docker push 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
 
