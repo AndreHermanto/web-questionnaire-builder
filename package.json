@@ -28,18 +28,17 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "styled-components": "^2.1.1",
-    "web-components": "GenomeOne/web-components.git#master"
+    "web-components": "GenomeOne/web-components#semver:1.0.0"
   },
   "scripts": {
     "postcommit": "git fetch upstream && git merge upstream/master",
-    "start":
-      "REACT_APP_BASE_URL=http://localhost:4000 REACT_APP_PASSPORT_URL=http://localhost:3002 react-scripts start",
+    "start": "REACT_APP_BASE_URL=http://localhost:4000 REACT_APP_PASSPORT_URL=http://localhost:3002 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
