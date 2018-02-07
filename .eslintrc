@@ -11,7 +11,7 @@
       "error",
       {
         "components": ["Link"],
-        "specialLink": ["hrefLeft", "hrefRight"],
+        "specialLink": ["hrefLeft", "hrefRight", "to"],
         "aspects": ["noHref", "invalidHref", "preferButton"]
       }
     ]
