@@ -22,7 +22,7 @@ repo_name="$app_name.wiki"
 repo_url="https://2fa70040e61b6d5faaf08f9c382587b707711051@github.com/GenomeOne/$app_name.wiki.git"
 
 # Output Test results
-CI=true npm run test > $output_file_name 2>&1
+CI=true npm run test 2> >(tee $output_file_name >&2)
 
 # Output Lint results
 node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/ > $lint_output_file_name
