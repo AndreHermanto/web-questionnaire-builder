@@ -5,6 +5,7 @@
     "jest": true
   },
   "rules": {
+    "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-named-as-default": 0,
     "jsx-a11y/anchor-is-valid": [
