@@ -8,7 +8,8 @@ clean_app_name=${app_name:4}
 # Build for sandbox
 rm -rf build
 
-REACT_APP_BASE_URL=/api/web-server REACT_APP_PASSPORT_URL=/demo/web-passport/develop CI=true npm run build
+npm run build:demo 2> >(tee build.txt >&2)
+
 mkdir -p $branch_name
 cp -R build/* $branch_name
 
@@ -25,7 +26,7 @@ scp -i ~/.ssh/sandbox.pem -r $branch_name/. ec2-user@13.55.2.207:/mnt/demo/$app_
 # Build for sandbox, but pointing to UAT
 rm -rf build
 
-REACT_APP_BASE_URL=https://uat.genome.one/api/gw-$clean_app_name/v1 REACT_APP_PASSPORT_URL=/demo/uat/web-passport/develop CI=true npm run build 2> >(tee build.txt >&2)
+npm run build:demo_uat 2> >(tee build.txt >&2)
 mkdir -p $branch_name
 cp -R build/* $branch_name
 
