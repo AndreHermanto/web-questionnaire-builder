@@ -7,17 +7,10 @@ app_name="$bamboo_planRepository_name"
 clean_app_name=${app_name:4}
 
 
-if [ "$PART_OF_BRANCH_NAME" == "develop" ] || [ "$PART_OF_BRANCH_NAME" == "uat" ] || [ "$PART_OF_BRANCH_NAME" == "master" ]; then
-        sed -i 's#"homepage": "/demo/'$bamboo_planRepository_name'/'"$BRANCH_NAME"'"#"homepage": "/'$clean_app_name'"#g' package.json
+if  [ "$PART_OF_BRANCH_NAME" == "uat" ] || [ "$PART_OF_BRANCH_NAME" == "master" ]; then
         rm -rf build
 
-        if [ "$PART_OF_BRANCH_NAME" == "uat" ]; then
-            REACT_APP_GATRACKID=UA-81359825-2 npm run build:uat 2> >(tee build.txt >&2)
-        elif [ "$PART_OF_BRANCH_NAME" == "master" ]; then
-            REACT_APP_GATRACKID=UA-81359825-3 npm run build:uat 2> >(tee build.txt >&2)
-        else
-            npm run build:uat 2> >(tee build.txt >&2)
-        fi
+        npm run build:uat 2> >(tee build.txt >&2)
 
         printf "FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
 
@@ -27,6 +20,25 @@ if [ "$PART_OF_BRANCH_NAME" == "develop" ] || [ "$PART_OF_BRANCH_NAME" == "uat" 
 
         aws ecr batch-delete-image --repository-name $bamboo_planRepository_name --image-ids imageTag=latest-$PART_OF_BRANCH_NAME
         docker push 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
+
+        rm Dockerfile
+fi
+
+if [ "$PART_OF_BRANCH_NAME" == "develop" ]; then
+        rm -rf build
+        npm run build:uat 2> >(tee build.txt >&2)
+
+        printf "FROM gcr.io/genomeone-sandbox/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
+
+        echo "Creating Docker Image for Web Application" $bamboo_planRepository_name "with Tag:latest-"$PART_OF_BRANCH_NAME
+        eval `aws ecr get-login --region ap-southeast-2`
+
+        docker build --force-rm=true --tag=gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME .
+
+        /home/bamboo/google-cloud-sdk/bin/gcloud -q container images untag --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
+        tagdigest=$(/home/bamboo/google-cloud-sdk/bin/gcloud container images list-tags gcr.io/genomeone-sandbox/$bamboo_planRepository_name --filter='-tags:*'  --format='get(digest)' --limit=1)
+        /home/bamboo/google-cloud-sdk/bin/gcloud container images delete --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name@"$tagdigest"
+        /home/bamboo/google-cloud-sdk/bin/gcloud docker -- push gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
 
         rm Dockerfile
 fi
