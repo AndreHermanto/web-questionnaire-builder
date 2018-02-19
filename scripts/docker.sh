@@ -35,9 +35,9 @@ if [ "$PART_OF_BRANCH_NAME" == "develop" ]; then
 
         docker build --force-rm=true --tag=gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME .
 
-        /home/bamboo/google-cloud-sdk/bin/gcloud -q container images untag --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
+        /home/bamboo/google-cloud-sdk/bin/gcloud -q container images untag --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME || true
         tagdigest=$(/home/bamboo/google-cloud-sdk/bin/gcloud container images list-tags gcr.io/genomeone-sandbox/$bamboo_planRepository_name --filter='-tags:*'  --format='get(digest)' --limit=1)
-        /home/bamboo/google-cloud-sdk/bin/gcloud container images delete --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name@"$tagdigest"
+        /home/bamboo/google-cloud-sdk/bin/gcloud container images delete --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name@"$tagdigest" || true
         /home/bamboo/google-cloud-sdk/bin/gcloud docker -- push gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME
 
         rm Dockerfile
