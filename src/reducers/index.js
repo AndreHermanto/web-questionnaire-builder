@@ -1,28 +1,14 @@
 import { combineReducers } from 'redux-immutable';
-import { authReducer } from 'web-components';
-import { fromJS } from 'immutable';
-import * as types from '../constants';
-
-/**
- * [exampleData]
- * @param  {[type]} [state=fromJS({})] [description]
- * @param  {[object]} action             [description]
- * @return {[object]}                    [description]
- */
-const exampleData = (state = fromJS({}), action) => {
-  switch (action.type) {
-    case types.EXAMPLE_RESPONSE:
-      return state.merge(fromJS(action.data));
-    default:
-      return state;
-  }
-};
+import { Helpers, authReducer } from 'web-components';
+import { reducer as formReducer } from 'redux-form/immutable';
 
 /**
  * @return collection of reducers
  */
+const resourceReducers = Helpers.makeResourceReducers(['examples']);
 const exampleReducer = combineReducers({
-  exampleData,
+  form: formReducer,
+  ...resourceReducers,
   authentication: authReducer,
 });
 
