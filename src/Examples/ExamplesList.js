@@ -33,8 +33,7 @@ const renderBodyRow = ({ id, title, age, category, timestamp }) => ({
   actions: [
     {
       content: 'Edit',
-      to: `/examples/${id}/edit`,
-      state: { modal: true },
+      to: { pathname: `/examples/${id}/edit`, state: { modal: true } },
     },
   ],
 });
@@ -72,7 +71,10 @@ class ExamplesList extends React.Component {
                       <Grid.Column width={4}>
                         <Buttons
                           actions={[
-                            { content: 'Add Example', to: '/examples/create' },
+                            {
+                              content: 'Add Example',
+                              to: { pathname: '/examples/create', state: { modal: true } },
+                            },
                             {
                               content: 'Second Button',
                               onClick: () => window.alert('hello world!'),
