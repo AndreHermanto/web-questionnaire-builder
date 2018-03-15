@@ -15,7 +15,12 @@ import './index.css';
 const middleware = [thunk, apiMiddleware, normalizrMiddleware, errorHandleMiddleware];
 
 // logging (only in development)
-if (process.env.NODE_ENV === 'development') {
+// logging (only in development)
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.REACT_APP_ENV === 'demo' ||
+  process.env.REACT_APP_ENV === 'demo_uat'
+) {
   const logger = createLogger();
   middleware.push(logger);
 }
