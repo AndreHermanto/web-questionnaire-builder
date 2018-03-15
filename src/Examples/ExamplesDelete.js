@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation, Button } from 'web-components';
+import { Mutation, Confirmation } from 'web-components';
 import { exampleSchema } from './schemas';
 
 const ExamplesDelete = (props) => {
@@ -16,13 +16,14 @@ const ExamplesDelete = (props) => {
           return <div>loading...</div>;
         }
         return (
-          <div>
-            <p>Are you sure you want to delete this?</p>
-            <Button primary onClick={remove}>
-              Delete
-            </Button>
-            <Button onClick={closePanel}>Cancel</Button>
-          </div>
+          <Confirmation
+            title="Delete Example"
+            content="Are you sure you want to delete this example?"
+            confirmLabel="Yes"
+            cancelLabel="No"
+            onConfirm={() => remove(exampleId)}
+            onCancel={closePanel}
+          />
         );
       }}
     />

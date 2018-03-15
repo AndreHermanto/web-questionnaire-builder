@@ -60,7 +60,10 @@
     "redux-mock-store": "^1.5.1"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": ["prettier-eslint --single-quote --write", "git add"]
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier-eslint --single-quote --write",
+      "git add"
+    ]
   },
   "homepage": "."
 }
