@@ -41,8 +41,7 @@
     "start": "react-scripts start",
     "build": "sh -ac '. ./.env.${REACT_APP_ENV}; react-scripts build'",
     "build:demo": "REACT_APP_ENV=demo npm run build",
-    "build:demo_uat": "REACT_APP_ENV=demo_uat npm run build",
-    "build:uat": "REACT_APP_ENV=uat npm run build",
+    "build:gateway": "REACT_APP_ENV=gateway npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "flow": "flow"
