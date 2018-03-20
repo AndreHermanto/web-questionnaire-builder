@@ -14,4 +14,4 @@ set -ex
 ./scripts/build-for-demo.sh
 
 # ECR
-./scripts/docker.sh
+#./scripts/docker.sh

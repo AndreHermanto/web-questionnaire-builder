@@ -14,13 +14,7 @@ import './index.css';
 // redux
 const middleware = [thunk, apiMiddleware, normalizrMiddleware, errorHandleMiddleware];
 
-// logging (only in development)
-// logging (only in development)
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.REACT_APP_ENV === 'demo' ||
-  process.env.REACT_APP_ENV === 'demo_uat'
-) {
+if (process.env.REACT_APP_ENABLE_LOGS === 'true') {
   const logger = createLogger();
   middleware.push(logger);
 }
