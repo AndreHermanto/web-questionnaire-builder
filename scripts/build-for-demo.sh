@@ -46,6 +46,8 @@ scp  -r $branch_name/. 35.189.35.255:/var/nfs/demo/uat/$app_name/$branch_name/
 printf "FROM gcr.io/genomeone-sandbox/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
 echo "Creating Docker Image for Web Application" $bamboo_planRepository_name "with Tag:latest-"$PART_OF_BRANCH_NAME
 docker build --force-rm=true --tag=gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME .
+/home/bamboo/google-cloud-sdk/bin/gcloud config set project genomeone-sandbox
+/home/bamboo/google-cloud-sdk/bin/gcloud container clusters get-credentials genomeone-sandbox
 /home/bamboo/google-cloud-sdk/bin/gcloud -q container images untag --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name:latest-$PART_OF_BRANCH_NAME || true
 tagdigest=$(/home/bamboo/google-cloud-sdk/bin/gcloud container images list-tags gcr.io/genomeone-sandbox/$bamboo_planRepository_name --filter='-tags:*'  --format='get(digest)' --limit=1)
 /home/bamboo/google-cloud-sdk/bin/gcloud container images delete --quiet gcr.io/genomeone-sandbox/$bamboo_planRepository_name@"$tagdigest" || true
