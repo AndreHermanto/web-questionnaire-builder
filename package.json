@@ -44,7 +44,8 @@
     "build:gateway": "REACT_APP_ENV=gateway npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "flow": "flow"
+    "flow": "flow",
+    "web-components": "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/"
   },
   "devDependencies": {
     "eslint": "^4.17.0",
