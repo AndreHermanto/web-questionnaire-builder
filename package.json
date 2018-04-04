@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "core-js": "^2.5.4",
     "create-react-class": "^15.6.3",
     "cuid": "^2.1.0",
     "fetch-mock": "^6.0.0",
