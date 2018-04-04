@@ -77,7 +77,7 @@ class ExamplesList extends React.Component {
                             },
                             {
                               content: 'Second Button',
-                              onClick: () => window.alert('hello world!'),
+                              onClick: () => window.alert('hello world!'), //eslint-disable-line
                             },
                           ]}
                         />
