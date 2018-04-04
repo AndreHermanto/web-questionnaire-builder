@@ -1,11 +1,9 @@
 /* eslint react/prefer-stateless-function: "off" */
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { HashRouter, withRouter, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Routes from './Routes';
-import EnsureLoggedInContainer from './containers/EnsureLoggedInContainer';
-
-const EnsureLoggedInContainerWithRouter = withRouter(EnsureLoggedInContainer);
 
 const theme = {
   appColor: 'red',
@@ -14,13 +12,17 @@ const theme = {
 export class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <HashRouter>
-          <EnsureLoggedInContainerWithRouter>
+      <div>
+        <Helmet defaultTitle="Example Application">
+          <link rel="manifest" href="http://example.com/favicon.ico" />
+          <link rel="shortcut icon" href="http://example.com/favicon.ico" />
+        </Helmet>;
+        <ThemeProvider theme={theme}>
+          <HashRouter>
             <Route component={Routes} />
-          </EnsureLoggedInContainerWithRouter>
-        </HashRouter>
-      </ThemeProvider>
+          </HashRouter>
+        </ThemeProvider>
+      </div>
     );
   }
 }

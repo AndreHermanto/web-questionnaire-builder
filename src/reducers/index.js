@@ -8,7 +8,7 @@ import { reducer as formReducer } from 'redux-form/immutable';
 const resourceReducers = Helpers.makeResourceReducers(['examples']);
 const exampleReducer = combineReducers({
   form: formReducer,
-  ...resourceReducers,
+  resources: combineReducers(resourceReducers),
   authentication: authReducer,
 });
 
