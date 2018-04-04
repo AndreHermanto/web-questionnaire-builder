@@ -7,7 +7,7 @@ app_name="$bamboo_planRepository_name"
 clean_app_name=${app_name:4}
 
 rm -rf build
-npm run build:uat 2> >(tee build.txt >&2)
+npm run build:gateway 2> >(tee build.txt >&2)
 
 # AWS
 printf "FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile

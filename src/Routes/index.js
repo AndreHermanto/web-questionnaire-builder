@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Page, NavBar, SideBarComponent, Content, SidePanelRoute } from 'web-components';
+import {
+  Authorized,
+  AuthTokenValidator,
+  RedirectToLogin,
+  Page,
+  NavBar,
+  SideBarComponent,
+  Content,
+  SidePanelRoute,
+} from 'web-components';
 import ExamplesList from '../Examples/ExamplesList';
 import ExamplesShow from '../Examples/ExamplesShow';
 import ExamplesEdit from '../Examples/ExamplesEdit';
@@ -44,26 +54,22 @@ class Routes extends Component {
     }
   }
   previousLocation = this.props.location;
-  render() {
+
+  renderWithAuthorization = ({ me }) => {
+    if (!me) {
+      return <RedirectToLogin />;
+    }
     const { location } = this.props;
     const isModal = !!(
       (location.state && location.state.modal && this.previousLocation !== location) ||
       this.previousLocation === location
-    ); // not initial render
+    );
 
     return (
       <div>
         <Page>
           <div>
-            <NavBar
-              userName="Craig McNamara"
-              onChange={() => {}}
-              signOut={() => {}}
-              groups={[]}
-              apps={[]}
-              msgs={[]}
-              Notificaitons={[]}
-            />
+            <NavBar signOut={() => {}} />
             <SideBarComponent name={'Examples'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
@@ -84,7 +90,25 @@ class Routes extends Component {
         </Switch>
       </div>
     );
+  };
+
+  render() {
+    const { location } = this.props;
+    return (
+      <AuthTokenValidator>
+        <Authorized location={location} render={this.renderWithAuthorization} />
+      </AuthTokenValidator>
+    );
   }
 }
+
+Routes.propTypes = {
+  // eslint-disable-next-line
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      modal: PropTypes.bool,
+    }),
+  }),
+};
 
 export default Routes;

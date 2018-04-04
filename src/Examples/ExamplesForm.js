@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
-import { Heading, Fields, Button } from 'web-components';
-import { Field, reduxForm } from 'redux-form/immutable';
+import { Heading, Fields, Buttons } from 'web-components';
+import { reduxForm } from 'redux-form/immutable';
 
-const ExamplesForm = ({ initialValues, handleSubmit, onCancel }) => (
+const ExamplesForm = ({ initialValues, handleSubmit, onCancel, valid }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Example</Heading>
-    <Field name="title" label="Title" component={Fields.Input} type="text" />
-    <Field name="age" label="Age" component={Fields.Input} type="number" />
-    <Field
+    <Fields.Text name="title" required />
+    <Fields.Text name="age" required />
+    <Fields.Select
+      required
       name="category"
-      label="Category"
-      component={Fields.Select}
       options={[
         { key: '', text: '', value: '' },
         { key: 'user', text: 'User', value: 'User' },
@@ -20,10 +19,20 @@ const ExamplesForm = ({ initialValues, handleSubmit, onCancel }) => (
       ]}
     />
     <div>
-      <Button main style={{ marginTop: 10 }}>
-        {initialValues ? 'Update' : 'Create'}
-      </Button>
-      <Button onClick={onCancel}>Cancel</Button>
+      <Buttons
+        actions={[
+          {
+            content: initialValues ? 'Update Example' : 'Create Example',
+            type: 'submit',
+            disabled: !valid,
+          },
+          {
+            content: 'Cancel',
+            onClick: onCancel,
+            type: 'button',
+          },
+        ]}
+      />
     </div>
   </Form>
 );
@@ -35,6 +44,7 @@ ExamplesForm.propTypes = {
   }),
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired,
 };
 ExamplesForm.defaultProps = {
   initialValues: undefined,

@@ -1,3 +1,4 @@
+import 'core-js/shim';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
@@ -14,8 +15,7 @@ import './index.css';
 // redux
 const middleware = [thunk, apiMiddleware, normalizrMiddleware, errorHandleMiddleware];
 
-// logging (only in development)
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_ENABLE_LOGS === 'true') {
   const logger = createLogger();
   middleware.push(logger);
 }
