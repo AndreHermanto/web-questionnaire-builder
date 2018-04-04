@@ -1,35 +1,30 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Query, Resource, Table, Buttons, Heading } from 'web-components';
+import { Query, Resource, Table, Buttons, Heading, Helpers } from 'web-components';
 import { examplesSchema } from './schemas';
 
 const headerRow = [
   {
-    label: 'ID',
     propName: 'id',
   },
   {
-    label: 'Title',
     propName: 'title',
   },
   {
-    label: 'Age',
     propName: 'age',
   },
   {
-    label: 'Category',
     propName: 'category',
   },
   {
-    label: 'Date',
     propName: 'timestamp',
   },
 ];
 
-const renderBodyRow = ({ id, title, age, category, timestamp }) => ({
+const renderBodyRow = ({ id }) => ({
   key: id,
-  cells: [<Link to={`/examples/${id}`}>{id}</Link>, title, age, category, timestamp],
+  cells: [<Link to={`/examples/${id}`}>{Helpers.renderContent('id', id)}</Link>],
   actions: [
     {
       content: 'Edit',

@@ -17,10 +17,10 @@ const ExamplesDelete = (props) => {
         }
         return (
           <Confirmation
-            title="Delete Example"
-            content="Are you sure you want to delete this example?"
-            confirmLabel="Yes"
-            cancelLabel="No"
+            title="Delete Example?"
+            content="Deleting an example will remove it from the system forever?"
+            confirmLabel="Yes, Delete Example"
+            cancelLabel="No, Keep Example"
             onConfirm={() => remove(exampleId)}
             onCancel={closePanel}
           />
