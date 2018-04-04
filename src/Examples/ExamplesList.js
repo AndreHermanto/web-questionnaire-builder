@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Query, Resource, Table, Buttons, Heading, Helpers } from 'web-components';
 import { examplesSchema } from './schemas';
@@ -42,7 +42,10 @@ class ExamplesList extends React.Component {
           resourceName="examples"
           url="/examples"
           schema={examplesSchema}
-          render={({ loading, error }) => (
+          pagination
+          page={1}
+          itemsPerPage={2}
+          render={({ loading, error, examples: exampleReports }) => (
             <Resource
               resourceName="examples"
               render={({ examples }) => {
@@ -54,7 +57,7 @@ class ExamplesList extends React.Component {
                 }
                 return (
                   <div>
-                    <Heading size="h1">web-components-authentication Demo</Heading>
+                    <Heading size="h1">Examples</Heading>
                     <Grid>
                       <Grid.Column width={12}>
                         <Table
@@ -62,20 +65,16 @@ class ExamplesList extends React.Component {
                           renderBodyRow={renderBodyRow}
                           tableData={examples}
                         />
+                        {exampleReports.isLastPage ? (
+                          ''
+                        ) : (
+                          <Button floated="right" onClick={exampleReports.loadMore}>
+                            More
+                          </Button>
+                        )}
                       </Grid.Column>
                       <Grid.Column width={4}>
-                        <Buttons
-                          actions={[
-                            {
-                              content: 'Add Example',
-                              to: { pathname: '/examples/create', state: { modal: true } },
-                            },
-                            {
-                              content: 'Second Button',
-                              onClick: () => window.alert('hello world!'), //eslint-disable-line
-                            },
-                          ]}
-                        />
+                        <Buttons actions={[]} />
                       </Grid.Column>
                     </Grid>
                   </div>

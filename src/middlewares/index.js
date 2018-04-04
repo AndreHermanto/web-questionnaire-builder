@@ -1,2 +1,2 @@
 export * from './errorHandleMiddleware';
-export * from './normalizrMiddleware';
+export { default as normalizrMiddleware } from './normalizrMiddleware';
