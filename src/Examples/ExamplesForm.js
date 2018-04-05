@@ -6,14 +6,13 @@ import { reduxForm } from 'redux-form/immutable';
 
 const ExamplesForm = ({ initialValues, handleSubmit, onCancel, valid }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading size="h1">Example</Heading>
+    <Heading size="h1">{initialValues ? 'Update Example' : 'Create Example'}</Heading>
     <Fields.Text name="title" required />
     <Fields.Text name="age" required />
     <Fields.Select
       required
       name="category"
       options={[
-        { key: '', text: '', value: '' },
         { key: 'user', text: 'User', value: 'User' },
         { key: 'patient', text: 'Patient', value: 'Patient' },
       ]}

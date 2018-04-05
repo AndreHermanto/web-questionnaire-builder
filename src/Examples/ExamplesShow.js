@@ -52,6 +52,9 @@ class ExamplesShow extends React.Component {
                 if (error) {
                   return <div>Error: {error}</div>;
                 }
+                if (!examples.length) {
+                  return <div>No examples</div>;
+                }
                 const example = examples[0];
                 return (
                   <div>

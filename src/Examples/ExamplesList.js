@@ -54,7 +54,7 @@ class ExamplesList extends React.Component {
                 }
                 return (
                   <div>
-                    <Heading size="h1">web-components-authentication Demo</Heading>
+                    <Heading size="h1">Examples</Heading>
                     <Grid>
                       <Grid.Column width={12}>
                         <Table
