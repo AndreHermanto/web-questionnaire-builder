@@ -58,15 +58,15 @@ class ExamplesShow extends React.Component {
                 const example = examples[0];
                 return (
                   <div>
+                    <Breadcrumbs
+                      sections={[
+                        { content: 'Examples', to: '/examples' },
+                        { content: example.title },
+                      ]}
+                    />
+                    <Heading size="h1">{example.title}</Heading>
                     <Grid>
                       <Grid.Column width={12}>
-                        <Breadcrumbs
-                          sections={[
-                            { content: 'Examples', to: '/examples' },
-                            { content: example.title },
-                          ]}
-                        />
-                        <Heading size="h1">{example.title}</Heading>
                         <DefinitionList listData={example} renderProperty={renderProperty} />
                       </Grid.Column>
                       <Grid.Column width={4}>

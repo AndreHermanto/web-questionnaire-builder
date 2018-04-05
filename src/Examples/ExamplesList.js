@@ -74,7 +74,18 @@ class ExamplesList extends React.Component {
                         )}
                       </Grid.Column>
                       <Grid.Column width={4}>
-                        <Buttons actions={[]} />
+                        <Buttons
+                          actions={[
+                            {
+                              content: 'Add Example',
+                              to: { pathname: '/examples/create', state: { modal: true } },
+                            },
+                            {
+                              content: 'Second Button',
+                              onClick: () => window.alert('hello world!'), //eslint-disable-line
+                            },
+                          ]}
+                        />
                       </Grid.Column>
                     </Grid>
                   </div>
