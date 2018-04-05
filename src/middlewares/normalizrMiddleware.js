@@ -1,17 +1,24 @@
 import { normalize } from 'normalizr';
+import get from 'lodash.get';
 
-export const normalizrMiddleware = store => next => action => {
-  if (!action.error && action.payload) {
-    let payload = action.payload.data ? action.payload.data : action.payload;
-
-    const schema = action.meta && action.meta.schema;
-
-    if (schema) {
-      payload = normalize(payload, schema);
-    }
-
-    action = { ...action, payload };
+const normalizrMiddleware = () => next => (action) => {
+  if (action.error || !action.payload) {
+    return next(action);
   }
 
-  return next(action);
+  let payload = action.payload.data ? action.payload.data : action.payload;
+  let metadata;
+
+  if (get(action.payload, 'data.metadata.totalPages') && get(action.payload, 'data.results')) {
+    payload = action.payload.data.results;
+    metadata = action.payload.data.metadata;
+  }
+
+  const schema = action.meta && action.meta.schema;
+  if (schema) {
+    payload = normalize(payload, schema);
+  }
+  return next({ ...action, payload, metadata });
 };
+
+export default normalizrMiddleware;
