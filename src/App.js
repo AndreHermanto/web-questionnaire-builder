@@ -16,7 +16,7 @@ export class App extends Component {
         <Helmet defaultTitle="Example Application">
           <link rel="manifest" href="http://example.com/favicon.ico" />
           <link rel="shortcut icon" href="http://example.com/favicon.ico" />
-        </Helmet>;
+        </Helmet>
         <ThemeProvider theme={theme}>
           <HashRouter>
             <Route component={Routes} />
