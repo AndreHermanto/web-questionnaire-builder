@@ -8,12 +8,19 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { apiMiddleware } from 'redux-api-middleware';
 import { errorHandleMiddleware, normalizrMiddleware } from './middlewares';
+import { authMiddleware } from 'web-components';
 import App from './App';
 import reducer from './reducers';
 import './index.css';
 
 // redux
-const middleware = [thunk, apiMiddleware, normalizrMiddleware, errorHandleMiddleware];
+const middleware = [
+  thunk,
+  apiMiddleware,
+  normalizrMiddleware,
+  errorHandleMiddleware,
+  authMiddleware
+];
 
 if (process.env.REACT_APP_ENABLE_LOGS === 'true') {
   const logger = createLogger();
@@ -23,12 +30,12 @@ if (process.env.REACT_APP_ENABLE_LOGS === 'true') {
 // create patient portal store
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(...middleware)), // add logging in as middleware
+  composeWithDevTools(applyMiddleware(...middleware)) // add logging in as middleware
 );
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
