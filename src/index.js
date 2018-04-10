@@ -18,8 +18,8 @@ const middleware = [
   thunk,
   apiMiddleware,
   normalizrMiddleware,
-  errorHandleMiddleware,
-  authMiddleware
+  authMiddleware,
+  errorHandleMiddleware
 ];
 
 if (process.env.REACT_APP_ENABLE_LOGS === 'true') {
