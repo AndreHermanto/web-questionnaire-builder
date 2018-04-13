@@ -9,7 +9,7 @@ const normalizrMiddleware = () => next => (action) => {
   let payload = action.payload.data ? action.payload.data : action.payload;
   let metadata;
 
-  if (get(action.payload, 'data.metadata.totalPages') && get(action.payload, 'data.results')) {
+  if (get(action.payload, 'data.metadata.totalPages') >= 0) {
     payload = action.payload.data.results;
     metadata = action.payload.data.metadata;
   }
