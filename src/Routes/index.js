@@ -12,34 +12,46 @@ import {
   SidePanelRoute,
 } from 'web-components';
 import ExamplesList from '../Examples/ExamplesList';
-import ExamplesShow from '../Examples/ExamplesShow';
-import ExamplesEdit from '../Examples/ExamplesEdit';
-import ExamplesCreate from '../Examples/ExamplesCreate';
-import ExamplesDelete from '../Examples/ExamplesDelete';
+import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 
 const sidebarGroups = [
   {
     name: '',
     elements: [
       {
-        name: 'Examples',
-        url: '/examples',
-        icon: 'archive',
+        name: 'Dashboard',
+        url: '/dashboard',
+        icon: 'home',
+      },
+      {
+        name: 'Questionnaires',
+        url: '/questionnaires/filter/view',
+        icon: 'assignment',
+      },
+      {
+        name: 'Releases',
+        url: '/releases',
+        icon: 'unarchive',
+      },
+      {
+        name: 'Ontology',
+        url: '/ontology',
+        icon: 'view_list',
       },
     ],
   },
   {
-    name: 'Settings',
+    name: 'Platform',
     elements: [
       {
-        name: 'User Settings',
-        url: '/settings/user',
-        icon: 'archive',
+        name: 'Pricing plans',
+        url: '/pricingPlans',
+        icon: 'layers',
       },
       {
-        name: 'App Settings',
-        url: '/settings/app',
-        icon: 'archive',
+        name: 'Landing page',
+        url: '/landingPage',
+        icon: 'web_asset',
       },
     ],
   },
@@ -70,23 +82,19 @@ class Routes extends Component {
         <Page>
           <div>
             <NavBar signOut={() => {}} />
-            <SideBarComponent name={'Examples'} groups={sidebarGroups} />
+            <SideBarComponent name={'Questionnaires Builder'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
               <Switch location={isModal ? this.previousLocation : location}>
-                <Redirect exact from="/" to="/examples" />
-                <Route path="/examples/create" component={ExamplesList} />
-                <Route path="/examples/:exampleId" component={ExamplesShow} />
-                <Route path="/examples" component={ExamplesList} />
+                <Redirect exact from="/" to="/questionnaires" />
+                <Route path="/questionnaires" component={QuestionnairesList} />
               </Switch>
             </Content>
           </div>
         </Page>
         {/* Side Panel Content Here */}
         <Switch>
-          <SidePanelRoute path="/examples/create" component={ExamplesCreate} />
-          <SidePanelRoute path="/examples/:exampleId/edit" component={ExamplesEdit} />
-          <SidePanelRoute path="/examples/:exampleId/delete" component={ExamplesDelete} />
+          <SidePanelRoute path="/examples/create" component={ExamplesList} />
         </Switch>
       </div>
     );

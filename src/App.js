@@ -6,14 +6,14 @@ import { Helmet } from 'react-helmet';
 import Routes from './Routes';
 
 const theme = {
-  appColor: 'red',
+  appColor: '#10b2c1',
 };
 
 export class App extends Component {
   render() {
     return (
       <div>
-        <Helmet defaultTitle="Example Application">
+        <Helmet defaultTitle="Questionnaires Builder">
           <link rel="manifest" href="http://example.com/favicon.ico" />
           <link rel="shortcut icon" href="http://example.com/favicon.ico" />
         </Helmet>
