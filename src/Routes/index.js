@@ -17,6 +17,7 @@ import ExamplesShow from '../Examples/ExamplesShow';
 import ExamplesEdit from '../Examples/ExamplesEdit';
 import ExamplesCreate from '../Examples/ExamplesCreate';
 import ExamplesDelete from '../Examples/ExamplesDelete';
+import Page404 from '../page404';
 
 const sidebarGroups = [
   {
@@ -79,6 +80,7 @@ class Routes extends Component {
                 <Route path="/examples/create" component={ExamplesList} />
                 <Route path="/examples/:exampleId" component={ExamplesShow} />
                 <Route path="/examples" component={ExamplesList} />
+                <Route component={Page404} />
               </Switch>
             </Content>
           </div>
