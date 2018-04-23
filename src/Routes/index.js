@@ -13,6 +13,7 @@ import {
 } from 'web-components';
 import ExamplesList from '../Examples/ExamplesList';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
+import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 
 const sidebarGroups = [
   {
@@ -88,6 +89,7 @@ class Routes extends Component {
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route path="/questionnaires" component={QuestionnairesList} />
+                <Route path="/releases" component={ReleaseReportsList} />
               </Switch>
             </Content>
           </div>
