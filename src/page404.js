@@ -23,7 +23,7 @@ const Page404 = () => (
   <Container>
     <Heading>404</Heading>
     <Content>
-      <Icon name="frown" />Oops! We can't seem to find the page you're looking for.
+      <Icon name="frown" />Oops! We can&#8217;t seem to find the page you&#8217;re looking for.
     </Content>
     <Link to={'/'}>
       <Button>Back to Home</Button>
