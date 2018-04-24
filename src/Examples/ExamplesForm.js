@@ -4,7 +4,7 @@ import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
 import { reduxForm } from 'redux-form/immutable';
 
-const ExamplesForm = ({ initialValues, handleSubmit, onCancel }) => (
+const ExamplesForm = ({ initialValues, handleSubmit, onCancel, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">{initialValues ? 'Update Example' : 'Create Example'}</Heading>
     <Fields.Text name="title" required />
@@ -23,6 +23,7 @@ const ExamplesForm = ({ initialValues, handleSubmit, onCancel }) => (
           {
             content: initialValues ? 'Update Example' : 'Create Example',
             type: 'submit',
+            disabled: submitting,
           },
           {
             content: 'Cancel',
@@ -42,6 +43,7 @@ ExamplesForm.propTypes = {
   }),
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 ExamplesForm.defaultProps = {
   initialValues: undefined,
