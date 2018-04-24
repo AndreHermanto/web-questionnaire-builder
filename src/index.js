@@ -8,13 +8,12 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { apiMiddleware } from 'redux-api-middleware';
 import { authMiddleware } from 'web-components';
-import { normalizrMiddleware } from './middlewares';
 import App from './App';
 import reducer from './reducers';
 import './index.css';
 
 // redux
-const middleware = [thunk, apiMiddleware, normalizrMiddleware, authMiddleware];
+const middleware = [thunk, apiMiddleware, authMiddleware];
 
 if (process.env.REACT_APP_ENABLE_LOGS === 'true') {
   const logger = createLogger();
