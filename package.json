@@ -45,27 +45,35 @@
     "build:demo": "REACT_APP_ENV=demo npm run build",
     "build:gateway": "REACT_APP_ENV=gateway npm run build",
     "test": "react-scripts test --env=jsdom",
+    "e2e-test": "nightwatch",
+    "e2e-test:bamboo": "npm run e2e-test -- --env bamboo",
+    "e2e-test:chrome": "npm run e2e-test -- --env chrome",
+    "e2e-test:firefox": "npm run e2e-test -- --env firefox",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "web-components": "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/"
+    "web-components":
+      "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/"
   },
   "devDependencies": {
+    "chromedriver": "^2.37.0",
+    "cucumber": "^4.2.1",
     "eslint": "^4.17.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.6.1",
+    "geckodriver": "^1.11.0",
     "husky": "^0.14.3",
+    "nightwatch": "^0.9.20",
+    "nightwatch-cucumber": "^9.1.2",
     "prettier-eslint": "^8.8.1",
     "prettier-eslint-cli": "^4.7.0",
     "react-test-renderer": "^16.2.0",
-    "redux-mock-store": "^1.5.1"
+    "redux-mock-store": "^1.5.1",
+    "selenium-server": "^3.6.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier-eslint --single-quote --write",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,json,css}": ["prettier-eslint --single-quote --write", "git add"]
   },
   "homepage": "."
 }

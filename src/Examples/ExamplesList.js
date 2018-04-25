@@ -44,7 +44,7 @@ class ExamplesList extends React.Component {
           schema={examplesSchema}
           pagination
           page={1}
-          itemsPerPage={2}
+          itemsPerPage={10}
           render={({ loading, error, examples: exampleReports }) => (
             <Resource
               resourceName="examples"

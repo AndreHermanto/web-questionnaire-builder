@@ -14,6 +14,7 @@ import {
 import ExamplesList from '../Examples/ExamplesList';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
+import Page404 from '../page404';
 
 const sidebarGroups = [
   {
@@ -26,7 +27,7 @@ const sidebarGroups = [
       },
       {
         name: 'Questionnaires',
-        url: '/questionnaires/filter/view',
+        url: '/questionnaires',
         icon: 'assignment',
       },
       {
@@ -90,6 +91,7 @@ class Routes extends Component {
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases" component={ReleaseReportsList} />
+                <Route component={Page404} />
               </Switch>
             </Content>
           </div>
