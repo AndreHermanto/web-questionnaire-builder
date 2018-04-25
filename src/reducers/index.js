@@ -5,7 +5,11 @@ import { reducer as formReducer } from 'redux-form/immutable';
 /**
  * @return collection of reducers
  */
-const resourceReducers = Helpers.makeResourceReducers(['questionnaires', 'folders']);
+const resourceReducers = Helpers.makeResourceReducers([
+  'questionnaires',
+  'folders',
+  'releaseReports',
+]);
 const exampleReducer = combineReducers({
   form: formReducer,
   resources: combineReducers(resourceReducers),
