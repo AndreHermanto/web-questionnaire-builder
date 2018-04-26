@@ -9,17 +9,17 @@ lint_output_file_name="$santized_branch_name-lint.md"
 cp_output_file_name="$santized_branch_name-cp.md"
 
 # Send Test Pending to Github
-curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data '{"state": "pending", "description": "Build is running", "target_url": "", "context": "Tests"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pending", "description": "Build is running", "target_url": "", "context": "Tests"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 
 # Send Lint Pending to Github
-curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data '{"state": "pending", "description": "Linter is running", "target_url": "", "context": "Linter"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pending", "description": "Linter is running", "target_url": "", "context": "Linter"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 
 # Send Copy paste detector pending to github
-curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data '{"state": "pending", "description": "Duplicate Code detector is running", "target_url": "", "context": "Duplicate Code Detector"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pending", "description": "Duplicate Code detector is running", "target_url": "", "context": "Duplicate Code Detector"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 
 
 repo_name="$app_name.wiki"
-repo_url="https://2fa70040e61b6d5faaf08f9c382587b707711051@github.com/GenomeOne/$app_name.wiki.git"
+repo_url="https://${GH_TOKEN}@github.com/GenomeOne/$app_name.wiki.git"
 
 # Output Test results
 CI=true npm run test 2> >(tee $output_file_name >&2)
@@ -59,11 +59,11 @@ git push origin master
 if grep -q "FAIL" $output_file_name
 then
   echo "Send Build starting to Github: Request"
-  curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"failure\", \"description\": \"Tests failed. Click Details to check them out.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$output_file_name\", \"context\": \"Tests\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+  curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"failure\", \"description\": \"Tests failed. Click Details to check them out.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$output_file_name\", \"context\": \"Tests\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
   echo "Send Build starting to Github: Success"
 else
   echo "Send Build starting to Github: Request"
-  curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"success\", \"description\": \"Tests passed! Hooray!\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$output_file_name\", \"context\": \"Tests\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+  curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"Tests passed! Hooray!\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$output_file_name\", \"context\": \"Tests\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
   echo "Send Build starting to Github: Success"
 fi
 
@@ -71,21 +71,21 @@ fi
 if grep -q "✖" $lint_output_file_name
 then
   echo "Send Build starting to Github: Request"
-  curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"failure\", \"description\": \"Found errors or warnings. Click Details to check them out.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$lint_output_file_name\", \"context\": \"Linter\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+  curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"failure\", \"description\": \"Found errors or warnings. Click Details to check them out.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$lint_output_file_name\", \"context\": \"Linter\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
   echo "Send Build starting to Github: Success".
 else
   echo "Send Build starting to Github: Request"
-  curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"success\", \"description\": \"No errors or warnings. YAY!\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$lint_output_file_name\", \"context\": \"Linter\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+  curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"No errors or warnings. YAY!\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$lint_output_file_name\", \"context\": \"Linter\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
   echo "Send Build starting to Github: Success"
 fi
 
 # Send the Copy paste detector results
 echo "Send CP starting to Github: Request"
-curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"success\", \"description\": \"Duplicate Code Detected - Click Details to review.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$cp_output_file_name\", \"context\": \"Duplicate Code Detector\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"Duplicate Code Detected - Click Details to review.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$cp_output_file_name\", \"context\": \"Duplicate Code Detector\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 echo "Send CP starting to Github: Success"
 
 # Send Demo URL
-curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"success\", \"description\": \"Demo URL.\", \"target_url\": \"https://sandbox.genome.one/demo/$app_name/$branch_name\", \"context\": \"Demo URL\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"Demo URL.\", \"target_url\": \"https://sandbox.genome.one/demo/$app_name/$branch_name\", \"context\": \"Demo URL\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 
 # Send Demo UAT URL
-curl -H "Authorization: token 2fa70040e61b6d5faaf08f9c382587b707711051" --request POST --data "{\"state\": \"success\", \"description\": \"Demo UAT URL.\", \"target_url\": \"https://sandbox.genome.one/demo/uat/$app_name/$branch_name\", \"context\": \"Demo UAT URL\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"Demo UAT URL.\", \"target_url\": \"https://sandbox.genome.one/demo/uat/$app_name/$branch_name\", \"context\": \"Demo UAT URL\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
