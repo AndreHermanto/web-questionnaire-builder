@@ -4,7 +4,6 @@ import { Grid } from 'semantic-ui-react';
 import {
   Query,
   Resource,
-  Buttons,
   Heading,
   Breadcrumbs,
   DefinitionList,
