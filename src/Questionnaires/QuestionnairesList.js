@@ -33,13 +33,29 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({ id, type, currentTitle, creatorName, lastUpdated, status }) => ({
+const renderBodyRow = ({
+  id,
+  type,
+  currentTitle,
+  creatorName,
+  lastUpdated,
+  status,
+  currentVersionId,
+}) => ({
   key: id,
   cells: [
-    <CustomLink to={type === 'folder' ? `/folders/${id}` : `/questionnaires/${id}`}>
-      {type === 'folder' ? <i className="material-icons">folder_open </i> : ''}{' '}
-      <span className={type}>{currentTitle}</span>
-    </CustomLink>,
+    <span>
+      {type === 'folder' ? (
+        <CustomLink to={`/folders/${id}`}>
+          <i className="material-icons">folder_open </i>
+          <span className={type}>{currentTitle}</span>
+        </CustomLink>
+      ) : (
+        <CustomLink to={`/questionnaires/${id}/versions/${currentVersionId}`}>
+          <span className={type}>{currentTitle}</span>
+        </CustomLink>
+      )}
+    </span>,
     creatorName || '',
     lastUpdated || '',
     status || '',
