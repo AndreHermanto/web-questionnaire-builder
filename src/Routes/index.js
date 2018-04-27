@@ -11,10 +11,11 @@ import {
   Content,
   SidePanelRoute,
 } from 'web-components';
-import ExamplesList from '../Examples/ExamplesList';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
+import OntologiesList from '../Ontologies/OntologiesList';
+import OntologiesShow from '../Ontologies/OntologiesShow';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
 import Page404 from '../page404';
 
@@ -39,7 +40,7 @@ const sidebarGroups = [
       },
       {
         name: 'Ontology',
-        url: '/ontology',
+        url: '/ontologies',
         icon: 'view_list',
       },
     ],
@@ -97,6 +98,8 @@ class Routes extends Component {
                 />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases" component={ReleaseReportsList} />
+                <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
+                <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
                 <Route component={Page404} />
               </Switch>
@@ -105,7 +108,7 @@ class Routes extends Component {
         </Page>
         {/* Side Panel Content Here */}
         <Switch>
-          <SidePanelRoute path="/examples/create" component={ExamplesList} />
+          <SidePanelRoute path="/releases/create" component={() => <div />} />
         </Switch>
       </div>
     );

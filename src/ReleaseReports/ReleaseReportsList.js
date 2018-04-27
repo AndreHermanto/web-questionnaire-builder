@@ -67,7 +67,7 @@ class ReleaseReportsList extends React.Component {
           resourceName="releaseReports"
           url="/release-reports"
           schema={releaseReportsSchema}
-          render={({ loading, error, releaseReports: releaseReportsDisplay }) => (
+          render={({ loading, error }) => (
             <Resource
               resourceName="releaseReports"
               render={({ releaseReports }) => {
