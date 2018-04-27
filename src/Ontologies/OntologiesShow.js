@@ -132,15 +132,15 @@ class ontologiesShow extends React.Component {
                   schema: ontologyVersionSchema,
                 },
               ]}
-              render={({ ontologies = [], ontologyVersions = [] }) => {
-                if (loading) {
+              render={({ ontologies, ontologyVersions }) => {
+                if (loading && !ontologies.length) {
                   return <div>loading...</div>;
                 }
                 if (error) {
                   return <div>Error: {error}</div>;
                 }
-                if (ontologies.length === 0) {
-                  return <div>ontologies not found</div>;
+                if (!ontologies.length) {
+                  return <div>No ontologies</div>;
                 }
 
                 const ontology = ontologies[0];
