@@ -127,6 +127,7 @@ class QuestionnairesList extends React.Component {
                     currentTitle: folder.title,
                     ...folder,
                   }))
+                  .map(folder => ({ type: 'folder', currentTitle: folder.title, ...folder }))
                   .concat(
                     questionnaires.map(questionnaire => ({
                       type: 'questionnaire',
