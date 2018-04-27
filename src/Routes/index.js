@@ -15,6 +15,7 @@ import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
+import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -94,6 +95,7 @@ class Routes extends Component {
                 <Route path="/releases" component={ReleaseReportsList} />
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
+                <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
