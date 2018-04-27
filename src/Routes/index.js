@@ -13,6 +13,7 @@ import {
 } from 'web-components';
 import ExamplesList from '../Examples/ExamplesList';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
+import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
 import Page404 from '../page404';
@@ -90,6 +91,10 @@ class Routes extends Component {
             <Content>
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
+                <Route
+                  path="/questionnaires/:id/versions/:currentVersionId"
+                  component={QuestionnairesShow}
+                />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases" component={ReleaseReportsList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
