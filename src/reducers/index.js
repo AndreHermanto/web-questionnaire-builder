@@ -9,6 +9,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'questionnaires',
   'folders',
   'releaseReports',
+  'questionnaireFolders',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,

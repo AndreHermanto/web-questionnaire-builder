@@ -36,7 +36,7 @@ const headerRow = [
 const renderBodyRow = ({ id, type, currentTitle, creatorName, lastUpdated, status }) => ({
   key: id,
   cells: [
-    <CustomLink to="/#">
+    <CustomLink to={type === 'folder' ? `/folders/${id}` : `/questionnaires/${id}`}>
       {type === 'folder' ? <i className="material-icons">folder_open </i> : ''}{' '}
       <span className={type}>{currentTitle}</span>
     </CustomLink>,
@@ -49,6 +49,29 @@ const renderBodyRow = ({ id, type, currentTitle, creatorName, lastUpdated, statu
 
 class QuestionnairesList extends React.Component {
   static propTypes = {};
+  renderButtons = () => (
+    <Grid.Column width={4}>
+      <Buttons
+        actions={[
+          {
+            content: 'New Questionnaire',
+            to: {
+              pathname: '/#',
+              state: { modal: true },
+            },
+          },
+          {
+            content: 'Import',
+            to: '/#',
+          },
+          {
+            content: 'Import from file',
+            to: '/#',
+          },
+        ]}
+      />
+    </Grid.Column>
+  );
 
   render() {
     return (
@@ -85,7 +108,6 @@ class QuestionnairesList extends React.Component {
                 if (error) {
                   return <div>Error: {error}</div>;
                 }
-
                 if (questionnaires.length === 0 || !questionnaires[0]) {
                   return (
                     <Grid>
@@ -94,11 +116,17 @@ class QuestionnairesList extends React.Component {
                           <Message.Header>No questionnaire found</Message.Header>
                         </Message>
                       </Grid.Column>
+                      {this.renderButtons()}
                     </Grid>
                   );
                 }
 
                 const tableData = folders
+                  .map(folder => ({
+                    type: 'folder',
+                    currentTitle: folder.title,
+                    ...folder,
+                  }))
                   .map(folder => ({ type: 'folder', currentTitle: folder.title, ...folder }))
                   .concat(
                     questionnaires.map(questionnaire => ({
@@ -117,27 +145,7 @@ class QuestionnairesList extends React.Component {
                           tableData={tableData}
                         />
                       </Grid.Column>
-                      <Grid.Column width={4}>
-                        <Buttons
-                          actions={[
-                            {
-                              content: 'New Questionnaire',
-                              to: {
-                                pathname: '/#',
-                                state: { modal: true },
-                              },
-                            },
-                            {
-                              content: 'Import',
-                              to: '/#',
-                            },
-                            {
-                              content: 'Import from file',
-                              to: '/#',
-                            },
-                          ]}
-                        />
-                      </Grid.Column>
+                      {this.renderButtons()}
                     </Grid>
                   </div>
                 );
