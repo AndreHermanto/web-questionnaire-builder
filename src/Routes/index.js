@@ -16,6 +16,7 @@ import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
+import OntologyForm from '../Ontologies/OntologyForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
 import Page404 from '../page404';
 
@@ -109,6 +110,16 @@ class Routes extends Component {
         {/* Side Panel Content Here */}
         <Switch>
           <SidePanelRoute path="/releases/create" component={() => <div />} />
+          <SidePanelRoute path="/ontologies/create" component={OntologyForm} />
+          <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyForm} />
+          <SidePanelRoute
+            path="/ontologies/:ontologyId/avtivate"
+            component={() => <div> ontologies, avtivate </div>}
+          />
+          <SidePanelRoute
+            path="/ontologies/:ontologyId/:versionId/diff-report"
+            component={() => <div> ontologies, diff-report </div>}
+          />
         </Switch>
       </div>
     );
