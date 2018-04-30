@@ -12,14 +12,14 @@ import {
 } from 'web-components';
 import { exampleSchema } from './schemas';
 
-const renderProperty = (propertyName, value, pricePlan) => {
+const renderProperty = (propertyName, value, example) => {
   switch (propertyName) {
     case 'id':
       return null;
     default:
       return {
         label: Helpers.renderLabel(propertyName),
-        value: Helpers.renderContent(propertyName, value, pricePlan),
+        value: Helpers.renderContent(propertyName, value, example),
       };
   }
 };
