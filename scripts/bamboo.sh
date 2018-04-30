@@ -10,8 +10,11 @@ set -ex
 # Tests
 ./scripts/test.sh
 
-# Demo
+# Demo on Sandbox
 ./scripts/build-for-demo.sh
+
+# Real Sandbox (from develop branch)
+./scripts/build-from-develop.sh
 
 # ECR
 #./scripts/docker.sh
