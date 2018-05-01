@@ -1,5 +1,5 @@
 {
-  "name": "web-base",
+  "name": "web-questionnaire-builder-new",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,7 +13,6 @@
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "moment": "^2.18.1",
-    "normalizr": "3.2.4",
     "prettier": "^1.10.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -73,7 +72,10 @@
     "selenium-server": "^3.6.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": ["prettier-eslint --single-quote --write", "git add"]
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier-eslint --single-quote --write",
+      "git add"
+    ]
   },
   "homepage": "."
 }
