@@ -1,4 +1,4 @@
-import { schema } from 'normalizr';
+import { schema } from 'web-components';
 
 export const ontologySchema = new schema.Entity('ontologies');
 export const ontologiesSchema = [ontologySchema];

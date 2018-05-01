@@ -1,4 +1,4 @@
-import { schema } from 'normalizr';
+import { schema } from 'web-components';
 
 export const questionnaireSchema = new schema.Entity('questionnaires');
 export const questionnairesSchema = [questionnaireSchema];

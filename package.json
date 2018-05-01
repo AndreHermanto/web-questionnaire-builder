@@ -50,8 +50,7 @@
     "eject": "react-scripts eject",
     "flow": "flow",
     "eslint": "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/",
-    "web-components":
-      "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/"
+    "web-components": "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/"
   },
   "devDependencies": {
     "chromedriver": "^2.37.0",
