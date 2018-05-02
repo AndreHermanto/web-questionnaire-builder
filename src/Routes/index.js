@@ -10,6 +10,7 @@ import {
   SideBarComponent,
   Content,
   SidePanelRoute,
+  redirectToLogout,
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
@@ -87,7 +88,7 @@ class Routes extends Component {
       <div>
         <Page>
           <div>
-            <NavBar signOut={() => {}} />
+            <NavBar signOut={redirectToLogout} />
             <SideBarComponent name={'Questionnaires Builder'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
