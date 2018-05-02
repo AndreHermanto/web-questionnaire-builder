@@ -10,7 +10,7 @@ import {
   SideBarComponent,
   Content,
   SidePanelRoute,
-  logout,
+  redirectToLogout,
 } from 'web-components';
 import ExamplesList from '../Examples/ExamplesList';
 import ExamplesShow from '../Examples/ExamplesShow';
@@ -71,7 +71,7 @@ class Routes extends Component {
       <div>
         <Page>
           <div>
-            <NavBar signOut={logout} />
+            <NavBar signOut={redirectToLogout} />
             <SideBarComponent name={'Examples'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>

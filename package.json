@@ -34,7 +34,7 @@
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.77.1",
     "styled-components": "^3.1.6",
-    "web-components": "GenomeOne/web-components#master"
+    "web-components": "github:GenomeOne/web-components#master"
   },
   "scripts": {
     "precommit": "lint-staged",
