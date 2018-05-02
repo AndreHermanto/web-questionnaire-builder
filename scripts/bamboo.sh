@@ -16,5 +16,8 @@ set -ex
 # Real Sandbox (from develop branch)
 ./scripts/build-from-develop.sh
 
+# Release Candidates
+./scripts/build-from-release.sh
+
 # ECR
 #./scripts/docker.sh
