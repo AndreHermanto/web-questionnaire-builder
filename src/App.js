@@ -14,8 +14,8 @@ export class App extends Component {
     return (
       <div>
         <Helmet defaultTitle="Questionnaires Builder">
-          <link rel="manifest" href="http://example.com/favicon.ico" />
-          <link rel="shortcut icon" href="http://example.com/favicon.ico" />
+          <link rel="manifest" href={`${process.env.PUBLIC_URL}/manifest.json`} />
+          <link rel="shortcut icon" href={`${process.env.PUBLIC_URL}/favicon.ico`} />
         </Helmet>
         <ThemeProvider theme={theme}>
           <HashRouter>
