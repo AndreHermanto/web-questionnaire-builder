@@ -13,6 +13,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'ontologyVersions',
   'questionnaireFolders',
   'versions',
+  'diffReports',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,

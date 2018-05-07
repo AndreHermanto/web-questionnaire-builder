@@ -13,19 +13,11 @@ const headerRow = [
     label: 'Created by',
     propName: 'creatorName',
   },
-  {
-    label: 'Last modified',
-    propName: 'lastUpdated',
-  },
-  {
-    label: 'Status',
-    propName: 'status',
-  },
 ];
 
-const renderBodyRow = ({ id, title, creatorName, lastUpdated }) => ({
+const renderBodyRow = ({ id, title, creatorName }) => ({
   key: id,
-  cells: [<Link to={`/ontologies/${id}`}>{title}</Link>, creatorName || '', lastUpdated || ''],
+  cells: [<Link to={`/ontologies/${id}`}>{title}</Link>, creatorName || ''],
   actions: [],
 });
 

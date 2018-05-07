@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Message } from 'semantic-ui-react';
 import { Mutation, Query, Resource } from 'web-components';
-import { ontologySchema } from './schemas';
-import Create from './forms/Create';
+import { ontologySchema } from '../schemas';
+import CreateEditFormBase from './CreateEditFormBase';
 
 /* eslint class-methods-use-this: 0 */
 /* eslint no-case-declarations: 0 */
-
-function OntologyForm({ closePanel, match: { params: { ontologyId } } }) {
+function Edit({ closePanel, match: { params: { ontologyId } } }) {
   return (
     <Query
       resourceName="ontologies"
@@ -28,9 +26,24 @@ function OntologyForm({ closePanel, match: { params: { ontologyId } } }) {
             const ontology = ontologies[0];
 
             return (
-              <div>
-                <Create />{' '}
-              </div>
+              <Mutation
+                resourceName="ontologies"
+                url={`/datasources/${ontologyId}`}
+                schema={ontologySchema}
+                post={closePanel}
+                render={({ update, loading: updateLoading }) => {
+                  if (updateLoading) {
+                    return <div>loading...</div>;
+                  }
+                  const formProps = {
+                    form: `ontologies-edit-${ontologyId}`,
+                    initialValues: ontology,
+                    onSubmit: update,
+                    onCancel: closePanel,
+                  };
+                  return <CreateEditFormBase {...formProps} />;
+                }}
+              />
             );
           }}
         />
@@ -39,7 +52,7 @@ function OntologyForm({ closePanel, match: { params: { ontologyId } } }) {
   );
 }
 
-OntologyForm.propTypes = {
+Edit.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -48,4 +61,4 @@ OntologyForm.propTypes = {
   }).isRequired,
 };
 
-export default OntologyForm;
+export default Edit;
