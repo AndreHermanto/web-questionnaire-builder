@@ -12,14 +12,39 @@ then
 
   REACT_APP_ENABLE_LOGS=false npm run build:gateway 2> >(tee build.txt >&2)
 
-  printf "FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
+  # increase the release candidate number
+  # this increases it from 1.2.0 to 1.2.0-0, if run again, it would be 1.2.0-1
+  # the reason we do this, is to stop someone accidentally ever overwriting a release 
+  # that may be important
+  # npm version prerelease
+  
+  # push the tag to github
 
-  echo "Creating Docker Image for Web Application $bamboo_planRepository_name with Tag:latest-release-candidate"
-  eval `aws ecr get-login --region ap-southeast-2`
-  docker build --force-rm=true --tag=822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-release-candidate .
+  # get the version from package.json
+  # from https://gist.github.com/DarrenN/8c6a5b969481725a4413
+  #PACKAGE_VERSION=$(cat package.json \
+  #| grep version \
+  #| head -1 \
+  #| awk -F: '{ print $2 }' \
+  #| sed 's/[",]//g' \
+  #| tr -d '[[:space:]]')
 
-  aws ecr batch-delete-image --repository-name $bamboo_planRepository_name --image-ids imageTag=latest-release-candidate
-  docker push 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/$bamboo_planRepository_name:latest-release-candidate
+  # ecr setup
+  ACCOUNT="822459375388"
+  REGION="ap-southeast-2"
+  REGISTRY="$ACCOUNT.dkr.ecr.$REGION.amazonaws.com"
+  REPOSITORY="$bamboo_planRepository_name"
+  TAG="latest-release-candidate" #"v$PACKAGE_VERSION-rc1"
+
+  # create a docker file for aws ecr
+  printf "FROM $REGISTRY/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
+
+  # make the image
+  echo "Creating Docker Image for Web Application $REPOSITORY with Tag:$TAG"
+  eval `aws ecr get-login --region $REGION`
+  docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$TAG .
+
+  docker push $REGISTRY/$REPOSITORY:$TAG
 
   rm Dockerfile
 fi
