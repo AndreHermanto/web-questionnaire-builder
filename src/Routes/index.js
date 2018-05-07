@@ -17,7 +17,10 @@ import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
-import OntologyForm from '../Ontologies/OntologyForm';
+import OntologyCreate from '../Ontologies/forms/Create';
+import OntologyEdit from '../Ontologies/forms/Edit';
+import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
+import DiffReportForm from '../Ontologies/forms/DiffReportForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
 import Page404 from '../page404';
 
@@ -101,6 +104,7 @@ class Routes extends Component {
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases" component={ReleaseReportsList} />
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
+                <Route path="/ontologies/:ontologyId/:method" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
                 <Route component={Page404} />
@@ -111,16 +115,10 @@ class Routes extends Component {
         {/* Side Panel Content Here */}
         <Switch>
           <SidePanelRoute path="/releases/create" component={() => <div />} />
-          <SidePanelRoute path="/ontologies/create" component={OntologyForm} />
-          <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyForm} />
-          <SidePanelRoute
-            path="/ontologies/:ontologyId/avtivate"
-            component={() => <div> ontologies, avtivate </div>}
-          />
-          <SidePanelRoute
-            path="/ontologies/:ontologyId/:versionId/diff-report"
-            component={() => <div> ontologies, diff-report </div>}
-          />
+          <SidePanelRoute path="/ontologies/create" component={OntologyCreate} />
+          <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
+          <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
+          <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
         </Switch>
       </div>
     );

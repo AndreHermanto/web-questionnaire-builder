@@ -30,7 +30,7 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({ id, status, active, dateCreated }) => ({
+const renderBodyRow = ontologyId => ({ id, status, active, dateCreated }) => ({
   key: id,
   positive: active,
   disabled: status !== 'OK',
@@ -38,12 +38,12 @@ const renderBodyRow = ({ id, status, active, dateCreated }) => ({
   actions: [
     {
       content: 'Activate',
-      to: `/ontologies/${id}/edit`,
+      to: `/ontologies/${ontologyId}/activate?versionId=${id}`,
       state: { modal: true },
     },
     {
       content: 'Diff report',
-      to: `/ontologies/${id}/edit`,
+      to: `/ontologies/${ontologyId}/diff-report?versionId=${id}`,
       state: { modal: true },
     },
   ],
@@ -169,7 +169,7 @@ class ontologiesShow extends React.Component {
                         <Heading size="h2">Versions</Heading>
                         <Table
                           headerRow={headerRow}
-                          renderBodyRow={renderBodyRow}
+                          renderBodyRow={renderBodyRow(ontology.id)}
                           tableData={ontologyVersions}
                         />
                       </Grid.Column>
