@@ -22,19 +22,20 @@ then
 
   # get the version from package.json
   # from https://gist.github.com/DarrenN/8c6a5b969481725a4413
-  #PACKAGE_VERSION=$(cat package.json \
-  #| grep version \
-  #| head -1 \
-  #| awk -F: '{ print $2 }' \
-  #| sed 's/[",]//g' \
-  #| tr -d '[[:space:]]')
+  PACKAGE_VERSION=$(cat package.json \
+  | grep version \
+  | head -1 \
+  | awk -F: '{ print $2 }' \
+  | sed 's/[",]//g' \
+  | tr -d '[[:space:]]')
 
   # ecr setup
   ACCOUNT="822459375388"
   REGION="ap-southeast-2"
   REGISTRY="$ACCOUNT.dkr.ecr.$REGION.amazonaws.com"
   REPOSITORY="$bamboo_planRepository_name"
-  TAG="latest-release-candidate" #"v$PACKAGE_VERSION-rc1"
+  TAG="v$PACKAGE_VERSION-rc1"
+  LATEST_TAG="latest-release-candidate"
 
   # create a docker file for aws ecr
   printf "FROM $REGISTRY/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
@@ -43,8 +44,15 @@ then
   echo "Creating Docker Image for Web Application $REPOSITORY with Tag:$TAG"
   eval `aws ecr get-login --region $REGION`
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$TAG .
-
   docker push $REGISTRY/$REPOSITORY:$TAG
+
+  # do the latest image
+  aws ecr batch-delete-image --repository-name $REPOSITORY --image-ids imageTag=$LATEST_TAG
+  docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$LATEST_TAG .
+  docker push $REGISTRY/$REPOSITORY:$LATEST_TAG
 
   rm Dockerfile
 fi
+
+
+
