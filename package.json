@@ -49,7 +49,9 @@
     "e2e-test:firefox": "npm run e2e-test -- --env firefox",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "web-components": "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/"
+    "web-components": "rm -rf ./node_modules/web-components && mkdir -p ./node_modules/web-components && cp -r ${path}/lib ${path}/package.json ./node_modules/web-components/",
+    "release:start": "./scripts/release-start.sh",
+    "release:finish": "./scripts/release-finish.sh"    
   },
   "devDependencies": {
     "chromedriver": "^2.37.0",
