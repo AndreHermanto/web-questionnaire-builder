@@ -6,19 +6,10 @@ santized_branch_name="${branch_name/\//-}";
 # build any release branch
 # this should always work, beacuse we wont ever build old release branches
 # so this should work out fine
-if  [[ $branch_name == release/* ]] ;
-then
+if [ "$branch_name" = "master" ]; then
   rm -rf build
 
   REACT_APP_ENABLE_LOGS=false npm run build:gateway 2> >(tee build.txt >&2)
-
-  # increase the release candidate number
-  # this increases it from 1.2.0 to 1.2.0-0, if run again, it would be 1.2.0-1
-  # the reason we do this, is to stop someone accidentally ever overwriting a release 
-  # that may be important
-  # npm version prerelease
-  
-  # push the tag to github
 
   # get the version from package.json
   # from https://gist.github.com/DarrenN/8c6a5b969481725a4413
@@ -30,12 +21,12 @@ then
   | tr -d '[[:space:]]')
 
   # ecr setup
-  ACCOUNT="822459375388"
+  ACCOUNT="946635200951"
   REGION="ap-southeast-2"
   REGISTRY="$ACCOUNT.dkr.ecr.$REGION.amazonaws.com"
   REPOSITORY="$bamboo_planRepository_name"
-  TAG="v$PACKAGE_VERSION-rc1"
-  LATEST_TAG="latest-release-candidate"
+  TAG="v$PACKAGE_VERSION"
+  LATEST_TAG="latest-master"
 
   # create a docker file for aws ecr
   printf "FROM $REGISTRY/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
@@ -46,7 +37,7 @@ then
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$TAG .
   docker push $REGISTRY/$REPOSITORY:$TAG
 
-  # do the latest image
+  # update the latest image
   aws ecr batch-delete-image --repository-name $REPOSITORY --image-ids imageTag=$LATEST_TAG
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$LATEST_TAG .
   docker push $REGISTRY/$REPOSITORY:$LATEST_TAG
