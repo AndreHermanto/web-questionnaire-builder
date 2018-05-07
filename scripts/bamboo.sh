@@ -19,5 +19,9 @@ set -ex
 # Release Candidates
 ./scripts/build-from-release.sh
 
+# Production
+./scripts/build-from-master.sh
+
+
 # ECR
 #./scripts/docker.sh
