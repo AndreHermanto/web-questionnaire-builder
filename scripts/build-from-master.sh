@@ -1,3 +1,6 @@
+#!/bin/bash
+set -ex
+
 branch_name="$bamboo_planRepository_branch"
 # replace / with - i.e. feature/branch_name to feature-branch-name
 # not really needed here, because its always "develop" but you never know
@@ -38,7 +41,6 @@ if [ "$branch_name" = "master" ]; then
   docker push $REGISTRY/$REPOSITORY:$TAG
 
   # update the latest image
-  aws ecr batch-delete-image --repository-name $REPOSITORY --image-ids imageTag=$LATEST_TAG
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$LATEST_TAG .
   docker push $REGISTRY/$REPOSITORY:$LATEST_TAG
 
