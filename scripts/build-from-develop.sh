@@ -1,3 +1,6 @@
+#!/bin/bash
+set -ex
+
 branch_name="$bamboo_planRepository_branch"
 # replace / with - i.e. feature/branch_name to feature-branch-name
 # not really needed here, because its always "develop" but you never know
