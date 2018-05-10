@@ -6,7 +6,6 @@ import { Query, Resource, Table, Heading, Buttons } from 'web-components';
 import { questionnaireSchema, questionnairesSchema, folderSchema, foldersSchema } from './schemas';
 
 const CustomLink = styled(Link)`
-  color: #4a4c4c;
   i {
     vertical-align: bottom;
   }
