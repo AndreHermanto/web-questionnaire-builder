@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { HashRouter, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { AppNavigation } from 'web-components';
 import Routes from './Routes';
 
 const theme = {
@@ -18,9 +19,11 @@ export class App extends Component {
           <link rel="shortcut icon" href={`${process.env.PUBLIC_URL}/favicon.ico`} />
         </Helmet>
         <ThemeProvider theme={theme}>
-          <HashRouter>
-            <Route component={Routes} />
-          </HashRouter>
+          <AppNavigation>
+            <HashRouter>
+              <Route component={Routes} />
+            </HashRouter>
+          </AppNavigation>
         </ThemeProvider>
       </div>
     );
