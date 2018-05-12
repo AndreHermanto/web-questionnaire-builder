@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Query, Resource, Table, Buttons, Heading, Helpers } from 'web-components';
+import { Query, Resource, Table, Heading, Helpers } from 'web-components';
 import { releaseReportsSchema } from './schemas';
 
 const headerRow = [
