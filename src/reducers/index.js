@@ -7,6 +7,7 @@ import { reducer as formReducer } from 'redux-form/immutable';
  */
 const resourceReducers = Helpers.makeResourceReducers([
   'questionnaires',
+  'importedQuestionnaire',
   'folders',
   'releaseReports',
   'ontologies',

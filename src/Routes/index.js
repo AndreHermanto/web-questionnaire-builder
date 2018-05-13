@@ -14,6 +14,7 @@ import {
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
+import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
@@ -119,6 +120,7 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
+          <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
         </Switch>
       </div>
     );
