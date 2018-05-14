@@ -27,6 +27,9 @@ import ElementsEdit from '../Elements/ElementsEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import DiffReportForm from '../Ontologies/forms/DiffReportForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
+import LandingPageList from '../LandingPage/LandingPageList';
+import LandingPageShow from '../LandingPage/LandingPageShow';
+import LandingPageEdit from '../LandingPage/LandingPageEdit';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -70,7 +73,7 @@ const sidebarGroups = [
       },
       {
         name: 'Landing page',
-        url: '/landingPage',
+        url: '/landing-page',
         icon: 'web_asset',
       },
     ],
@@ -119,6 +122,8 @@ class Routes extends Component {
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
                 <Route path="/elements/:elementId" component={ElementsShow} />
                 <Route path="/elements" component={ElementsList} />
+                <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
+                <Route path="/landing-page" component={LandingPageList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
@@ -134,6 +139,10 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
+          <SidePanelRoute
+            path="/landing-page/consents/:consentTypeId/edit"
+            component={LandingPageEdit}
+          />
         </Switch>
       </div>
     );

@@ -16,6 +16,8 @@ const resourceReducers = Helpers.makeResourceReducers([
   'versions',
   'diffReports',
   'elements',
+  'consentTypes',
+  'headingsData',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
