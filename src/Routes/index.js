@@ -39,7 +39,7 @@ const sidebarGroups = [
         icon: 'assignment',
       },
       {
-        name: 'Releases',
+        name: 'Release reports',
         url: '/releases',
         icon: 'unarchive',
       },
