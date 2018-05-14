@@ -17,6 +17,7 @@ import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
+import OntologiesDelete from '../Ontologies/OntologiesDelete';
 import OntologyCreate from '../Ontologies/forms/Create';
 import OntologyEdit from '../Ontologies/forms/Edit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
@@ -117,6 +118,7 @@ class Routes extends Component {
           <SidePanelRoute path="/releases/create" component={() => <div />} />
           <SidePanelRoute path="/ontologies/create" component={OntologyCreate} />
           <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
+          <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologiesDelete} />
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
         </Switch>

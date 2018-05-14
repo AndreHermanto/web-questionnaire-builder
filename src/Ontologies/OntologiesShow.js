@@ -102,7 +102,11 @@ class ontologiesShow extends React.Component {
   };
 
   render() {
-    const { match: { params: { ontologyId } } } = this.props;
+    const {
+      match: {
+        params: { ontologyId },
+      },
+    } = this.props;
 
     return (
       <div>
@@ -179,6 +183,10 @@ class ontologiesShow extends React.Component {
                             {
                               content: 'Edit',
                               to: `/ontologies/${ontology.id}/Edit`,
+                            },
+                            {
+                              content: 'Delete',
+                              to: `/ontologies/${ontology.id}/Delete`,
                             },
                           ]}
                         />
