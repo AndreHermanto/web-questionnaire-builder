@@ -22,10 +22,10 @@ const headerRow = [
     label: 'Created by',
     propName: 'creatorName',
   },
-  {
-    label: 'Last modified',
-    propName: 'lastUpdated',
-  },
+  // {
+  //   label: 'Last modified',
+  //   propName: 'lastUpdated',
+  // },
   {
     label: 'Status',
     propName: 'status',
@@ -56,7 +56,7 @@ const renderBodyRow = ({
       )}
     </span>,
     creatorName || '',
-    lastUpdated || '',
+    (typeof lastUpdated === 'object' ? lastUpdated.timestamp : lastUpdated) || '',
     status || '',
   ],
   actions: [],
@@ -81,7 +81,7 @@ class QuestionnairesList extends React.Component {
           },
           {
             content: 'Import from file',
-            to: '/#',
+            to: '/questionnaires/import-file',
           },
         ]}
       />
