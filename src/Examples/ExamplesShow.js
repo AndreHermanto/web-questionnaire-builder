@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import {
-  Query,
-  Resource,
+  QueryResource,
   Buttons,
   Heading,
   Breadcrumbs,
@@ -33,63 +32,58 @@ class ExamplesShow extends React.Component {
     }).isRequired,
   };
   render() {
-    const { match: { params: { exampleId } } } = this.props;
+    const {
+      match: {
+        params: { exampleId },
+      },
+    } = this.props;
 
     return (
       <div>
-        <Query
-          resourceName="examples"
-          url={`/examples/${exampleId}`}
-          schema={exampleSchema}
-          render={({ loading, error }) => (
-            <Resource
-              resourceName="examples"
-              filter={{ id: exampleId }}
-              render={({ examples }) => {
-                if (loading && !examples.length) {
-                  return <div>loading...</div>;
-                }
-                if (error) {
-                  return <div>Error: {error}</div>;
-                }
-                if (!examples.length) {
-                  return <div>No examples</div>;
-                }
-                const example = examples[0];
-                return (
-                  <div>
-                    <Breadcrumbs
-                      sections={[
-                        { content: 'Examples', to: '/examples' },
-                        { content: example.title },
+        <QueryResource
+          queries={[
+            {
+              resourceName: 'examples',
+              url: `/examples/${exampleId}`,
+              schema: exampleSchema,
+              filter: { id: exampleId },
+            },
+          ]}
+        >
+          {({ examples }) => {
+            if (!examples.length) {
+              return <div>No examples</div>;
+            }
+            const example = examples[0];
+            return (
+              <div>
+                <Breadcrumbs
+                  sections={[{ content: 'Examples', to: '/examples' }, { content: example.title }]}
+                />
+                <Heading size="h1">{example.title}</Heading>
+                <Grid>
+                  <Grid.Column width={12}>
+                    <DefinitionList listData={example} renderProperty={renderProperty} />
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    <Buttons
+                      actions={[
+                        {
+                          content: 'Edit',
+                          to: `/examples/${exampleId}/edit`,
+                        },
+                        {
+                          content: 'Delete',
+                          to: `/examples/${exampleId}/delete`,
+                        },
                       ]}
                     />
-                    <Heading size="h1">{example.title}</Heading>
-                    <Grid>
-                      <Grid.Column width={12}>
-                        <DefinitionList listData={example} renderProperty={renderProperty} />
-                      </Grid.Column>
-                      <Grid.Column width={4}>
-                        <Buttons
-                          actions={[
-                            {
-                              content: 'Edit',
-                              to: `/examples/${exampleId}/edit`,
-                            },
-                            {
-                              content: 'Delete',
-                              to: `/examples/${exampleId}/delete`,
-                            },
-                          ]}
-                        />
-                      </Grid.Column>
-                    </Grid>
-                  </div>
-                );
-              }}
-            />
-          )}
-        />
+                  </Grid.Column>
+                </Grid>
+              </div>
+            );
+          }}
+        </QueryResource>
       </div>
     );
   }
