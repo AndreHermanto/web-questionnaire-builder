@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation } from 'web-components';
+import { QueryResource, Mutation } from 'web-components';
 import { ontologySchema } from './schemas';
 import UploadOntologyVersionForm from './forms/UploadOntologyVersionForm';
 
@@ -11,16 +11,40 @@ function UploadOntologyVersion({
   },
 }) {
   return (
-    <Mutation
-      resourceName="ontologies"
-      url={`/datasources/${ontologyId}/upload`}
-      schema={ontologySchema}
-      post={closePanel}
-      render={({ create, loading: pending }) => {
-        if (pending) {
-          return <div>loading...</div>;
+    <QueryResource
+      queries={[
+        {
+          resourceName: 'ontologies',
+          url: `/datasources/${ontologyId}`,
+          schema: ontologySchema,
+          filter: { id: ontologyId },
+        },
+      ]}
+      render={({ ontologies }) => {
+        if (!ontologies.length) {
+          return <div>No result...</div>;
         }
-        return <UploadOntologyVersionForm onSubmit={create} onCancel={closePanel} />;
+        const ontology = ontologies[0];
+        return (
+          <Mutation
+            resourceName="ontologies"
+            url={`/datasources/${ontologyId}/upload`}
+            schema={ontologySchema}
+            post={closePanel}
+            render={({ create, loading: pending }) => {
+              if (pending) {
+                return <div>loading...</div>;
+              }
+              return (
+                <UploadOntologyVersionForm
+                  initialValues={{ releaseName: ontology.activeVersion.releaseVersion }}
+                  onSubmit={create}
+                  onCancel={closePanel}
+                />
+              );
+            }}
+          />
+        );
       }}
     />
   );
