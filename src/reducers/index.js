@@ -18,6 +18,8 @@ const resourceReducers = Helpers.makeResourceReducers([
   'elements',
   'consentTypes',
   'headingsData',
+  'pricePlans',
+  'pricePlanMappings',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
