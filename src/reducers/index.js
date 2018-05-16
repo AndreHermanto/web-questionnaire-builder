@@ -15,6 +15,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'questionnaireFolders',
   'versions',
   'diffReports',
+  'elements',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
