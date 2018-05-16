@@ -20,6 +20,8 @@ import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
 import OntologyCreate from '../Ontologies/forms/Create';
 import OntologyEdit from '../Ontologies/forms/Edit';
+import ElementsList from '../Elements/ElementsList';
+import ElementsShow from '../Elements/ElementsShow';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import DiffReportForm from '../Ontologies/forms/DiffReportForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -47,6 +49,11 @@ const sidebarGroups = [
       {
         name: 'Ontology',
         url: '/ontologies',
+        icon: 'view_list',
+      },
+      {
+        name: 'Elements',
+        url: '/elements',
         icon: 'view_list',
       },
     ],
@@ -108,6 +115,8 @@ class Routes extends Component {
                 <Route path="/ontologies/:ontologyId/:method" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
+                <Route path="/elements/:elementId" component={ElementsShow} />
+                <Route path="/elements" component={ElementsList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
