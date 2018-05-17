@@ -188,6 +188,10 @@ class ontologiesShow extends React.Component {
                               content: 'Edit',
                               to: `/ontologies/${ontology.id}/Edit`,
                             },
+                            {
+                              content: 'Delete',
+                              to: `/ontologies/${ontology.id}/Delete`,
+                            },
                           ]}
                         />
                       </Grid.Column>
