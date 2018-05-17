@@ -185,7 +185,7 @@ class ontologiesShow extends React.Component {
                             },
                             {
                               content: 'Delete',
-                              to: `/ontologies/${ontologyId}/delete`,
+                              to: `/ontologies/${ontology.id}/Delete`,
                             },
                           ]}
                         />

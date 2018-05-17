@@ -14,6 +14,7 @@ import {
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
+import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
@@ -21,6 +22,8 @@ import OntologiesVersionsShow from '../Ontologies/OntologiesVersionsShow';
 import OntologiesVersionsDiffReportShow from '../Ontologies/OntologiesVersionsDiffReportShow';
 import OntologyCreate from '../Ontologies/forms/OntologyCreate';
 import OntologyEdit from '../Ontologies/forms/OntologyEdit';
+import ElementsList from '../Elements/ElementsList';
+import ElementsShow from '../Elements/ElementsShow';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -41,13 +44,18 @@ const sidebarGroups = [
         icon: 'assignment',
       },
       {
-        name: 'Releases',
+        name: 'Release reports',
         url: '/releases',
         icon: 'unarchive',
       },
       {
         name: 'Ontology',
         url: '/ontologies',
+        icon: 'view_list',
+      },
+      {
+        name: 'Elements',
+        url: '/elements',
         icon: 'view_list',
       },
     ],
@@ -120,6 +128,8 @@ class Routes extends Component {
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
+                <Route path="/elements/:elementId" component={ElementsShow} />
+                <Route path="/elements" component={ElementsList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
@@ -135,6 +145,8 @@ class Routes extends Component {
             component={VersionActivateForm}
           />
           <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologyDeleteForm} />
+          <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
+          <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
         </Switch>
       </div>
     );

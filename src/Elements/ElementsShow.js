@@ -9,32 +9,41 @@ import {
   DefinitionList,
   Helpers,
 } from 'web-components';
-import { exampleSchema } from './schemas';
+import { elementSchema } from './schemas';
 
-const renderProperty = (propertyName, value, example) => {
+const renderProperty = (propertyName, value, element) => {
   switch (propertyName) {
     case 'id':
       return null;
+    case 'answers':
+      if (value[0].type !== 'text') {
+        return {
+          label: Helpers.renderLabel(propertyName),
+          value: Helpers.renderContent(propertyName, value, element),
+        };
+      }
+      return null;
+
     default:
       return {
         label: Helpers.renderLabel(propertyName),
-        value: Helpers.renderContent(propertyName, value, example),
+        value: Helpers.renderContent(propertyName, value, element),
       };
   }
 };
 
-class ExamplesShow extends React.Component {
+class ElementsShow extends React.Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        exampleId: PropTypes.string.isRequired,
+        elementId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
   };
   render() {
     const {
       match: {
-        params: { exampleId },
+        params: { elementId },
       },
     } = this.props;
 
@@ -43,38 +52,41 @@ class ExamplesShow extends React.Component {
         <QueryResource
           queries={[
             {
-              resourceName: 'examples',
-              url: `/examples/${exampleId}`,
-              schema: exampleSchema,
-              filter: { id: exampleId },
+              resourceName: 'elements',
+              url: `/elements/${elementId}`,
+              schema: elementSchema,
+              filter: { id: elementId },
             },
           ]}
         >
-          {({ examples }) => {
-            if (!examples.length) {
-              return <div>No examples</div>;
+          {({ elements }) => {
+            if (!elements.length) {
+              return <div>No Elements</div>;
             }
-            const example = examples[0];
+            const element = elements[0];
             return (
               <div>
                 <Breadcrumbs
-                  sections={[{ content: 'Examples', to: '/examples' }, { content: example.title }]}
+                  sections={[
+                    { content: 'Elements', to: '/elements' },
+                    { content: element.question },
+                  ]}
                 />
-                <Heading size="h1">{example.title}</Heading>
+                <Heading size="h1">{element.title}</Heading>
                 <Grid>
                   <Grid.Column width={12}>
-                    <DefinitionList listData={example} renderProperty={renderProperty} />
+                    <DefinitionList listData={element} renderProperty={renderProperty} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Buttons
                       actions={[
                         {
                           content: 'Edit',
-                          to: `/examples/${exampleId}/edit`,
+                          to: `/elements/${elementId}/edit`,
                         },
                         {
                           content: 'Delete',
-                          to: `/examples/${exampleId}/delete`,
+                          to: `/elements/${elementId}/delete`,
                         },
                       ]}
                     />
@@ -89,4 +101,4 @@ class ExamplesShow extends React.Component {
   }
 }
 
-export default ExamplesShow;
+export default ElementsShow;

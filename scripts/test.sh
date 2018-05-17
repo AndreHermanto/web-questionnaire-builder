@@ -7,6 +7,8 @@ santized_branch_name="${branch_name/\//-}";
 output_file_name="$santized_branch_name.md"
 lint_output_file_name="$santized_branch_name-lint.md"
 cp_output_file_name="$santized_branch_name-cp.md"
+audit_output_file_name="$santized_branch_name-audit.md"
+
 
 # Send Test Pending to Github
 curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pending", "description": "Build is running", "target_url": "", "context": "Tests"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
@@ -16,6 +18,9 @@ curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pen
 
 # Send Copy paste detector pending to github
 curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pending", "description": "Duplicate Code detector is running", "target_url": "", "context": "Duplicate Code Detector"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+
+# Send npm audit pending to github
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data '{"state": "pending", "description": "npm audit is running", "target_url": "", "context": "npm audit"}' https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 
 
 repo_name="$app_name.wiki"
@@ -30,6 +35,9 @@ node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react
 # Output Copy Paste Detector Results
 node_modules/jsinspect/bin/jsinspect -t 40 src/ > $cp_output_file_name
 
+# Output npm audit Results
+npm audit > $audit_output_file_name
+
 # Clean up repo locally
 rm -rf $repo_name
 
@@ -40,6 +48,8 @@ git clone $repo_url
 mv $output_file_name $repo_name/
 mv $lint_output_file_name $repo_name/
 mv $cp_output_file_name $repo_name/
+mv $audit_output_file_name $repo_name/
+
 
 # Appending building SMS to wiki
 cd $repo_name
@@ -47,6 +57,8 @@ cd $repo_name
 echo $'\r' >> $output_file_name
 echo $'\r' >> $lint_output_file_name
 echo $'\r' >> $cp_output_file_name
+echo $'\r' >> $audit_output_file_name
+
 
 # Add all untracked files
 git add -A
@@ -83,6 +95,11 @@ fi
 echo "Send CP starting to Github: Request"
 curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"Duplicate Code Detected - Click Details to review.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$cp_output_file_name\", \"context\": \"Duplicate Code Detector\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
 echo "Send CP starting to Github: Success"
+
+# Send npm audit results
+echo "Send audit starting to Github: Request"
+curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"npm audit Finished - Click Details to review.\", \"target_url\": \"https://github.com/GenomeOne/$app_name/wiki/$audit_output_file_name\", \"context\": \"npm audit\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null
+echo "Send audit starting to Github: Success"
 
 # Send Demo URL
 curl -H "Authorization: token ${GH_TOKEN}" --request POST --data "{\"state\": \"success\", \"description\": \"Demo URL.\", \"target_url\": \"https://sandbox.genome.one/demo/$app_name/$branch_name\", \"context\": \"Demo URL\"}" https://api.github.com/repos/GenomeOne/$app_name/statuses/${bamboo_repository_revision_number} > /dev/null

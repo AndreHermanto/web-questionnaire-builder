@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux-immutable';
-import { Helpers, authReducer } from 'web-components';
+import { Helpers, authReducer, appNavigationReducer } from 'web-components';
 import { reducer as formReducer } from 'redux-form/immutable';
 
 /**
@@ -7,6 +7,7 @@ import { reducer as formReducer } from 'redux-form/immutable';
  */
 const resourceReducers = Helpers.makeResourceReducers([
   'questionnaires',
+  'importedQuestionnaire',
   'folders',
   'releaseReports',
   'ontologies',
@@ -14,11 +15,13 @@ const resourceReducers = Helpers.makeResourceReducers([
   'questionnaireFolders',
   'versions',
   'diffReports',
+  'elements',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
   resources: combineReducers(resourceReducers),
   authentication: authReducer,
+  appNavigation: appNavigationReducer,
 });
 
 export default exampleReducer;

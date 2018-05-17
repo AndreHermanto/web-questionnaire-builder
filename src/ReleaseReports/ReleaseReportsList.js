@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Query, Resource, Table, Buttons, Heading, Helpers } from 'web-components';
+import { Query, Resource, Table, Heading, Helpers } from 'web-components';
 import { releaseReportsSchema } from './schemas';
 
 const headerRow = [
@@ -97,16 +97,6 @@ class ReleaseReportsList extends React.Component {
                           headerRow={headerRow}
                           renderBodyRow={renderBodyRow}
                           tableData={releaseReports}
-                        />
-                      </Grid.Column>
-                      <Grid.Column width={4}>
-                        <Buttons
-                          actions={[
-                            {
-                              content: 'Add Release Report',
-                              to: { pathname: '/releases/create', state: { modal: true } },
-                            },
-                          ]}
                         />
                       </Grid.Column>
                     </Grid>
