@@ -22,6 +22,7 @@ import OntologyCreate from '../Ontologies/forms/Create';
 import OntologyEdit from '../Ontologies/forms/Edit';
 import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
+import ElementsEdit from '../Elements/ElementsEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import DiffReportForm from '../Ontologies/forms/DiffReportForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -130,6 +131,7 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
+          <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
         </Switch>
       </div>
     );
