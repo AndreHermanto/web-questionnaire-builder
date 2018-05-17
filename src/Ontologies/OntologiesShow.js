@@ -56,38 +56,11 @@ const renderProperty = (propertyName, value) => {
         label: 'Ontology ID',
         value,
       };
-    case 'acronym':
-      return {
-        label: 'Acronym',
-        value,
-      };
-    case 'category':
-      return {
-        label: 'Category',
-        value,
-      };
-    case 'notificationActive':
-      return {
-        label: 'Notification Active',
-        value: value ? 'Yes' : 'No',
-      };
-    case 'notificationEmail':
-      return {
-        label: 'Notification Email',
-        value,
-      };
-    case 'managementType':
-      return {
-        label: 'Management Type',
-        value,
-      };
-    case 'description':
+    default:
       return {
         label: Helpers.renderLabel(propertyName),
         value: Helpers.renderContent(propertyName, value),
       };
-    default:
-      return null;
   }
 };
 

@@ -36,22 +36,6 @@ const renderProperty = (propertyName, value) => {
         label: 'Ontology ID',
         value,
       };
-    case 'fileName':
-      return {
-        label: Helpers.renderLabel(propertyName),
-        value,
-      };
-    case 'fromVersion':
-    case 'fromVersionId':
-    case 'toVersion':
-    case 'toVersionId':
-    case 'newConcepts':
-    case 'changedConcepts':
-    case 'retiredConcepts':
-      return {
-        label: propertyName.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
-        value,
-      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),

@@ -29,13 +29,6 @@ const renderProperty = (ontologyId, versionId) => (propertyName, value) => {
           </div>
         ),
       };
-    case 'active':
-    case 'newer':
-    case 'download':
-      return {
-        label: propertyName,
-        value: value.toString(),
-      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),
