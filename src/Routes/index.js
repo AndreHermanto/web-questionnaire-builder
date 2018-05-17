@@ -27,6 +27,7 @@ import ElementsEdit from '../Elements/ElementsEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import DiffReportForm from '../Ontologies/forms/DiffReportForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
+import UploadOntologyVersion from '../Ontologies/UploadOntologyVersion';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -132,6 +133,7 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologiesDelete} />
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
+          <SidePanelRoute path="/ontologies/:ontologyId/upload" component={UploadOntologyVersion} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
         </Switch>
