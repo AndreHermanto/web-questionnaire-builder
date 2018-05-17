@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import {
   Query,
@@ -10,48 +11,23 @@ import {
   Breadcrumbs,
   DefinitionList,
   Helpers,
-  Table,
 } from 'web-components';
-import { Link } from 'react-router-dom';
-import { Date } from 'web-components/lib/components/UiComponent';
 import { ontologySchema, ontologyVersionsSchema, ontologyVersionSchema } from './schemas';
 
-const headerRow = [
-  {
-    propName: 'version',
-  },
-  {
-    label: 'Date Created',
-    propName: 'dateCreated',
-  },
-  {
-    propName: 'status',
-  },
-  {
-    propName: 'active',
-  },
-];
-
-const renderBodyRow = ontologyId => ({ id, status, active, dateCreated }) => ({
-  key: id,
-  positive: active,
-  disabled: status !== 'OK',
-  cells: [
-    <Link to={`/ontologies/${ontologyId}/versions/${id}`}>{Helpers.renderContent('id', id)}</Link>,
-    <Date date={dateCreated} format={'MMMM Do YYYY'} />,
-    Helpers.renderContent('status', status),
-    Helpers.renderContent('active', active),
-  ],
-  actions: [],
-});
-
 // const renderFamilyontologies
-const renderProperty = (propertyName, value) => {
+const renderProperty = (ontologyId, versionId) => (propertyName, value) => {
   switch (propertyName) {
-    case 'id':
+    case 'releaseVersion':
       return {
-        label: 'Ontology ID',
-        value,
+        label: propertyName,
+        value: (
+          <div>
+            {value} <br />
+            <Link to={`/ontologies/${ontologyId}/versions/${versionId}/diff-report`}>
+              Show diff-report
+            </Link>
+          </div>
+        ),
       };
     default:
       return {
@@ -61,11 +37,12 @@ const renderProperty = (propertyName, value) => {
   }
 };
 
-class ontologiesShow extends React.Component {
+class OntologiesVersionsShow extends React.Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
         ontologyId: PropTypes.string.isRequired,
+        versionId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
   };
@@ -73,10 +50,9 @@ class ontologiesShow extends React.Component {
   render() {
     const {
       match: {
-        params: { ontologyId },
+        params: { ontologyId, versionId },
       },
     } = this.props;
-
     return (
       <div>
         <Query
@@ -102,21 +78,23 @@ class ontologiesShow extends React.Component {
                 },
                 {
                   resourceName: 'ontologyVersions',
+                  filter: { id: versionId },
                   schema: ontologyVersionSchema,
                 },
               ]}
               render={({ ontologies, ontologyVersions }) => {
-                if (loading && !ontologies.length) {
+                if (loading && !ontologies.length && !ontologyVersions.length) {
                   return <div>loading...</div>;
                 }
                 if (error) {
                   return <div>Error: {error}</div>;
                 }
-                if (!ontologies.length) {
+                if (!ontologies.length || !ontologyVersions.length) {
                   return <div>No ontologies</div>;
                 }
 
                 const ontology = ontologies[0];
+                const ontologyVersion = ontologyVersions[0];
 
                 return (
                   <div>
@@ -127,43 +105,38 @@ class ontologiesShow extends React.Component {
                             { content: 'Ontologies', to: '/ontologies' },
                             {
                               content: `${ontology.title}`,
-                              to: `/ontologies/${ontology.id}`,
+                              to: `/ontologies/${ontologyId}`,
+                            },
+                            {
+                              content: 'versions',
+                              to: `/ontologies/${ontologyId}/versions/`,
+                            },
+                            {
+                              content: ontologyVersion.version,
+                              to: `/ontologies/${ontologyId}/versions/${versionId}`,
                             },
                           ]}
                         />
                         <Heading
                           size="h1"
-                          subtitle={moment(ontology.dateCreated).format('MMMM Do YYYY, h:mm:ss a')}
+                          subtitle={moment(ontologyVersion.dateCreated).format(
+                            'MMMM Do YYYY, h:mm:ss a',
+                          )}
                         >
-                          {ontology.title}
+                          {ontologyVersion.version}
                         </Heading>
-                        <DefinitionList listData={ontology} renderProperty={renderProperty} />
-
-                        <Heading size="h2">Versions</Heading>
-                        <Table
-                          headerRow={headerRow}
-                          renderBodyRow={renderBodyRow(ontology.id)}
-                          tableData={ontologyVersions}
+                        <DefinitionList
+                          listData={ontologyVersion}
+                          renderProperty={renderProperty(ontologyId, versionId)}
                         />
                       </Grid.Column>
                       <Grid.Column width={4}>
                         <Buttons
                           actions={[
                             {
-                              content: 'Edit',
-                              to: `/ontologies/${ontology.id}/Edit`,
+                              content: 'Activate',
+                              to: `/ontologies/${ontologyId}/versions/${versionId}/activate/`,
                             },
-                            {
-                              content: 'Delete',
-                              to: `/ontologies/${ontology.id}/Delete`,
-                            },
-                            ...(ontology.managementType === 'OFFLINE' && [
-                              {
-                                content: 'Upload new version',
-                                to: `/ontologies/${ontology.id}/upload`,
-                                state: { modal: true },
-                              },
-                            ]),
                           ]}
                         />
                       </Grid.Column>
@@ -179,4 +152,4 @@ class ontologiesShow extends React.Component {
   }
 }
 
-export default ontologiesShow;
+export default OntologiesVersionsShow;

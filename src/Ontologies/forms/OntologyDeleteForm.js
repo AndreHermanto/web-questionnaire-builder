@@ -5,30 +5,30 @@ import { ontologySchema } from '../schemas';
 
 /* eslint class-methods-use-this: 0 */
 /* eslint no-case-declarations: 0 */
-function VersionActivateForm({
+function OntologyDeleteForm({
   history,
   closePanel,
   match: {
-    params: { ontologyId, versionId },
+    params: { ontologyId },
   },
 }) {
   return (
     <Mutation
       resourceName="ontologies"
-      url={`/datasources/${ontologyId}/activeVersion`}
+      url={`/datasources/${ontologyId}`}
       schema={ontologySchema}
-      post={() => history.push(`/ontologies/${ontologyId}`)}
-      render={({ update, loading: updateLoading }) => {
+      post={() => history.push('/ontologies/')}
+      render={({ remove, loading: updateLoading }) => {
         if (updateLoading) {
           return <div>loading...</div>;
         }
         return (
           <Confirmation
-            title="Activate"
-            content="Activating a new ontology version may lead to data loss due to concepts being retired. Do you want to proceed?"
-            confirmLabel="Activate"
+            title="Ontology"
+            content="Are you sure you want to delete this questionnaire (including all versions)?"
+            confirmLabel="Delete"
             cancelLabel="No"
-            onConfirm={() => update({ versionId })}
+            onConfirm={() => remove()}
             onCancel={closePanel}
           />
         );
@@ -37,7 +37,7 @@ function VersionActivateForm({
   );
 }
 
-VersionActivateForm.propTypes = {
+OntologyDeleteForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -49,4 +49,4 @@ VersionActivateForm.propTypes = {
   }).isRequired,
 };
 
-export default VersionActivateForm;
+export default OntologyDeleteForm;

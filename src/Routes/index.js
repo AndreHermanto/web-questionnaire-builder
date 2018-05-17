@@ -18,14 +18,15 @@ import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/Quest
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
-import OntologiesDelete from '../Ontologies/OntologiesDelete';
-import OntologyCreate from '../Ontologies/forms/Create';
-import OntologyEdit from '../Ontologies/forms/Edit';
+import OntologiesVersionsShow from '../Ontologies/OntologiesVersionsShow';
+import OntologiesVersionsDiffReportShow from '../Ontologies/OntologiesVersionsDiffReportShow';
+import OntologyCreate from '../Ontologies/forms/OntologyCreate';
+import OntologyEdit from '../Ontologies/forms/OntologyEdit';
 import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
-import DiffReportForm from '../Ontologies/forms/DiffReportForm';
+import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
 import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
@@ -117,8 +118,19 @@ class Routes extends Component {
                 />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases" component={ReleaseReportsList} />
+                <Route
+                  path="/ontologies/:ontologyId/versions/:versionId/diff-report"
+                  component={OntologiesVersionsDiffReportShow}
+                />
+                <Route
+                  path="/ontologies/:ontologyId/versions/:versionId/:methods"
+                  component={OntologiesVersionsShow}
+                />
+                <Route
+                  path="/ontologies/:ontologyId/versions/:versionId"
+                  component={OntologiesVersionsShow}
+                />
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
-                <Route path="/ontologies/:ontologyId/:method" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
                 <Route path="/elements/:elementId" component={ElementsShow} />
@@ -135,9 +147,12 @@ class Routes extends Component {
           <SidePanelRoute path="/releases/create" component={() => <div />} />
           <SidePanelRoute path="/ontologies/create" component={OntologyCreate} />
           <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
-          <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologiesDelete} />
+          <SidePanelRoute
+            path="/ontologies/:ontologyId/versions/:versionId/activate"
+            component={VersionActivateForm}
+          />
+          <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologyDeleteForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
-          <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/upload" component={UploadOntologyVersion} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />

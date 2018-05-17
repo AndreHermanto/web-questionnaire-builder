@@ -6,7 +6,6 @@ import { ontologiesSchema, ontologySchema } from './schemas';
 
 const headerRow = [
   {
-    label: 'Title',
     propName: 'title',
   },
   {
