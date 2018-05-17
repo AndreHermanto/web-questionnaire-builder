@@ -82,7 +82,10 @@ class ElementsShow extends React.Component {
                       actions={[
                         {
                           content: 'Edit',
-                          to: `/elements/${elementId}/edit`,
+                          to: {
+                            pathname: `/elements/${elementId}/edit`,
+                            state: { modal: true },
+                          },
                         },
                         {
                           content: 'Delete',

@@ -18,7 +18,6 @@ import { ontologySchema, ontologyVersionsSchema, ontologyVersionSchema } from '.
 
 const headerRow = [
   {
-    label: 'Version',
     propName: 'version',
   },
   {
@@ -26,11 +25,9 @@ const headerRow = [
     propName: 'dateCreated',
   },
   {
-    label: 'Status',
     propName: 'status',
   },
   {
-    label: 'Active',
     propName: 'active',
   },
 ];
@@ -160,6 +157,13 @@ class ontologiesShow extends React.Component {
                               content: 'Delete',
                               to: `/ontologies/${ontology.id}/Delete`,
                             },
+                            ...(ontology.managementType === 'OFFLINE' && [
+                              {
+                                content: 'Upload new version',
+                                to: `/ontologies/${ontology.id}/upload`,
+                                state: { modal: true },
+                              },
+                            ]),
                           ]}
                         />
                       </Grid.Column>
