@@ -34,7 +34,11 @@ const renderBodyRow = ontologyId => ({ id, status, active, dateCreated }) => ({
   key: id,
   positive: active,
   disabled: status !== 'OK',
-  cells: [<Date date={dateCreated} format={'MMMM Do YYYY'} />, status || '', active ? 'Yes' : 'No'],
+  cells: [
+    <Date date={dateCreated} format={'MMMM Do YYYY'} />,
+    Helpers.renderContent('status', status),
+    active ? 'Yes' : 'No',
+  ],
   actions: [
     {
       content: 'Activate',
@@ -102,7 +106,11 @@ class ontologiesShow extends React.Component {
   };
 
   render() {
-    const { match: { params: { ontologyId } } } = this.props;
+    const {
+      match: {
+        params: { ontologyId },
+      },
+    } = this.props;
 
     return (
       <div>
