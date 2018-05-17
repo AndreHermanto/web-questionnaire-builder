@@ -30,6 +30,7 @@ import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFolde
 import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
 import LandingPageEdit from '../LandingPage/LandingPageEdit';
+import UploadOntologyVersion from '../Ontologies/UploadOntologyVersion';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -137,6 +138,7 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologiesDelete} />
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/diff-report" component={DiffReportForm} />
+          <SidePanelRoute path="/ontologies/:ontologyId/upload" component={UploadOntologyVersion} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
           <SidePanelRoute
