@@ -72,7 +72,7 @@ class ElementsShow extends React.Component {
                     { content: element.question },
                   ]}
                 />
-                <Heading size="h1">{element.title}</Heading>
+                <Heading size="h1">{element.question}</Heading>
                 <Grid>
                   <Grid.Column width={12}>
                     <DefinitionList listData={element} renderProperty={renderProperty} />
@@ -84,6 +84,13 @@ class ElementsShow extends React.Component {
                           content: 'Edit',
                           to: {
                             pathname: `/elements/${elementId}/edit`,
+                            state: { modal: true },
+                          },
+                        },
+                        {
+                          content: 'Edit Logic',
+                          to: {
+                            pathname: `/elements/${elementId}/edit-logic`,
                             state: { modal: true },
                           },
                         },
