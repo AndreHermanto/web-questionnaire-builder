@@ -6,7 +6,7 @@ import CreateEditFormBase from './CreateEditFormBase';
 
 /* eslint class-methods-use-this: 0 */
 /* eslint no-case-declarations: 0 */
-function Create({ closePanel }) {
+function OntologyEdit({ closePanel }) {
   return (
     <Mutation
       resourceName="ontologies"
@@ -28,8 +28,8 @@ function Create({ closePanel }) {
   );
 }
 
-Create.propTypes = {
+OntologyEdit.propTypes = {
   closePanel: PropTypes.func.isRequired,
 };
 
-export default Create;
+export default OntologyEdit;

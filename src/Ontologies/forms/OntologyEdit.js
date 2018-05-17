@@ -6,7 +6,7 @@ import CreateEditFormBase from './CreateEditFormBase';
 
 /* eslint class-methods-use-this: 0 */
 /* eslint no-case-declarations: 0 */
-function Edit({ closePanel, match: { params: { ontologyId } } }) {
+function OntologyEdit({ closePanel, match: { params: { ontologyId } } }) {
   return (
     <Query
       resourceName="ontologies"
@@ -52,7 +52,7 @@ function Edit({ closePanel, match: { params: { ontologyId } } }) {
   );
 }
 
-Edit.propTypes = {
+OntologyEdit.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -61,4 +61,4 @@ Edit.propTypes = {
   }).isRequired,
 };
 
-export default Edit;
+export default OntologyEdit;
