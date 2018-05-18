@@ -33,6 +33,7 @@ import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
 import LandingPageEdit from '../LandingPage/LandingPageEdit';
 import UploadOntologyVersion from '../Ontologies/UploadOntologyVersion';
+import ElementsAddImage from '../Elements/ElementsAddImage';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -157,6 +158,7 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/upload" component={UploadOntologyVersion} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
+          <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
