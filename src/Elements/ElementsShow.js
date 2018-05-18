@@ -95,6 +95,13 @@ class ElementsShow extends React.Component {
                           },
                         },
                         {
+                          content: 'Add Image',
+                          to: {
+                            pathname: `/elements/${elementId}/add-image`,
+                            state: { modal: true },
+                          },
+                        },
+                        {
                           content: 'Delete',
                           to: `/elements/${elementId}/delete`,
                         },
