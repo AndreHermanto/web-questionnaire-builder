@@ -36,7 +36,7 @@ if [ "$branch_name" = "master" ]; then
 
   # make the image
   echo "Creating Docker Image for Web Application $REPOSITORY with Tag:$TAG"
-  eval `aws ecr get-login --region $REGION --profile production`
+  eval `aws ecr get-login --region $REGION --no-include-email --profile production`
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$TAG .
   docker push $REGISTRY/$REPOSITORY:$TAG
 
