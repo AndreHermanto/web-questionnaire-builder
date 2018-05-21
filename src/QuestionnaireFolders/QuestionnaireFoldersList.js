@@ -84,7 +84,11 @@ class QuestionnaireFoldersList extends React.Component {
   );
 
   render() {
-    const { match: { params: { folderId } } } = this.props;
+    const {
+      match: {
+        params: { folderId },
+      },
+    } = this.props;
 
     return (
       <div>

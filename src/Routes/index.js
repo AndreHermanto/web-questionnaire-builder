@@ -25,6 +25,7 @@ import OntologyEdit from '../Ontologies/forms/OntologyEdit';
 import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
+import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
@@ -33,7 +34,10 @@ import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
 import LandingPageEdit from '../LandingPage/LandingPageEdit';
 import UploadOntologyVersion from '../Ontologies/UploadOntologyVersion';
-import ElementsAddImage from '../Elements/ElementsAddImage';
+import PricePlanMappingsList from '../PricePlanMappings/PricePlanMappingsList';
+import PricePlanMappingsDelete from '../PricePlanMappings/PricePlanMappingsDelete';
+import PricePlanMappingsShow from '../PricePlanMappings/PricePlanMappingsShow';
+import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreate';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -72,7 +76,7 @@ const sidebarGroups = [
     elements: [
       {
         name: 'Pricing plans',
-        url: '/pricingPlans',
+        url: '/price-plan-mappings',
         icon: 'layers',
       },
       {
@@ -139,6 +143,11 @@ class Routes extends Component {
                 <Route path="/elements" component={ElementsList} />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
                 <Route path="/landing-page" component={LandingPageList} />
+                <Route
+                  path="/price-plan-mappings/:pricePlanMappingId"
+                  component={PricePlanMappingsShow}
+                />
+                <Route path="/price-plan-mappings" component={PricePlanMappingsList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
@@ -163,6 +172,11 @@ class Routes extends Component {
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
             component={LandingPageEdit}
+          />
+          <SidePanelRoute path="/price-plan-mappings/create" component={PricePlanMappingsCreate} />
+          <SidePanelRoute
+            path="/price-plan-mappings/:pricePlanMappingId/delete"
+            component={PricePlanMappingsDelete}
           />
         </Switch>
       </div>
