@@ -23,8 +23,8 @@ const OntologiesDelete = (props) => {
         }
         return (
           <Confirmation
-            title="Delete Example?"
-            content="Deleting an ontology will remove it from the system forever?"
+            title="Delete Ontology?"
+            content="Deleting an ontology will remove it from the system forever."
             confirmLabel="Yes, Delete Ontology"
             cancelLabel="No"
             onConfirm={() => remove(ontologyId)}
