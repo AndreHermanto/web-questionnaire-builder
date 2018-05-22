@@ -9,6 +9,7 @@ import {
   DefinitionList,
   Helpers,
   Table,
+  Buttons,
 } from 'web-components';
 import { versionSchema } from './schemas';
 
@@ -49,6 +50,7 @@ class QuestionnairesShow extends React.Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
+        id: PropTypes.string.isRequired,
         currentVersionId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
@@ -56,7 +58,7 @@ class QuestionnairesShow extends React.Component {
   render() {
     const {
       match: {
-        params: { currentVersionId },
+        params: { id, currentVersionId },
       },
     } = this.props;
 
@@ -101,6 +103,16 @@ class QuestionnairesShow extends React.Component {
                           headerRow={headerRow}
                           renderBodyRow={renderBodyRow}
                           tableData={version.body.filter(element => element.question)}
+                        />
+                      </Grid.Column>
+                      <Grid.Column width={4}>
+                        <Buttons
+                          actions={[
+                            {
+                              content: 'Delete',
+                              to: `/questionnaires/${id}/delete`,
+                            },
+                          ]}
                         />
                       </Grid.Column>
                     </Grid>
