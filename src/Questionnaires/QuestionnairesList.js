@@ -79,7 +79,7 @@ class QuestionnairesList extends React.Component {
           {
             content: 'New Questionnaire',
             to: {
-              pathname: '/#',
+              pathname: '/questionnaires/create',
               state: { modal: true },
             },
           },
