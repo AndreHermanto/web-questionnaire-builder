@@ -96,15 +96,6 @@ class QuestionnairesShow extends React.Component {
                       <Grid.Column width={12}>
                         <DefinitionList listData={version} renderProperty={renderProperty} />
                       </Grid.Column>
-                    </Grid>
-                    <Grid>
-                      <Grid.Column width={12}>
-                        <Table
-                          headerRow={headerRow}
-                          renderBodyRow={renderBodyRow}
-                          tableData={version.body.filter(element => element.question)}
-                        />
-                      </Grid.Column>
                       <Grid.Column width={4}>
                         <Buttons
                           actions={[
@@ -113,6 +104,15 @@ class QuestionnairesShow extends React.Component {
                               to: `/questionnaires/${id}/delete`,
                             },
                           ]}
+                        />
+                      </Grid.Column>
+                    </Grid>
+                    <Grid>
+                      <Grid.Column width={12}>
+                        <Table
+                          headerRow={headerRow}
+                          renderBodyRow={renderBodyRow}
+                          tableData={version.body.filter(element => element.question)}
                         />
                       </Grid.Column>
                     </Grid>
