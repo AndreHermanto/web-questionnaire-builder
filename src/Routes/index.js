@@ -16,6 +16,7 @@ import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import QuestionnaireElementReOrder from '../Questionnaires/QuestionnaireElementReOrder';
 import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
+import QuestionnaireTagsAdd from '../Questionnaires/QuestionnaireTagsAdd';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesVersionFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesVersionFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
@@ -243,6 +244,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/create"
             component={ElementsCreate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/editTag"
+            component={QuestionnaireTagsAdd}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section/create"

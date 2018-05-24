@@ -191,6 +191,10 @@ class QuestionnairesShow extends React.Component {
                                     to: `/questionnaires/${questionnaireId}/delete`,
                                   },
                                   {
+                                    content: 'Add Tag',
+                                    to: `/questionnaires/${id}/versions/${currentVersionId}/editTag`,
+                                  },
+                                  {
                                     content: 'Move to Folder',
                                     to: `/questionnaires/${version.questionnaireId}/versions/${
                                       version.id
