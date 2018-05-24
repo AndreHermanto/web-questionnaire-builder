@@ -3,8 +3,8 @@ import { Grid, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Query, Resource, Table, Heading, Buttons } from 'web-components';
-import { questionnaireSchema, questionnairesSchema, folderSchema, foldersSchema } from './schemas';
-import { questionnaireFoldersSchema } from '../QuestionnaireFolders/schemas';
+import { questionnaireSchema, questionnairesSchema } from './schemas';
+import { folderSchema, foldersSchema, questionnaireFoldersSchema } from '../QuestionnaireFolders/schemas';
 
 const CustomLink = styled(Link)`
   i {
@@ -91,6 +91,13 @@ class QuestionnairesList extends React.Component {
           {
             content: 'Import from file',
             to: '/questionnaires/import-file',
+          },
+          {
+            content: 'New Folder',
+            to: {
+              pathname: '/folders/create',
+              state: { modal: true },
+            },
           },
         ]}
       />
