@@ -63,14 +63,6 @@ class QuestionnaireFoldersList extends React.Component {
             },
           },
           {
-            content: 'Import',
-            to: '/#',
-          },
-          {
-            content: 'Import from file',
-            to: '/#',
-          },
-          {
             content: 'Edit folder',
             to: '/#',
           },
