@@ -119,7 +119,7 @@ class Routes extends Component {
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route
-                  path="/questionnaires/:id/versions/:currentVersionId"
+                  path="/questionnaires/:questionnaireId/versions/:currentVersionId"
                   component={QuestionnairesShow}
                 />
                 <Route path="/questionnaires" component={QuestionnairesList} />
