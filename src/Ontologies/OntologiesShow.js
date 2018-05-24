@@ -48,6 +48,8 @@ const renderBodyRow = ontologyId => ({ id, status, active, dateCreated }) => ({
 // const renderFamilyontologies
 const renderProperty = (propertyName, value) => {
   switch (propertyName) {
+    case 'activeVersion':
+      return null;
     case 'id':
       return {
         label: 'Ontology ID',
