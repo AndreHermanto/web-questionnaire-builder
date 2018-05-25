@@ -116,6 +116,13 @@ class QuestionnairesShow extends React.Component {
                               onClick: () =>
                                 this.downloadQuestionnaire(questionnaireId, currentVersionId),
                             },
+                            {
+                              content: 'Export questionnaire',
+                              to: {
+                                pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
+                                state: { modal: true },
+                              },
+                            },
                           ]}
                         />
                       </Grid.Column>
