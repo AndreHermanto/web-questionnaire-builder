@@ -55,6 +55,14 @@ class QuestionnairesShow extends React.Component {
       }).isRequired,
     }).isRequired,
   };
+  downloadQuestionnaire = (questionnaireId, currentVersionId) => {
+    window.open(
+      `${
+        process.env.REACT_APP_BASE_URL
+      }/questionnaires/export?questionnaireId=${questionnaireId}&versionId=${currentVersionId}`,
+      '_blank',
+    );
+  };
   render() {
     const {
       match: {
@@ -101,7 +109,12 @@ class QuestionnairesShow extends React.Component {
                           actions={[
                             {
                               content: 'Delete',
-                              to: `/questionnaires/${id}/delete`,
+                              to: `/questionnaires/${questionnaireId}/delete`,
+                            },
+                            {
+                              content: 'Download',
+                              onClick: () =>
+                                this.downloadQuestionnaire(questionnaireId, currentVersionId),
                             },
                           ]}
                         />
