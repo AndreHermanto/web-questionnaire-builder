@@ -29,7 +29,7 @@ export default function QuestionnaireFoldersDelete({
               content="This only deletes this folder, all questionnaires inside this folder will be moved to the Home section, and will not be deleted."
               confirmLabel="Yes"
               cancelLabel="No"
-              onConfirm={remove}
+              onConfirm={() => remove(folderId)}
               onCancel={closePanel}
             />
           );
