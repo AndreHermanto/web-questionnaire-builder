@@ -50,7 +50,7 @@ class QuestionnairesShow extends React.Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        questionnaireId: PropTypes.string.isRequired,
         currentVersionId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
@@ -58,7 +58,7 @@ class QuestionnairesShow extends React.Component {
   render() {
     const {
       match: {
-        params: { id, currentVersionId },
+        params: { questionnaireId, currentVersionId },
       },
     } = this.props;
 
@@ -66,7 +66,7 @@ class QuestionnairesShow extends React.Component {
       <div>
         <Query
           resourceName="versions"
-          url={`/versions/${currentVersionId}`}
+          url={`/questionnaires/${questionnaireId}/versions/${currentVersionId}`}
           schema={versionSchema}
           render={({ loading, error }) => (
             <Resource
