@@ -123,6 +123,12 @@ class QuestionnairesShow extends React.Component {
                                 state: { modal: true },
                               },
                             },
+                            {
+                              content: 'Move to Folder',
+                              to: `/questionnaires/${version.questionnaireId}/versions/${
+                                version.id
+                              }/move-to-folder`,
+                            },
                           ]}
                         />
                       </Grid.Column>
