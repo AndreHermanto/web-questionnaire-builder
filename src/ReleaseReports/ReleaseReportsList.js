@@ -36,11 +36,11 @@ const headerRow = [
 
 const renderBodyRow = ({ id, releaseId }) => ({
   key: id,
-  cells: [<Link to={`/releases/${id}`}>{Helpers.renderContent('id', id)}</Link>],
+  cells: [<Link to={`/release-reports/${id}`}>{Helpers.renderContent('id', id)}</Link>],
   actions: [
     {
       content: 'Edit',
-      to: { pathname: `/releases/${id}/edit`, state: { modal: true } },
+      to: { pathname: `/release-reports/${id}/edit`, state: { modal: true } },
     },
     {
       content: (
