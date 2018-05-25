@@ -59,7 +59,15 @@ const renderBodyRow = ({
     (typeof lastUpdated === 'object' ? lastUpdated.timestamp : lastUpdated) || '',
     status || '',
   ],
-  actions: [],
+  actions:
+    type === 'folder'
+      ? []
+      : [
+        {
+          content: 'Delete',
+          to: { pathname: `/questionnaires/${id}/delete`, state: { modal: true } },
+        },
+      ],
 });
 
 class QuestionnairesList extends React.Component {

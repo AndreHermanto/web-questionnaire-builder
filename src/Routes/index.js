@@ -14,8 +14,10 @@ import {
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
+import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
+import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
 import OntologiesVersionsShow from '../Ontologies/OntologiesVersionsShow';
@@ -57,7 +59,7 @@ const sidebarGroups = [
       },
       {
         name: 'Release reports',
-        url: '/releases',
+        url: '/release-reports',
         icon: 'unarchive',
       },
       {
@@ -120,11 +122,12 @@ class Routes extends Component {
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route
-                  path="/questionnaires/:id/versions/:currentVersionId"
+                  path="/questionnaires/:questionnaireId/versions/:currentVersionId"
                   component={QuestionnairesShow}
                 />
                 <Route path="/questionnaires" component={QuestionnairesList} />
-                <Route path="/releases" component={ReleaseReportsList} />
+                <Route path="/release-reports/:releaseReportId" component={ReleaseReportsShow} />
+                <Route path="/release-reports" component={ReleaseReportsList} />
                 <Route
                   path="/ontologies/:ontologyId/versions/:versionId/diff-report"
                   component={OntologiesVersionsDiffReportShow}
@@ -180,6 +183,7 @@ class Routes extends Component {
             component={PricePlanMappingsDelete}
           />
           <SidePanelRoute path="/folders/:folderId/delete" component={QuestionnaireFoldersDelete} />
+          <SidePanelRoute path="/questionnaires/:id/delete" component={QuestionnairesDelete} />
         </Switch>
       </div>
     );

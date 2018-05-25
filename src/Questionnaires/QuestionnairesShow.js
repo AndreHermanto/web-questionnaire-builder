@@ -9,6 +9,7 @@ import {
   DefinitionList,
   Helpers,
   Table,
+  Buttons,
 } from 'web-components';
 import { versionSchema } from './schemas';
 
@@ -49,14 +50,23 @@ class QuestionnairesShow extends React.Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
+        questionnaireId: PropTypes.string.isRequired,
         currentVersionId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
   };
+  downloadQuestionnaire = (questionnaireId, currentVersionId) => {
+    window.open(
+      `${
+        process.env.REACT_APP_BASE_URL
+      }/questionnaires/export?questionnaireId=${questionnaireId}&versionId=${currentVersionId}`,
+      '_blank',
+    );
+  };
   render() {
     const {
       match: {
-        params: { currentVersionId },
+        params: { questionnaireId, currentVersionId },
       },
     } = this.props;
 
@@ -64,7 +74,7 @@ class QuestionnairesShow extends React.Component {
       <div>
         <Query
           resourceName="versions"
-          url={`/versions/${currentVersionId}`}
+          url={`/questionnaires/${questionnaireId}/versions/${currentVersionId}`}
           schema={versionSchema}
           render={({ loading, error }) => (
             <Resource
@@ -93,6 +103,21 @@ class QuestionnairesShow extends React.Component {
                     <Grid>
                       <Grid.Column width={12}>
                         <DefinitionList listData={version} renderProperty={renderProperty} />
+                      </Grid.Column>
+                      <Grid.Column width={4}>
+                        <Buttons
+                          actions={[
+                            {
+                              content: 'Delete',
+                              to: `/questionnaires/${questionnaireId}/delete`,
+                            },
+                            {
+                              content: 'Download',
+                              onClick: () =>
+                                this.downloadQuestionnaire(questionnaireId, currentVersionId),
+                            },
+                          ]}
+                        />
                       </Grid.Column>
                     </Grid>
                     <Grid>
