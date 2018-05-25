@@ -14,6 +14,7 @@ import {
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
+import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -178,6 +179,7 @@ class Routes extends Component {
             path="/price-plan-mappings/:pricePlanMappingId/delete"
             component={PricePlanMappingsDelete}
           />
+          <SidePanelRoute path="/questionnaires/:id/delete" component={QuestionnairesDelete} />
         </Switch>
       </div>
     );

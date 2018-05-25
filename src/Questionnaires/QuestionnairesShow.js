@@ -9,6 +9,7 @@ import {
   DefinitionList,
   Helpers,
   Table,
+  Buttons,
 } from 'web-components';
 import { versionSchema } from './schemas';
 
@@ -94,6 +95,16 @@ class QuestionnairesShow extends React.Component {
                     <Grid>
                       <Grid.Column width={12}>
                         <DefinitionList listData={version} renderProperty={renderProperty} />
+                      </Grid.Column>
+                      <Grid.Column width={4}>
+                        <Buttons
+                          actions={[
+                            {
+                              content: 'Delete',
+                              to: `/questionnaires/${id}/delete`,
+                            },
+                          ]}
+                        />
                       </Grid.Column>
                     </Grid>
                     <Grid>
