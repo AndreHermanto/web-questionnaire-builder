@@ -9,6 +9,7 @@ import {
   DefinitionList,
   Helpers,
   Table,
+  Buttons,
 } from 'web-components';
 import { versionSchema } from './schemas';
 
@@ -56,7 +57,7 @@ class QuestionnairesShow extends React.Component {
   render() {
     const {
       match: {
-        params: { currentVersionId },
+        params: { id, currentVersionId },
       },
     } = this.props;
 
@@ -93,6 +94,20 @@ class QuestionnairesShow extends React.Component {
                     <Grid>
                       <Grid.Column width={12}>
                         <DefinitionList listData={version} renderProperty={renderProperty} />
+                      </Grid.Column>
+                      <Grid.Column width={4}>
+                        <Buttons
+                          actions={[
+                            {
+                              content: 'Edit',
+                              to: '/',
+                            },
+                            {
+                              content: 'Duplicate',
+                              to: `/questionnaires/${id}/versions/${currentVersionId}/duplicate`,
+                            },
+                          ]}
+                        />
                       </Grid.Column>
                     </Grid>
                     <Grid>
