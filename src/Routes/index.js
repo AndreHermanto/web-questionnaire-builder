@@ -27,6 +27,7 @@ import OntologyEdit from '../Ontologies/forms/OntologyEdit';
 import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
+import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
@@ -170,6 +171,7 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/upload" component={UploadOntologyVersion} />
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
+          <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
           <SidePanelRoute

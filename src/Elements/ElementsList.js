@@ -24,6 +24,10 @@ const renderBodyRow = ({ id }) => ({
       content: 'Edit',
       to: { pathname: `/elements/${id}/edit`, state: { modal: true } },
     },
+    {
+      content: 'Delete',
+      to: { pathname: `/elements/${id}/delete`, state: { modal: true } },
+    },
   ],
 });
 

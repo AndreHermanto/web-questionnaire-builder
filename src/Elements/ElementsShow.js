@@ -88,6 +88,13 @@ class ElementsShow extends React.Component {
                           },
                         },
                         {
+                          content: 'Delete',
+                          to: {
+                            pathname: `/elements/${elementId}/delete`,
+                            state: { modal: true },
+                          },
+                        },
+                        {
                           content: 'Edit Logic',
                           to: {
                             pathname: `/elements/${elementId}/edit-logic`,
