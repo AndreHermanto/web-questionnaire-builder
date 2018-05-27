@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Mutation, Confirmation, QueryResource } from 'web-components';
 import { elementSchema } from './schemas';
 
-const ElementsDelete = (props) => {
+const ElementsDuplicate = (props) => {
   const {
     closePanel,
     history,
@@ -52,7 +52,7 @@ const ElementsDelete = (props) => {
     </QueryResource>
   );
 };
-ElementsDelete.propTypes = {
+ElementsDuplicate.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -64,4 +64,4 @@ ElementsDelete.propTypes = {
   }).isRequired,
 };
 
-export default ElementsDelete;
+export default ElementsDuplicate;
