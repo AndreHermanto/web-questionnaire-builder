@@ -25,6 +25,10 @@ const renderBodyRow = ({ id }) => ({
       to: { pathname: `/elements/${id}/edit`, state: { modal: true } },
     },
     {
+      content: 'Duplicate',
+      to: { pathname: `/elements/${id}/duplicate`, state: { modal: true } },
+    },
+    {
       content: 'Delete',
       to: { pathname: `/elements/${id}/delete`, state: { modal: true } },
     },
