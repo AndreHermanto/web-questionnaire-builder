@@ -24,7 +24,7 @@ const ElementsDelete = (props) => {
         return (
           <Confirmation
             title="Delete Element?"
-            content="Deleting an element will remove it from the system forever?"
+            content="Deleting an element will remove it from the system forever"
             confirmLabel="Yes, Delete Element"
             cancelLabel="No"
             onConfirm={() => remove(elementId)}
