@@ -114,6 +114,7 @@ class QuestionnaireFoldersList extends React.Component {
                 },
                 {
                   resourceName: 'questionnaireFolders',
+                  filter: { folderId },
                 },
               ]}
               render={({ questionnaires, questionnaireFolders, folders }) => {

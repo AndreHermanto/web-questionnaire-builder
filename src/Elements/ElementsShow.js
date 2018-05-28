@@ -102,6 +102,13 @@ class ElementsShow extends React.Component {
                           },
                         },
                         {
+                          content: 'Duplicate',
+                          to: {
+                            pathname: `/elements/${elementId}/duplicate`,
+                            state: { modal: true },
+                          },
+                        },
+                        {
                           content: 'Delete',
                           to: {
                             pathname: `/elements/${elementId}/delete`,
