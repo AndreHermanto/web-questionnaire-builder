@@ -20,6 +20,7 @@ import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/Questi
 import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
 import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
+import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -205,6 +206,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/export"
             component={QuestionnairesExport}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/generate-responses-report"
+            component={QuestionnairesResponsesReport}
           />
         </Switch>
       </div>

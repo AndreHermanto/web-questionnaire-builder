@@ -125,13 +125,23 @@ class QuestionnairesShow extends React.Component {
                             },
                             {
                               content: 'Move to Folder',
-                              to: `/questionnaires/${version.questionnaireId}/versions/${
-                                version.id
-                              }/move-to-folder`,
+                              to: {
+                                pathname: `/questionnaires/${version.questionnaireId}/versions/${
+                                  version.id
+                                }/move-to-folder`,
+                              },
+                              state: { modal: true },
                             },
                             {
                               content: 'Duplicate',
                               to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
+                            },
+                            {
+                              content: 'Generate responses report',
+                              to: {
+                                pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
+                                state: { modal: true },
+                              },
                             },
                           ]}
                         />
