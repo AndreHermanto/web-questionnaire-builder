@@ -129,6 +129,10 @@ class QuestionnairesShow extends React.Component {
                                 version.id
                               }/move-to-folder`,
                             },
+                            {
+                              content: 'Duplicate',
+                              to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
+                            },
                           ]}
                         />
                       </Grid.Column>
