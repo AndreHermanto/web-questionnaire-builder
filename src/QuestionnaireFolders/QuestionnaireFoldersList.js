@@ -51,7 +51,7 @@ class QuestionnaireFoldersList extends React.Component {
     />
   );
 
-  renderButtons = () => (
+  renderButtons = folderId => (
     <Grid.Column width={4}>
       <Buttons
         actions={[
@@ -68,7 +68,8 @@ class QuestionnaireFoldersList extends React.Component {
           },
           {
             content: 'Delete folder',
-            to: '/#',
+            to: `/folders/${folderId}/delete`,
+            state: { modal: true },
           },
         ]}
       />
@@ -134,7 +135,7 @@ class QuestionnaireFoldersList extends React.Component {
                           <Message.Header>No questionnaire found</Message.Header>
                         </Message>
                       </Grid.Column>
-                      {this.renderButtons()}
+                      {this.renderButtons(folderId)}
                     </Grid>
                   );
                 }

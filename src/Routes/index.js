@@ -46,6 +46,7 @@ import PricePlanMappingsList from '../PricePlanMappings/PricePlanMappingsList';
 import PricePlanMappingsDelete from '../PricePlanMappings/PricePlanMappingsDelete';
 import PricePlanMappingsShow from '../PricePlanMappings/PricePlanMappingsShow';
 import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreate';
+import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFoldersDelete';
 import Page404 from '../page404';
 
 const sidebarGroups = [
@@ -199,6 +200,7 @@ class Routes extends Component {
             path="/price-plan-mappings/:pricePlanMappingId/delete"
             component={PricePlanMappingsDelete}
           />
+          <SidePanelRoute path="/folders/:folderId/delete" component={QuestionnaireFoldersDelete} />
           <SidePanelRoute path="/questionnaires/:id/delete" component={QuestionnairesDelete} />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/export"
