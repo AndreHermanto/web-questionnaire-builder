@@ -37,6 +37,7 @@ export default function QuestionnairesResponsesReport({
 
   return (
     <QuestionnairesResponsesReportForm
+      initialValues={{ includeTimestamp: false, includePartialAnswers: false }}
       onCancel={closePanel}
       form={`questionnaire-${questionnaireId}-generate-responses-report`}
       onSubmit={handleGenerateResponsesReport}
