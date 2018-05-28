@@ -39,7 +39,7 @@ export default function ElementsEdit({
                       return <div>loading...</div>;
                     }
                     const formProps = {
-                      form: `elements-edit-${elementId}`,
+                      form: 'elements-form',
                       initialValues: elements[0],
                       onSubmit: update,
                       onCancel: closePanel,

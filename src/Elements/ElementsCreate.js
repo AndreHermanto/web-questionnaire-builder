@@ -16,7 +16,7 @@ const ElementsCreate = (props) => {
         if (loading) {
           return <div>loading...</div>;
         }
-        return <ElementsForm form={'elements-create'} onSubmit={create} onCancel={closePanel} />;
+        return <ElementsForm form={'elements-form'} onSubmit={create} onCancel={closePanel} />;
       }}
     />
   );
