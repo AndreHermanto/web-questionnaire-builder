@@ -14,9 +14,12 @@ import {
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
+import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
+import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
+import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
 import OntologiesShow from '../Ontologies/OntologiesShow';
 import OntologiesVersionsShow from '../Ontologies/OntologiesVersionsShow';
@@ -26,6 +29,7 @@ import OntologyEdit from '../Ontologies/forms/OntologyEdit';
 import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
+import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
@@ -57,7 +61,7 @@ const sidebarGroups = [
       },
       {
         name: 'Release reports',
-        url: '/releases',
+        url: '/release-reports',
         icon: 'unarchive',
       },
       {
@@ -120,11 +124,12 @@ class Routes extends Component {
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route
-                  path="/questionnaires/:id/versions/:currentVersionId"
+                  path="/questionnaires/:questionnaireId/versions/:currentVersionId"
                   component={QuestionnairesShow}
                 />
                 <Route path="/questionnaires" component={QuestionnairesList} />
-                <Route path="/releases" component={ReleaseReportsList} />
+                <Route path="/release-reports/:releaseReportId" component={ReleaseReportsShow} />
+                <Route path="/release-reports" component={ReleaseReportsList} />
                 <Route
                   path="/ontologies/:ontologyId/versions/:versionId/diff-report"
                   component={OntologiesVersionsDiffReportShow}
@@ -172,6 +177,7 @@ class Routes extends Component {
             component={QuestionnairesDuplicate}
           />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
+          <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
           <SidePanelRoute
@@ -182,6 +188,11 @@ class Routes extends Component {
           <SidePanelRoute
             path="/price-plan-mappings/:pricePlanMappingId/delete"
             component={PricePlanMappingsDelete}
+          />
+          <SidePanelRoute path="/questionnaires/:id/delete" component={QuestionnairesDelete} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/export"
+            component={QuestionnairesExport}
           />
         </Switch>
       </div>

@@ -103,7 +103,10 @@ class ElementsShow extends React.Component {
                         },
                         {
                           content: 'Delete',
-                          to: `/elements/${elementId}/delete`,
+                          to: {
+                            pathname: `/elements/${elementId}/delete`,
+                            state: { modal: true },
+                          },
                         },
                       ]}
                     />
