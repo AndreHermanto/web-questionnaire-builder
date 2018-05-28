@@ -48,6 +48,7 @@ import PricePlanMappingsShow from '../PricePlanMappings/PricePlanMappingsShow';
 import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreate';
 import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFoldersDelete';
 import Page404 from '../page404';
+import ElementsCreate from '../Elements/ElementsCreate';
 
 const sidebarGroups = [
   {
@@ -149,6 +150,7 @@ class Routes extends Component {
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
+                <Route path="/elements/create" component={ElementsList} />
                 <Route path="/elements/:elementId" component={ElementsShow} />
                 <Route path="/elements" component={ElementsList} />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
@@ -186,6 +188,8 @@ class Routes extends Component {
             path="/questionnaires/:id/versions/:currentVersionId/duplicate"
             component={QuestionnairesDuplicate}
           />
+          <SidePanelRoute path="/elements/create" component={ElementsCreate} />
+
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
           <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
           <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
