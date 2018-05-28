@@ -18,6 +18,7 @@ import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
 import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
+import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -30,6 +31,7 @@ import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
 import ElementsDelete from '../Elements/ElementsDelete';
+import ElementsDuplicate from '../Elements/ElementsDuplicate';
 import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
@@ -171,6 +173,11 @@ class Routes extends Component {
           <SidePanelRoute path="/ontologies/:ontologyId/delete" component={OntologyDeleteForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/activate" component={VersionActivateForm} />
           <SidePanelRoute path="/ontologies/:ontologyId/upload" component={UploadOntologyVersion} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/move-to-folder"
+            component={QuestionnairesMoveToFolder}
+          />
+
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
           <SidePanelRoute
             path="/questionnaires/:id/versions/:currentVersionId/duplicate"
@@ -178,6 +185,7 @@ class Routes extends Component {
           />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
           <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
+          <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
           <SidePanelRoute
