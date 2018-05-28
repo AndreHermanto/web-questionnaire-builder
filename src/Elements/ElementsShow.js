@@ -16,14 +16,13 @@ const renderProperty = (propertyName, value, element) => {
     case 'id':
       return null;
     case 'answers':
-      if (value[0].type !== 'text') {
-        return {
-          label: Helpers.renderLabel(propertyName),
-          value: Helpers.renderContent(propertyName, value, element),
-        };
+      if (propertyName !== 'textinformation') {
+        return null;
       }
-      return null;
-
+      return {
+        label: Helpers.renderLabel(propertyName),
+        value: Helpers.renderContent(propertyName, value, element),
+      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),

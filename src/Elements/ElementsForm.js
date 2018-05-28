@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
-import { Heading, Fields, Buttons } from 'web-components';
-import { reduxForm } from 'redux-form/immutable';
+import { Heading, Fields, Buttons, Helpers } from 'web-components';
+import { reduxForm, formValueSelector } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
 import cuid from 'cuid';
+import { connect } from 'react-redux';
 
 const getAnswers = (type) => {
   switch (type) {
@@ -45,7 +46,7 @@ const getAnswers = (type) => {
   }
 };
 
-const ElementsForm = ({ handleSubmit, onCancel, change }) => (
+let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
     <Fields.Text name="question" required />
@@ -65,25 +66,25 @@ const ElementsForm = ({ handleSubmit, onCancel, change }) => (
       ].map(value => ({
         key: value,
         value,
-        text: value,
+        text: Helpers.renderLabel(value),
       }))}
       required
       onChange={(event, newValue) => {
         change('answers', getAnswers(newValue));
       }}
     />
-
-    <Fields.Array
-      name="answers"
-      header="Answers"
-      components={<Fields.Text name="text" label="Text" required />}
-    />
+    {type !== 'textinformation' && (
+      <Fields.Array
+        name="answers"
+        header="Answers"
+        components={<Fields.Text name="text" label="Text" required />}
+      />
+    )}
     <Buttons
       actions={[
         {
           content: 'Save',
           type: 'submit',
-          onClick: () => {},
         },
         {
           content: 'Cancel',
@@ -98,7 +99,20 @@ ElementsForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
+
+ElementsForm.defaultProps = {
+  type: null,
+};
+
+ElementsForm = connect((state) => {
+  const selector = formValueSelector('elements-form');
+  const type = selector(state, 'type');
+  return {
+    type,
+  };
+})(ElementsForm);
 
 export default reduxForm({
   enableReinitialize: true,
