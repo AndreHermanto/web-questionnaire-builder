@@ -11,7 +11,7 @@ import {
   Buttons,
   QueryResource,
 } from 'web-components';
-import { versionSchema, questionnaireSchema } from './schemas';
+import { versionSchema, questionnaireSchema, userSchema } from './schemas';
 
 const renderProperty = (propertyName, value, pricePlan) => {
   switch (propertyName) {
@@ -41,7 +41,6 @@ class QuestionnairesShow extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         questionnaireId: PropTypes.string.isRequired,
-        currentVersionId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
   };
@@ -56,7 +55,7 @@ class QuestionnairesShow extends React.Component {
   render() {
     const {
       match: {
-        params: { questionnaireId, currentVersionId },
+        params: { questionnaireId },
       },
     } = this.props;
     const renderBodyRow = ({ id, question, title, type }) => ({
@@ -102,10 +101,17 @@ class QuestionnairesShow extends React.Component {
                       id: questionnaire.currentVersionId,
                     },
                   },
+                  {
+                    resourceName: 'users',
+                    url: '/me',
+                    schema: userSchema,
+                  },
                 ]}
               >
-                {({ versions }) => {
+                {({ versions, users }) => {
                   const version = versions[0];
+                  const user = users[0];
+                  const currentVersionId = version.id;
                   return (
                     <div>
                       <Breadcrumbs
@@ -148,11 +154,19 @@ class QuestionnairesShow extends React.Component {
                                 content: 'Duplicate',
                                 to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
                               },
-
                               {
                                 content: 'Generate responses report',
                                 to: {
                                   pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
+                                  state: { modal: true },
+                                },
+                              },
+                              {
+                                content: 'Preview as Patient',
+                                to: {
+                                  pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/user/${
+                                    user.id
+                                  }/preview-patient`,
                                   state: { modal: true },
                                 },
                               },

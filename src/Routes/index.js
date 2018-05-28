@@ -21,6 +21,7 @@ import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/Questionn
 import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
 import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
+import QuestionnairesPreviewAsPatient from '../Questionnaires/QuestionnairesForm/QuestionnairesPreviewAsPatient';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -233,6 +234,10 @@ class Routes extends Component {
           />
           <SidePanelRoute path="/folders/create" component={QuestionnaireFoldersCreate} />
           <SidePanelRoute path="/folders/:folderId/edit" component={QuestionnaireFoldersEdit} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/user/:userId/preview-patient"
+            component={QuestionnairesPreviewAsPatient}
+          />
         </Switch>
       </div>
     );
