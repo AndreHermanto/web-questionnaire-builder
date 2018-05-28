@@ -139,11 +139,13 @@ class QuestionnairesShow extends React.Component {
                     </Grid>
                     <Grid>
                       <Grid.Column width={12}>
-                        <Table
-                          headerRow={headerRow}
-                          renderBodyRow={renderBodyRow}
-                          tableData={version.body.filter(element => element.question)}
-                        />
+                        {version.body && (
+                          <Table
+                            headerRow={headerRow}
+                            renderBodyRow={renderBodyRow}
+                            tableData={version.body.filter(element => element.question)}
+                          />
+                        )}
                       </Grid.Column>
                     </Grid>
                   </div>

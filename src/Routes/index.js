@@ -18,6 +18,7 @@ import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
 import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
+import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
@@ -179,6 +180,7 @@ class Routes extends Component {
           />
 
           <SidePanelRoute path="/questionnaires/import-file" component={QuestionnairesFileImport} />
+          <SidePanelRoute path="/questionnaires/create" component={QuestionnairesCreate} />
           <SidePanelRoute
             path="/questionnaires/:id/versions/:currentVersionId/duplicate"
             component={QuestionnairesDuplicate}
