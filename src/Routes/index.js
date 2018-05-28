@@ -35,6 +35,7 @@ import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsDuplicate from '../Elements/ElementsDuplicate';
 import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
+import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -189,6 +190,7 @@ class Routes extends Component {
             component={QuestionnairesDuplicate}
           />
           <SidePanelRoute path="/elements/create" component={ElementsCreate} />
+          <SidePanelRoute path="/elements/section-add" component={ElementsAddHeader} />
 
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
           <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
