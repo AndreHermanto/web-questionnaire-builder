@@ -25,10 +25,12 @@ export default function QuestionnairesResponsesReport({
         },
       );
       await response.json();
+      // eslint-disable-next-line no-alert
       alert(
         'A new responses report will be created and you will be notified by email when this will become available.',
       );
     } catch (err) {
+      // eslint-disable-next-line no-alert
       alert(`Error generating responses report : ${err}`);
     } finally {
       closePanel();
