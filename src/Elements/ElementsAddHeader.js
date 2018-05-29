@@ -6,10 +6,6 @@ import { elementSchema } from './schemas';
 
 const ElementsAddHeader = (props) => {
   const { closePanel } = props;
-  const handleSubmit = (create, values) => {
-    const payload = values.set('type', 'SECTION');
-    create(payload);
-  };
   return (
     <Mutation
       resourceName="elements"
@@ -23,7 +19,7 @@ const ElementsAddHeader = (props) => {
         return (
           <ElementsAddHeaderForm
             form={'elements-header-create'}
-            onSubmit={element => handleSubmit(create, element)}
+            onSubmit={element => create(element.set('type', 'section'))}
             onCancel={closePanel}
           />
         );

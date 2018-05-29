@@ -7,6 +7,7 @@ import { reduxForm } from 'redux-form/immutable';
 const ElementsAddHeaderForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Element Header</Heading>
+    <Heading size="h3">Remember: All headings must be uniquely named.</Heading>
     <Fields.Text name="title" label="Title" required />
     <Fields.Select
       name="size"
