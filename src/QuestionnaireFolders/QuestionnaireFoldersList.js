@@ -172,7 +172,7 @@ class QuestionnaireFoldersList extends React.Component {
                         tableData={tableData}
                       />
                     </Grid.Column>
-                    {this.renderButtons()}
+                    {this.renderButtons(folderId)}
                   </Grid>
                 );
               }}
