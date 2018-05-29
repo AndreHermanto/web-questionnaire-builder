@@ -133,6 +133,10 @@ class QuestionnairesShow extends React.Component {
                               content: 'Duplicate',
                               to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
                             },
+                            {
+                              content: 'Import version',
+                              to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
+                            },
                           ]}
                         />
                       </Grid.Column>
