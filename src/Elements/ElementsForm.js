@@ -46,6 +46,7 @@ const getAnswers = (type) => {
   }
 };
 
+const showAnswers = type => type === 'radio' || type === 'checkbox' || type === 'matrix';
 let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
@@ -56,6 +57,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
         'radio',
         'checkbox',
         'text',
+        'textinformation',
         'weight',
         'height',
         'date',
@@ -63,17 +65,26 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
         'matrix',
         'uom',
         'uoms',
-      ].map(value => ({
-        key: value,
-        value,
-        text: Helpers.renderLabel(value),
-      }))}
+      ].map((value) => {
+        if (value === 'text') {
+          return {
+            key: value,
+            value,
+            text: Helpers.renderLabel('questionType.text'),
+          };
+        }
+        return {
+          key: value,
+          value,
+          text: Helpers.renderLabel(value),
+        };
+      })}
       required
       onChange={(event, newValue) => {
         change('answers', getAnswers(newValue));
       }}
     />
-    {type !== 'textinformation' && (
+    {showAnswers(type) && (
       <Fields.Array
         name="answers"
         header="Answers"
