@@ -4,11 +4,11 @@ import { Resource, Mutation, Query } from 'web-components';
 import { answerSchema, elementSchema } from './schemas';
 import ElementsAddImageForm from './ElementsAddImageForm';
 
-const ElementsAddImage = (props) => {
+const AnswersAddImage = (props) => {
   const {
     closePanel,
     match: {
-      params: { elementId },
+      params: { elementId, id },
     },
   } = props;
   const handleSubmit = (update, values, element, answer) => {
@@ -43,6 +43,7 @@ const ElementsAddImage = (props) => {
             {
               resourceName: 'answers',
               schema: answerSchema,
+              filter: { id },
             },
           ]}
           render={({ elements, answers }) => {
@@ -74,7 +75,7 @@ const ElementsAddImage = (props) => {
   );
 };
 
-ElementsAddImage.propTypes = {
+AnswersAddImage.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -83,4 +84,4 @@ ElementsAddImage.propTypes = {
   }).isRequired,
 };
 
-export default ElementsAddImage;
+export default AnswersAddImage;
