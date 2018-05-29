@@ -44,11 +44,21 @@ let QuestionnairesVersionFileImportForm = ({
   };
 
   const convertYamlToObject = (data) => {
-    const jsonData = yamlJS.safeLoad(data);
-    if (typeof jsonData === 'object') {
+    if (!data) {
       setError(false, '');
-      change('fileJsonData', jsonData);
-    } else {
+      return;
+    }
+
+    try {
+      const jsonData = yamlJS.safeLoad(data);
+      if (typeof jsonData === 'object') {
+        setError(false, '');
+        change('fileJsonData', jsonData);
+      } else {
+        setError(true, 'Please check your yaml data');
+        cleanFile();
+      }
+    } catch (e) {
       setError(true, 'Please check your yaml data');
       cleanFile();
     }
