@@ -8,8 +8,29 @@ import {
   Breadcrumbs,
   DefinitionList,
   Helpers,
+  Table,
 } from 'web-components';
 import { elementSchema } from './schemas';
+
+const headerRow = [
+  {
+    propName: 'id',
+  },
+  {
+    propName: 'text',
+  },
+];
+
+const renderBodyRow = ({ id }) => ({
+  key: id,
+  cells: [Helpers.renderContent('id', id)],
+  actions: [
+    {
+      content: 'Add image',
+      to: { pathname: `/elements/${id}/answers/add-image`, state: { modal: true } },
+    },
+  ],
+});
 
 const renderProperty = (propertyName, value, element) => {
   switch (propertyName) {
@@ -115,6 +136,15 @@ class ElementsShow extends React.Component {
                           },
                         },
                       ]}
+                    />
+                  </Grid.Column>
+                </Grid>
+                <Grid>
+                  <Grid.Column width={12}>
+                    <Table
+                      headerRow={headerRow}
+                      renderBodyRow={renderBodyRow}
+                      tableData={element.answers}
                     />
                   </Grid.Column>
                 </Grid>
