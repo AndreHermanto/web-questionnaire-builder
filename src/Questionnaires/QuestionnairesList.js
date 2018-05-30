@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Query, Resource, Table, Heading, Buttons } from 'web-components';
 import { questionnaireSchema, questionnairesSchema } from './schemas';
-import { folderSchema, foldersSchema, questionnaireFoldersSchema } from '../QuestionnaireFolders/schemas';
+import {
+  folderSchema,
+  foldersSchema,
+  questionnaireFoldersSchema,
+} from '../QuestionnaireFolders/schemas';
 
 const CustomLink = styled(Link)`
   i {
