@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Query, Resource, Mutation } from 'web-components';
-import { elementsSchema } from './schemas';
+import { QueryResource, Mutation } from 'web-components';
+import { elementSchema } from './schemas';
 import ElementsForm from './ElementsForm';
 
 export default function ElementsEdit({
@@ -12,46 +12,43 @@ export default function ElementsEdit({
 }) {
   return (
     <div>
-      <Query
-        resourceName="elements"
-        url={`/elements/${elementId}`}
-        schema={elementsSchema}
-        render={({ loading, error }) => (
-          <Resource
-            resourceName="elements"
-            filter={{ id: elementId }}
-            render={({ elements }) => {
-              if (loading && !elements.length) {
-                return <div>Updating...</div>;
-              }
-              if (error) {
-                return <div>Error: {error}</div>;
-              }
-
-              return (
-                <Mutation
-                  resourceName="elements"
-                  url={`/elements/${elementId}`}
-                  schema={elementsSchema}
-                  post={closePanel}
-                  render={({ update, loading: pending }) => {
-                    if (pending) {
-                      return <div>loading...</div>;
-                    }
-                    const formProps = {
-                      form: `elements-edit-${elementId}`,
-                      initialValues: elements[0],
-                      onSubmit: update,
-                      onCancel: closePanel,
-                    };
-                    return <ElementsForm {...formProps} />;
-                  }}
-                />
-              );
-            }}
-          />
-        )}
-      />
+      <QueryResource
+        queries={[
+          {
+            resourceName: 'elements',
+            url: `/elements/${elementId}`,
+            schema: elementSchema,
+            filter: { id: elementId },
+          },
+        ]}
+      >
+        {({ elements }) => {
+          if (!elements.length) {
+            return <div>No Elements</div>;
+          }
+          const element = elements[0];
+          return (
+            <Mutation
+              resourceName="elements"
+              url={`/elements/${elementId}`}
+              schema={elementSchema}
+              post={closePanel}
+              render={({ update, loading: pending }) => {
+                if (pending) {
+                  return <div>loading...</div>;
+                }
+                const formProps = {
+                  form: 'elements-form',
+                  initialValues: element,
+                  onSubmit: update,
+                  onCancel: closePanel,
+                };
+                return <ElementsForm {...formProps} />;
+              }}
+            />
+          );
+        }}
+      </QueryResource>
     </div>
   );
 }

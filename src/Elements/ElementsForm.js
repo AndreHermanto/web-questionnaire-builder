@@ -1,33 +1,101 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
-import { Heading, Fields, Buttons } from 'web-components';
-import { reduxForm } from 'redux-form/immutable';
+import { Heading, Fields, Buttons, Helpers } from 'web-components';
+import { reduxForm, formValueSelector } from 'redux-form/immutable';
+import { fromJS } from 'immutable';
+import cuid from 'cuid';
+import { connect } from 'react-redux';
 
-const ElementsForm = ({ handleSubmit, onCancel }) => (
+const getAnswers = (type) => {
+  switch (type) {
+    case 'matrix':
+    case 'radio':
+    case 'checkbox':
+    case 'text':
+    case 'weight':
+    case 'height':
+    case 'date':
+    case 'number':
+      return fromJS([
+        {
+          id: cuid(),
+          text: '',
+          concepts: [],
+        },
+      ]);
+    case 'uom':
+      return fromJS([
+        {
+          id: cuid(),
+          uom1: {},
+          concepts: [],
+        },
+      ]);
+    case 'uoms':
+      return fromJS([
+        {
+          id: cuid(),
+          uom1: {},
+          uom2: {},
+          concepts: [],
+        },
+      ]);
+    default:
+      return [];
+  }
+};
+
+const showAnswers = type => type === 'radio' || type === 'checkbox' || type === 'matrix';
+let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
     <Fields.Text name="question" required />
     <Fields.Select
       name="type"
-      options={['RADIO', 'CHECKBOX', 'TEXT'].map(value => ({
-        key: value,
-        value,
-        text: value,
-      }))}
+      options={[
+        'radio',
+        'checkbox',
+        'text',
+        'textinformation',
+        'weight',
+        'height',
+        'date',
+        'number',
+        'matrix',
+        'uom',
+        'uoms',
+      ].map((value) => {
+        if (value === 'text') {
+          return {
+            key: value,
+            value,
+            text: Helpers.renderLabel('questionType.text'),
+          };
+        }
+        return {
+          key: value,
+          value,
+          text: Helpers.renderLabel(value),
+        };
+      })}
       required
+      onChange={(event, newValue) => {
+        change('answers', getAnswers(newValue));
+      }}
     />
-    <Fields.Array
-      name="answers"
-      header="Answers"
-      components={<Fields.Text name="text" label="Text" required />}
-    />
+    {showAnswers(type) && (
+      <Fields.Array
+        name="answers"
+        header="Answers"
+        components={<Fields.Text name="text" label="Text" required />}
+      />
+    )}
     <Buttons
       actions={[
         {
           content: 'Save',
           type: 'submit',
-          onClick: () => {},
         },
         {
           content: 'Cancel',
@@ -41,7 +109,21 @@ const ElementsForm = ({ handleSubmit, onCancel }) => (
 ElementsForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
+
+ElementsForm.defaultProps = {
+  type: null,
+};
+
+ElementsForm = connect((state) => {
+  const selector = formValueSelector('elements-form');
+  const type = selector(state, 'type');
+  return {
+    type,
+  };
+})(ElementsForm);
 
 export default reduxForm({
   enableReinitialize: true,

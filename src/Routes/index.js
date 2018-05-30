@@ -21,6 +21,8 @@ import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/Questi
 import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
 import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
+import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
+import QuestionnairesPreviewAsPatient from '../Questionnaires/QuestionnairesForm/QuestionnairesPreviewAsPatient';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -36,9 +38,14 @@ import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsDuplicate from '../Elements/ElementsDuplicate';
 import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
+import ValidationLogic from '../Elements/Forms/ValidationLogic';
+import ElementsAddHeader from '../Elements/ElementsAddHeader';
+import AnswersAddImage from '../Elements/AnswersAddImage';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
+import QuestionnaireFoldersCreate from '../QuestionnaireFolders/QuestionnaireFoldersCreate';
+import QuestionnaireFoldersEdit from '../QuestionnaireFolders/QuestionnaireFoldersEdit';
 import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
 import LandingPageEdit from '../LandingPage/LandingPageEdit';
@@ -49,6 +56,7 @@ import PricePlanMappingsShow from '../PricePlanMappings/PricePlanMappingsShow';
 import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreate';
 import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFoldersDelete';
 import Page404 from '../page404';
+import ElementsCreate from '../Elements/ElementsCreate';
 
 const sidebarGroups = [
   {
@@ -129,9 +137,10 @@ class Routes extends Component {
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route
-                  path="/questionnaires/:questionnaireId/versions/:currentVersionId"
-                  component={QuestionnairesShow}
+                  path="/questionnaires/:questionnaireId/elements/:elementId"
+                  component={ElementsShow}
                 />
+                <Route path="/questionnaires/:questionnaireId" component={QuestionnairesShow} />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/release-reports/:releaseReportId" component={ReleaseReportsShow} />
                 <Route path="/release-reports" component={ReleaseReportsList} />
@@ -150,6 +159,7 @@ class Routes extends Component {
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
+                <Route path="/elements/create" component={ElementsList} />
                 <Route path="/elements/:elementId" component={ElementsShow} />
                 <Route path="/elements" component={ElementsList} />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
@@ -191,11 +201,22 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/import-version"
             component={QuestionnairesVersionFileImport}
           />
+          <SidePanelRoute path="/elements/create" component={ElementsCreate} />
+          <SidePanelRoute path="/elements/section-add" component={ElementsAddHeader} />
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
           <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
           <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
+
+          <SidePanelRoute
+            path="/elements/:elementId/answers/:id/add-image"
+            component={AnswersAddImage}
+          />
+          <SidePanelRoute
+            path="/elements/:elementId/answers/:answerId/add-validation"
+            component={ValidationLogic}
+          />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
             component={LandingPageEdit}
@@ -210,6 +231,16 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/export"
             component={QuestionnairesExport}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/generate-responses-report"
+            component={QuestionnairesResponsesReport}
+          />
+          <SidePanelRoute path="/folders/create" component={QuestionnaireFoldersCreate} />
+          <SidePanelRoute path="/folders/:folderId/edit" component={QuestionnaireFoldersEdit} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/user/:userId/preview-patient"
+            component={QuestionnairesPreviewAsPatient}
           />
         </Switch>
       </div>

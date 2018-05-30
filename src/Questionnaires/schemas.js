@@ -11,5 +11,14 @@ export const versionSchema = new schema.Entity('versions', {
 
 export const versionsSchema = [versionSchema];
 
-export const folderSchema = new schema.Entity('folders');
-export const foldersSchema = [folderSchema];
+export const userSchema = new schema.Entity('users');
+export const usersSchema = [userSchema];
+
+export const previewResponseSchema = new schema.Entity('previewResponses');
+export const previewResponsesSchema = [previewResponseSchema];
+
+export const encryptedTokenSchema = new schema.Entity(
+  'encryptedToken',
+  {},
+  { idAttribute: 'consentTypeId' },
+);

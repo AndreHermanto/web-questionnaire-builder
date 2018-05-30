@@ -82,6 +82,10 @@ class ElementsList extends React.Component {
                               content: 'Add Element',
                               to: { pathname: '/elements/create', state: { modal: true } },
                             },
+                            {
+                              content: 'Add Section',
+                              to: { pathname: '/elements/section-add', state: { modal: true } },
+                            },
                           ]}
                         />
                       </Grid.Column>

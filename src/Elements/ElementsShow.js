@@ -8,22 +8,58 @@ import {
   Breadcrumbs,
   DefinitionList,
   Helpers,
+  Table,
 } from 'web-components';
 import { elementSchema } from './schemas';
+
+const getTableActions = ({ id, elementId, type }) => {
+  const actions = [
+    {
+      content: 'Add image',
+      to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
+    },
+  ];
+
+  const validationAction = {
+    content: 'Add validation',
+    to: { pathname: `/elements/${elementId}/answers/${id}/add-validation`, state: { modal: true } },
+  };
+
+  if (type === 'number' || type === 'text') actions.push(validationAction);
+
+  return actions;
+};
+
+const headerRow = [
+  {
+    propName: 'id',
+  },
+  {
+    propName: 'text',
+  },
+  {
+    propName: 'image',
+  },
+];
+
+const renderBodyRow = ({ elementId, type }) => ({ id }) => ({
+  key: id,
+  cells: [Helpers.renderContent('id', id)],
+  actions: getTableActions({ elementId, type, id }),
+});
 
 const renderProperty = (propertyName, value, element) => {
   switch (propertyName) {
     case 'id':
       return null;
     case 'answers':
-      if (value[0].type !== 'text') {
-        return {
-          label: Helpers.renderLabel(propertyName),
-          value: Helpers.renderContent(propertyName, value, element),
-        };
+      if (element.type === 'textinformation') {
+        return null;
       }
-      return null;
-
+      return {
+        label: Helpers.renderLabel(propertyName),
+        value: Helpers.renderContent(propertyName, value, element),
+      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),
@@ -116,6 +152,15 @@ class ElementsShow extends React.Component {
                           },
                         },
                       ]}
+                    />
+                  </Grid.Column>
+                </Grid>
+                <Grid>
+                  <Grid.Column width={12}>
+                    <Table
+                      headerRow={headerRow}
+                      renderBodyRow={renderBodyRow({ elementId, type: element.type })}
+                      tableData={element.answers}
                     />
                   </Grid.Column>
                 </Grid>
