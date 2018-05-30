@@ -36,6 +36,7 @@ import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsDuplicate from '../Elements/ElementsDuplicate';
 import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
+import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
@@ -198,6 +199,10 @@ class Routes extends Component {
           <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
+          <SidePanelRoute
+            path="/elements/:elementId/answers/:answerId/add-validation"
+            component={ValidationLogic}
+          />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
             component={LandingPageEdit}

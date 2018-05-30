@@ -12,6 +12,24 @@ import {
 } from 'web-components';
 import { elementSchema } from './schemas';
 
+const getTableActions = ({ id, elementId, type }) => {
+  const actions = [
+    {
+      content: 'Add image',
+      to: { pathname: `/elements/${id}/answers/add-image`, state: { modal: true } },
+    },
+  ];
+
+  const validationAction = {
+    content: 'Add validation',
+    to: { pathname: `/elements/${elementId}/answers/${id}/add-validation`, state: { modal: true } },
+  };
+
+  if (type === 'number' || type === 'text') actions.push(validationAction);
+
+  return actions;
+};
+
 const headerRow = [
   {
     propName: 'id',
@@ -21,15 +39,10 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({ id }) => ({
+const renderBodyRow = ({ elementId, type }) => ({ id }) => ({
   key: id,
   cells: [Helpers.renderContent('id', id)],
-  actions: [
-    {
-      content: 'Add image',
-      to: { pathname: `/elements/${id}/answers/add-image`, state: { modal: true } },
-    },
-  ],
+  actions: getTableActions({ elementId, type, id }),
 });
 
 const renderProperty = (propertyName, value, element) => {
@@ -143,7 +156,7 @@ class ElementsShow extends React.Component {
                   <Grid.Column width={12}>
                     <Table
                       headerRow={headerRow}
-                      renderBodyRow={renderBodyRow}
+                      renderBodyRow={renderBodyRow({ elementId, type: element.type })}
                       tableData={element.answers}
                     />
                   </Grid.Column>
