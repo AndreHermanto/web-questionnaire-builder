@@ -20,6 +20,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'headingsData',
   'pricePlans',
   'pricePlanMappings',
+  'answers',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,

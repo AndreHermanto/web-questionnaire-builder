@@ -3,7 +3,12 @@ import { Grid, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Query, Resource, Table, Heading, Buttons } from 'web-components';
-import { questionnaireSchema, questionnairesSchema, folderSchema, foldersSchema } from './schemas';
+import { questionnaireSchema, questionnairesSchema } from './schemas';
+import {
+  folderSchema,
+  foldersSchema,
+  questionnaireFoldersSchema,
+} from '../QuestionnaireFolders/schemas';
 
 const CustomLink = styled(Link)`
   i {
@@ -32,15 +37,7 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({
-  id,
-  type,
-  currentTitle,
-  creatorName,
-  lastUpdated,
-  status,
-  currentVersionId,
-}) => ({
+const renderBodyRow = ({ id, type, currentTitle, creatorName, lastUpdated, status }) => ({
   key: id,
   cells: [
     <span>
@@ -50,7 +47,7 @@ const renderBodyRow = ({
           <span className={type}>{currentTitle}</span>
         </CustomLink>
       ) : (
-        <CustomLink to={`/questionnaires/${id}/versions/${currentVersionId}`}>
+        <CustomLink to={`/questionnaires/${id}`}>
           <span className={type}>{currentTitle}</span>
         </CustomLink>
       )}
@@ -91,6 +88,13 @@ class QuestionnairesList extends React.Component {
             content: 'Import from file',
             to: '/questionnaires/import-file',
           },
+          {
+            content: 'New Folder',
+            to: {
+              pathname: '/folders/create',
+              state: { modal: true },
+            },
+          },
         ]}
       />
     </Grid.Column>
@@ -111,6 +115,11 @@ class QuestionnairesList extends React.Component {
               url: '/folders',
               schema: foldersSchema,
             },
+            {
+              resourceName: 'questionnaireFolders',
+              url: '/questionnaire-folders',
+              schema: questionnaireFoldersSchema,
+            },
           ]}
           render={({ loading, error }) => (
             <Resource
@@ -123,8 +132,11 @@ class QuestionnairesList extends React.Component {
                   resourceName: 'folders',
                   schema: folderSchema,
                 },
+                {
+                  resourceName: 'questionnaireFolders',
+                },
               ]}
-              render={({ questionnaires, folders }) => {
+              render={({ questionnaires, folders, questionnaireFolders }) => {
                 if (loading && !questionnaires.length) {
                   return <div>loading...</div>;
                 }
@@ -145,17 +157,19 @@ class QuestionnairesList extends React.Component {
                 }
 
                 const tableData = folders
-                  .map(folder => ({
-                    type: 'folder',
-                    currentTitle: folder.title,
-                    ...folder,
-                  }))
                   .map(folder => ({ type: 'folder', currentTitle: folder.title, ...folder }))
                   .concat(
-                    questionnaires.map(questionnaire => ({
-                      type: 'questionnaire',
-                      ...questionnaire,
-                    })),
+                    questionnaires
+                      .filter(
+                        questionnaire =>
+                          !questionnaireFolders.find(
+                            qFolder => qFolder.questionnaireId === questionnaire.id,
+                          ),
+                      )
+                      .map(questionnaire => ({
+                        type: 'questionnaire',
+                        ...questionnaire,
+                      })),
                   );
                 return (
                   <div>

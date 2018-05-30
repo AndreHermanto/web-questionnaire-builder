@@ -10,6 +10,3 @@ export const versionSchema = new schema.Entity('versions', {
 });
 
 export const versionsSchema = [versionSchema];
-
-export const folderSchema = new schema.Entity('folders');
-export const foldersSchema = [folderSchema];

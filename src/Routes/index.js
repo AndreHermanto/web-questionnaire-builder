@@ -38,9 +38,12 @@ import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
+import AnswersAddImage from '../Elements/AnswersAddImage';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
+import QuestionnaireFoldersCreate from '../QuestionnaireFolders/QuestionnaireFoldersCreate';
+import QuestionnaireFoldersEdit from '../QuestionnaireFolders/QuestionnaireFoldersEdit';
 import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
 import LandingPageEdit from '../LandingPage/LandingPageEdit';
@@ -132,9 +135,10 @@ class Routes extends Component {
               <Switch location={isModal ? this.previousLocation : location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route
-                  path="/questionnaires/:questionnaireId/versions/:currentVersionId"
-                  component={QuestionnairesShow}
+                  path="/questionnaires/:questionnaireId/elements/:elementId"
+                  component={ElementsShow}
                 />
+                <Route path="/questionnaires/:questionnaireId" component={QuestionnairesShow} />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/release-reports/:releaseReportId" component={ReleaseReportsShow} />
                 <Route path="/release-reports" component={ReleaseReportsList} />
@@ -199,6 +203,11 @@ class Routes extends Component {
           <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
           <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
+
+          <SidePanelRoute
+            path="/elements/:elementId/answers/:id/add-image"
+            component={AnswersAddImage}
+          />
           <SidePanelRoute
             path="/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}
@@ -222,6 +231,8 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/generate-responses-report"
             component={QuestionnairesResponsesReport}
           />
+          <SidePanelRoute path="/folders/create" component={QuestionnaireFoldersCreate} />
+          <SidePanelRoute path="/folders/:folderId/edit" component={QuestionnaireFoldersEdit} />
         </Switch>
       </div>
     );

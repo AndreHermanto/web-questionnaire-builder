@@ -16,7 +16,7 @@ const getTableActions = ({ id, elementId, type }) => {
   const actions = [
     {
       content: 'Add image',
-      to: { pathname: `/elements/${id}/answers/add-image`, state: { modal: true } },
+      to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
     },
   ];
 
@@ -37,6 +37,9 @@ const headerRow = [
   {
     propName: 'text',
   },
+  {
+    propName: 'image',
+  },
 ];
 
 const renderBodyRow = ({ elementId, type }) => ({ id }) => ({
@@ -50,7 +53,7 @@ const renderProperty = (propertyName, value, element) => {
     case 'id':
       return null;
     case 'answers':
-      if (propertyName !== 'textinformation') {
+      if (element.type === 'textinformation') {
         return null;
       }
       return {
