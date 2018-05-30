@@ -33,15 +33,7 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({
-  id,
-  type,
-  currentTitle,
-  creatorName,
-  lastUpdated,
-  status,
-  currentVersionId,
-}) => ({
+const renderBodyRow = ({ id, type, currentTitle, creatorName, lastUpdated, status }) => ({
   key: id,
   cells: [
     <span>
@@ -51,7 +43,7 @@ const renderBodyRow = ({
           <span className={type}>{currentTitle}</span>
         </CustomLink>
       ) : (
-        <CustomLink to={`/questionnaires/${id}/versions/${currentVersionId}`}>
+        <CustomLink to={`/questionnaires/${id}`}>
           <span className={type}>{currentTitle}</span>
         </CustomLink>
       )}
