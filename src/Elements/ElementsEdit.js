@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Query, Resource, Mutation } from 'web-components';
-import { elementsSchema } from './schemas';
+import { elementSchema } from './schemas';
 import ElementsForm from './ElementsForm';
 
 export default function ElementsEdit({
@@ -15,7 +15,7 @@ export default function ElementsEdit({
       <Query
         resourceName="elements"
         url={`/elements/${elementId}`}
-        schema={elementsSchema}
+        schema={elementSchema}
         render={({ loading, error }) => (
           <Resource
             resourceName="elements"
@@ -32,7 +32,7 @@ export default function ElementsEdit({
                 <Mutation
                   resourceName="elements"
                   url={`/elements/${elementId}`}
-                  schema={elementsSchema}
+                  schema={elementSchema}
                   post={closePanel}
                   render={({ update, loading: pending }) => {
                     if (pending) {

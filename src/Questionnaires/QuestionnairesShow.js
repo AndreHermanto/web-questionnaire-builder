@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import {
-  Query,
-  Resource,
   Heading,
   Breadcrumbs,
   DefinitionList,
   Helpers,
   Table,
   Buttons,
+  QueryResource,
 } from 'web-components';
-import { versionSchema } from './schemas';
+import { versionSchema, questionnaireSchema } from './schemas';
 
 const renderProperty = (propertyName, value, pricePlan) => {
   switch (propertyName) {
@@ -28,23 +28,13 @@ const renderProperty = (propertyName, value, pricePlan) => {
 
 const headerRow = [
   {
-    label: 'Questions',
+    propName: element => element.title || element.question,
+    label: 'Content',
   },
   {
-    label: 'Type',
+    propName: 'type',
   },
 ];
-
-const renderBodyRow = ({ id, question, type }) => ({
-  key: id,
-  cells: [question, type],
-  actions: [
-    {
-      content: 'Edit',
-      to: { pathname: '' },
-    },
-  ],
-});
 
 class QuestionnairesShow extends React.Component {
   static propTypes = {
@@ -69,101 +59,125 @@ class QuestionnairesShow extends React.Component {
         params: { questionnaireId, currentVersionId },
       },
     } = this.props;
-
+    const renderBodyRow = ({ id, question, title, type }) => ({
+      key: id,
+      cells: [
+        <Link to={`/questionnaires/${questionnaireId}/elements/${id}`}>{question || title}</Link>,
+        type,
+      ],
+      actions: [
+        {
+          content: 'Edit',
+          to: { pathname: '' },
+        },
+      ],
+    });
     return (
       <div>
-        <Query
-          resourceName="versions"
-          url={`/questionnaires/${questionnaireId}/versions/${currentVersionId}`}
-          schema={versionSchema}
-          render={({ loading, error }) => (
-            <Resource
-              resourceName="versions"
-              filter={{ id: currentVersionId }}
-              render={({ versions }) => {
-                if (loading && !versions.length) {
-                  return <div>loading...</div>;
-                }
-                if (error) {
-                  return <div>Error: {error}</div>;
-                }
-                if (!versions.length) {
-                  return <div>No Versions</div>;
-                }
-                const version = versions[0];
-                return (
-                  <div>
-                    <Breadcrumbs
-                      sections={[
-                        { content: 'Questionnaires', to: '/questionnaires' },
-                        { content: version.title },
-                      ]}
-                    />
-                    <Heading size="h1">{version.title}</Heading>
-                    <Grid>
-                      <Grid.Column width={12}>
-                        <DefinitionList listData={version} renderProperty={renderProperty} />
-                      </Grid.Column>
-                      <Grid.Column width={4}>
-                        <Buttons
-                          actions={[
-                            {
-                              content: 'Delete',
-                              to: `/questionnaires/${questionnaireId}/delete`,
-                            },
-                            {
-                              content: 'Download',
-                              onClick: () =>
-                                this.downloadQuestionnaire(questionnaireId, currentVersionId),
-                            },
-                            {
-                              content: 'Export questionnaire',
-                              to: {
-                                pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
-                                state: { modal: true },
+        <QueryResource
+          queries={[
+            {
+              resourceName: 'questionnaires',
+              url: `/questionnaires/${questionnaireId}`,
+              schema: questionnaireSchema,
+              filter: { id: questionnaireId },
+            },
+          ]}
+        >
+          {({ loading, questionnaires }) => {
+            if (loading) {
+              return 'Loading latest version...';
+            }
+            const questionnaire = questionnaires[0];
+            return (
+              <QueryResource
+                queries={[
+                  {
+                    resourceName: 'versions',
+                    url: `/questionnaires/${questionnaireId}/versions/${
+                      questionnaire.currentVersionId
+                    }`,
+                    schema: versionSchema,
+                    filter: {
+                      id: questionnaire.currentVersionId,
+                    },
+                  },
+                ]}
+              >
+                {({ versions }) => {
+                  const version = versions[0];
+                  return (
+                    <div>
+                      <Breadcrumbs
+                        sections={[
+                          { content: 'Questionnaires', to: '/questionnaires' },
+                          { content: version.title },
+                        ]}
+                      />
+                      <Heading size="h1">{version.title}</Heading>
+                      <Grid>
+                        <Grid.Column width={12}>
+                          <DefinitionList listData={version} renderProperty={renderProperty} />
+                        </Grid.Column>
+                        <Grid.Column width={4}>
+                          <Buttons
+                            actions={[
+                              {
+                                content: 'Delete',
+                                to: `/questionnaires/${questionnaireId}/delete`,
                               },
-                            },
-                            {
-                              content: 'Move to Folder',
-                              to: {
-                                pathname: `/questionnaires/${version.questionnaireId}/versions/${
+                              {
+                                content: 'Download',
+                                onClick: () =>
+                                  this.downloadQuestionnaire(questionnaireId, currentVersionId),
+                              },
+                              {
+                                content: 'Export questionnaire',
+                                to: {
+                                  pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
+                                  state: { modal: true },
+                                },
+                              },
+                              {
+                                content: 'Move to Folder',
+                                to: `/questionnaires/${version.questionnaireId}/versions/${
                                   version.id
                                 }/move-to-folder`,
                               },
-                              state: { modal: true },
-                            },
-                            {
-                              content: 'Duplicate',
-                              to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
-                            },
-                            {
-                              content: 'Generate responses report',
-                              to: {
-                                pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
-                                state: { modal: true },
+                              {
+                                content: 'Duplicate',
+                                to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
                               },
-                            },
-                          ]}
-                        />
-                      </Grid.Column>
-                    </Grid>
-                    <Grid>
-                      <Grid.Column width={12}>
-                        {version.body && (
-                          <Table
-                            headerRow={headerRow}
-                            renderBodyRow={renderBodyRow}
-                            tableData={version.body.filter(element => element.question)}
+
+                              {
+                                content: 'Generate responses report',
+                                to: {
+                                  pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
+                                  state: { modal: true },
+                                },
+                              },
+                            ]}
                           />
-                        )}
-                      </Grid.Column>
-                    </Grid>
-                  </div>
-                );
-              }}
-            />
-          )}
-        />
+                        </Grid.Column>
+                      </Grid>
+                      <Grid>
+                        <Grid.Column width={12}>
+                          {version.body && (
+                            <Table
+                              headerRow={headerRow}
+                              renderBodyRow={renderBodyRow}
+                              tableData={version.body}
+                            />
+                          )}
+                        </Grid.Column>
+                      </Grid>
+                    </div>
+                  );
+                }}
+              </QueryResource>
+            );
+          }}
+        </QueryResource>
       </div>
     );
   }
