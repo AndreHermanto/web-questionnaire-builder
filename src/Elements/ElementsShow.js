@@ -40,7 +40,7 @@ const renderProperty = (propertyName, value, element) => {
     case 'id':
       return null;
     case 'answers':
-      if (propertyName !== 'textinformation') {
+      if (element.type === 'textinformation') {
         return null;
       }
       return {
