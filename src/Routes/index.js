@@ -40,7 +40,6 @@ import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import AnswersAddImage from '../Elements/AnswersAddImage';
-import AnswersFollowUp from '../Elements/AnswersFollowUp';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -213,10 +212,6 @@ class Routes extends Component {
           <SidePanelRoute
             path="/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}
-          />
-          <SidePanelRoute
-            path="/elements/:elementId/answers/:id/follow-up"
-            component={AnswersFollowUp}
           />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"

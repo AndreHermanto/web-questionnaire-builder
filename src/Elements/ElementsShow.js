@@ -18,10 +18,6 @@ const getTableActions = ({ id, elementId, type }) => {
       content: 'Add image',
       to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
     },
-    {
-      content: 'Follow Up Question',
-      to: { pathname: `/elements/${elementId}/answers/${id}/follow-up`, state: { modal: true } },
-    },
   ];
 
   const validationAction = {
