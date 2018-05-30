@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Resource, Mutation, Query } from 'web-components';
-import { answerSchema, elementSchema } from './schemas';
+import { QueryResource, Mutation } from 'web-components';
+import { elementSchema } from './schemas';
 import ElementsAddImageForm from './ElementsAddImageForm';
 
 const AnswersAddImage = (props) => {
@@ -11,13 +11,14 @@ const AnswersAddImage = (props) => {
       params: { elementId, id },
     },
   } = props;
-  const handleSubmit = (update, values, element, answer) => {
-    const newAnswer = Object.assign(answer, {
+  const handleSubmit = (update, values, element, answerId) => {
+    const answer = element.answers.filter(ans => ans.id === answerId);
+    const newAnswer = Object.assign(answer[0], {
       image: `${process.env.REACT_APP_BASE_URL}/download?id=${values.get('file').id}`,
     });
 
     const newElementAnswers = element.answers.map((ans) => {
-      if (answer.id === ans.id) {
+      if (answerId === ans.id) {
         return newAnswer;
       }
       return ans;
@@ -29,49 +30,39 @@ const AnswersAddImage = (props) => {
     });
   };
   return (
-    <Query
-      resourceName="elements"
-      url={`/elements/${elementId}`}
-      schema={elementSchema}
-      render={() => (
-        <Resource
-          resources={[
-            {
-              resourceName: 'elements',
-              schema: elementSchema,
-            },
-            {
-              resourceName: 'answers',
-              schema: answerSchema,
-              filter: { id },
-            },
-          ]}
-          render={({ elements, answers }) => {
-            const element = elements[0];
-            const answer = answers[0];
-            return (
-              <Mutation
-                resourceName="elements"
-                url={`/elements/${elementId}`}
-                schema={elementSchema}
-                post={closePanel}
-                render={({ update, loading: updateLoading }) => {
-                  if (updateLoading) {
-                    return <div>loading...</div>;
-                  }
-                  return (
-                    <ElementsAddImageForm
-                      onSubmit={values => handleSubmit(update, values, element, answer)}
-                      onCancel={closePanel}
-                    />
-                  );
-                }}
-              />
-            );
-          }}
-        />
-      )}
-    />
+    <QueryResource
+      queries={[
+        {
+          resourceName: 'elements',
+          url: `/elements/${elementId}`,
+          schema: elementSchema,
+          filter: { id: elementId },
+        },
+      ]}
+    >
+      {({ elements }) => {
+        const element = elements[0];
+        return (
+          <Mutation
+            resourceName="elements"
+            url={`/elements/${elementId}`}
+            schema={elementSchema}
+            post={closePanel}
+            render={({ update, loading: updateLoading }) => {
+              if (updateLoading) {
+                return <div>loading...</div>;
+              }
+              return (
+                <ElementsAddImageForm
+                  onSubmit={values => handleSubmit(update, values, element, id)}
+                  onCancel={closePanel}
+                />
+              );
+            }}
+          />
+        );
+      }}
+    </QueryResource>
   );
 };
 
