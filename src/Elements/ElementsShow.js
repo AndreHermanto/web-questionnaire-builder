@@ -19,15 +19,18 @@ const headerRow = [
   {
     propName: 'text',
   },
+  {
+    propName: 'image',
+  },
 ];
 
-const renderBodyRow = ({ id }) => ({
+const renderBodyRow = ({ id }, elementId) => ({
   key: id,
   cells: [Helpers.renderContent('id', id)],
   actions: [
     {
       content: 'Add image',
-      to: { pathname: `/elements/${id}/answers/add-image`, state: { modal: true } },
+      to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
     },
   ],
 });
@@ -143,7 +146,7 @@ class ElementsShow extends React.Component {
                   <Grid.Column width={12}>
                     <Table
                       headerRow={headerRow}
-                      renderBodyRow={renderBodyRow}
+                      renderBodyRow={props => renderBodyRow(props, elementId)}
                       tableData={element.answers}
                     />
                   </Grid.Column>
