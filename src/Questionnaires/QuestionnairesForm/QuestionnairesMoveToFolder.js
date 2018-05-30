@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { QueryResource, Mutation } from 'web-components';
-import { foldersSchema } from '../schemas';
-import { questionnaireFoldersSchema } from '../../QuestionnaireFolders/schemas';
+import { foldersSchema, questionnaireFoldersSchema } from '../../QuestionnaireFolders/schemas';
 import QuestionnairesMoveToFolderForm from './QuestionnairesMoveToFolderForm';
 
 function QuestionnairesMoveToFolder({

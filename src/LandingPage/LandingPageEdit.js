@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Resource, Mutation } from 'web-components';
-import { headingSchema } from './schemas';
+import { Query, Resource, Mutation } from 'web-components';
+import { headingsSchema, headingSchema } from './schemas';
 import LandingPageForm from './LandingPageForm';
 
 export default function LandingPageEdit({
@@ -11,31 +11,44 @@ export default function LandingPageEdit({
   },
 }) {
   return (
-    <Resource
+    <Query
       resourceName="headingsData"
-      filter={{ consentTypeId }}
-      render={({ headingsData }) => {
-        if (!headingsData.length) {
-          return <div>Error: Data not found.</div>;
-        }
-        const data = headingsData[0];
-        return (
-          <Mutation
-            resourceName="headingsData"
-            url={`/headingsData/${data.id}`}
-            schema={headingSchema}
-            post={closePanel}
-            render={({ update, loading: pending }) => {
-              if (pending) {
-                return <div>updating...</div>;
-              }
-              return (
-                <LandingPageForm onSubmit={update} initialValues={data} onCancel={closePanel} />
-              );
-            }}
-          />
-        );
-      }}
+      url={`/headingsData?consentTypeId=${consentTypeId}`}
+      schema={headingsSchema}
+      render={({ loading, error }) => (
+        <Resource
+          resourceName="headingsData"
+          filter={{ consentTypeId }}
+          render={({ headingsData }) => {
+            if (loading) {
+              return <div>loading...</div>;
+            }
+            if (error) {
+              return <div>Error: {error}</div>;
+            }
+            if (!headingsData.length) {
+              return <div>Error: Data not found.</div>;
+            }
+            const data = headingsData[0];
+            return (
+              <Mutation
+                resourceName="headingsData"
+                url={`/headingsData/${data.id}`}
+                schema={headingSchema}
+                post={closePanel}
+                render={({ update, loading: pending }) => {
+                  if (pending) {
+                    return <div>updating...</div>;
+                  }
+                  return (
+                    <LandingPageForm onSubmit={update} initialValues={data} onCancel={closePanel} />
+                  );
+                }}
+              />
+            );
+          }}
+        />
+      )}
     />
   );
 }

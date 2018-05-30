@@ -4,8 +4,8 @@ import get from 'lodash.get';
 import { Grid, Message } from 'semantic-ui-react';
 import { Query, Resource, Breadcrumbs, Buttons, Table } from 'web-components';
 import { Link } from 'react-router-dom';
-import { questionnaireFoldersSchema } from './schemas';
-import { foldersSchema, questionnairesSchema } from '../Questionnaires/schemas';
+import { questionnaireFoldersSchema, foldersSchema } from './schemas';
+import { questionnairesSchema } from '../Questionnaires/schemas';
 
 const headerRow = [
   {
@@ -77,7 +77,10 @@ class QuestionnaireFoldersList extends React.Component {
           },
           {
             content: 'Edit folder',
-            to: '/#',
+            to: {
+              pathname: `/folders/${folderId}/edit`,
+              state: { modal: true },
+            },
           },
           {
             content: 'Delete folder',

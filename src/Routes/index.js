@@ -40,6 +40,8 @@ import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
+import QuestionnaireFoldersCreate from '../QuestionnaireFolders/QuestionnaireFoldersCreate';
+import QuestionnaireFoldersEdit from '../QuestionnaireFolders/QuestionnaireFoldersEdit';
 import LandingPageList from '../LandingPage/LandingPageList';
 import LandingPageShow from '../LandingPage/LandingPageShow';
 import LandingPageEdit from '../LandingPage/LandingPageEdit';
@@ -217,6 +219,8 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/generate-responses-report"
             component={QuestionnairesResponsesReport}
           />
+          <SidePanelRoute path="/folders/create" component={QuestionnaireFoldersCreate} />
+          <SidePanelRoute path="/folders/:folderId/edit" component={QuestionnaireFoldersEdit} />
         </Switch>
       </div>
     );
