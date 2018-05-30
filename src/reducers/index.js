@@ -21,6 +21,9 @@ const resourceReducers = Helpers.makeResourceReducers([
   'pricePlans',
   'pricePlanMappings',
   'answers',
+  'users',
+  'previewResponses',
+  'encryptedToken',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
