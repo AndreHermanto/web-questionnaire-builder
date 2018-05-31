@@ -3,11 +3,12 @@ import { Grid, Message } from 'semantic-ui-react';
 import { Query, Resource, Buttons, Table, Date, Heading, rest } from 'web-components';
 import { Link } from 'react-router-dom';
 import { pricePlanMappingsSchema } from './schemas';
+import { consentTypesSchema } from '../LandingPage/schemas';
 
 const headerRow = [
   {
-    label: 'Id',
-    propName: 'id',
+    label: 'Consent title',
+    propName: 'consentType',
   },
   {
     label: 'Created by',
@@ -19,10 +20,10 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({ id, creatorName, timestamp }) => ({
+const renderBodyRow = ({ id, creatorName, timestamp, consentType }) => ({
   key: id,
   cells: [
-    <Link to={`/price-plan-mappings/${id}`}>{id}</Link>,
+    <Link to={`/price-plan-mappings/${id}`}>{consentType.title}</Link>,
     creatorName || '',
     timestamp ? <Date date={timestamp} format={'MMMM Do YYYY'} /> : '',
   ],
@@ -64,6 +65,11 @@ class PricePlansList extends React.Component {
               url: '/price-plan-mappings',
               schema: pricePlanMappingsSchema,
             },
+            {
+              resourceName: 'consentTypes',
+              url: '/consent-types',
+              schema: consentTypesSchema,
+            },
           ]}
           render={({ loading, error }) => (
             <Resource
@@ -71,8 +77,11 @@ class PricePlansList extends React.Component {
                 {
                   resourceName: 'pricePlanMappings',
                 },
+                {
+                  resourceName: 'consentTypes',
+                },
               ]}
-              render={({ pricePlanMappings }) => {
+              render={({ pricePlanMappings, consentTypes }) => {
                 if (loading && !pricePlanMappings.length) {
                   return <div>loading...</div>;
                 }
@@ -101,7 +110,12 @@ class PricePlansList extends React.Component {
                         <Table
                           headerRow={headerRow}
                           renderBodyRow={renderBodyRow}
-                          tableData={pricePlanMappings}
+                          tableData={pricePlanMappings.map(pricePlanMapping => ({
+                            ...pricePlanMapping,
+                            consentType:
+                              consentTypes.find(ct => ct.id === pricePlanMapping.consentTypeId) ||
+                              {},
+                          }))}
                         />
                       </Grid.Column>
                       {this.renderButtons()}
