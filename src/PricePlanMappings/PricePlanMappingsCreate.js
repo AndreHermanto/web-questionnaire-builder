@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Query, Resource, Mutation } from 'web-components';
-import { pricePlanMappingSchema, pricePlansSchema } from './schemas';
+import { pricePlanMappingSchema, pricePlansSchema, pricePlanMappingsSchema } from './schemas';
 import PricePlanMappingsForm from './PricePlanMappingsForm';
 import { consentTypesSchema } from '../LandingPage/schemas';
 
@@ -20,6 +20,11 @@ export default function PricePlanMappingsCreate({ closePanel }) {
             url: '/price-plans',
             schema: pricePlansSchema,
           },
+          {
+            resourceName: 'pricePlanMappings',
+            url: '/price-plan-mappings',
+            schema: pricePlanMappingsSchema,
+          },
         ]}
         render={({ loading, error }) => (
           <Resource
@@ -30,8 +35,11 @@ export default function PricePlanMappingsCreate({ closePanel }) {
               {
                 resourceName: 'consentTypes',
               },
+              {
+                resourceName: 'pricePlanMappings',
+              },
             ]}
-            render={({ pricePlans, consentTypes }) => {
+            render={({ pricePlans, consentTypes, pricePlanMappings }) => {
               if (loading && (!pricePlans.length || !consentTypes.length)) {
                 return <div>loading...</div>;
               }
@@ -49,11 +57,16 @@ export default function PricePlanMappingsCreate({ closePanel }) {
                     if (pending) {
                       return <div>loading...</div>;
                     }
-                    const consentTypeOptions = consentTypes.map(consentType => ({
-                      key: consentType.id,
-                      value: consentType.id,
-                      text: consentType.title,
-                    }));
+                    const consentTypeIds = pricePlanMappings.map(
+                      pricePlanMapping => pricePlanMapping.consentTypeId,
+                    );
+                    const consentTypeOptions = consentTypes
+                      .filter(consentType => !consentTypeIds.includes(consentType.id))
+                      .map(consentType => ({
+                        key: consentType.id,
+                        value: consentType.id,
+                        text: consentType.title,
+                      }));
 
                     const pricePlanOptions = pricePlans.map(pricePlan => ({
                       key: pricePlan.id,
