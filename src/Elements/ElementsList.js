@@ -18,19 +18,32 @@ const headerRow = [
 
 const renderBodyRow = ({ id }) => ({
   key: id,
-  cells: [<Link to={`/elements/${id}`}>{Helpers.renderContent('id', id)}</Link>],
+  cells: [
+    <Link to={`/questionnaires/${questionnaireId}/elements/${id}`}>
+      {Helpers.renderContent('id', id)}
+    </Link>,
+  ],
   actions: [
     {
       content: 'Edit',
-      to: { pathname: `/elements/${id}/edit`, state: { modal: true } },
+      to: {
+        pathname: `/questionnaires/${questionnaireId}/elements/${id}/edit`,
+        state: { modal: true },
+      },
     },
     {
       content: 'Duplicate',
-      to: { pathname: `/elements/${id}/duplicate`, state: { modal: true } },
+      to: {
+        pathname: `/questionnaires/${questionnaireId}/elements/${id}/duplicate`,
+        state: { modal: true },
+      },
     },
     {
       content: 'Delete',
-      to: { pathname: `/elements/${id}/delete`, state: { modal: true } },
+      to: {
+        pathname: `/questionnaires/${questionnaireId}/elements/${id}/delete`,
+        state: { modal: true },
+      },
     },
   ],
 });

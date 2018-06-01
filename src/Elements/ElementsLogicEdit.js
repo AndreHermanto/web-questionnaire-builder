@@ -8,7 +8,7 @@ const ElementsLogicEdit = (props) => {
   const {
     closePanel,
     match: {
-      params: { elementId },
+      params: { elementId, questionnaireId },
     },
   } = props;
   return (
@@ -16,7 +16,7 @@ const ElementsLogicEdit = (props) => {
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -27,7 +27,7 @@ const ElementsLogicEdit = (props) => {
         return (
           <Mutation
             resourceName="elements"
-            url={`/elements/${elementId}`}
+            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
             schema={elementSchema}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {

@@ -8,7 +8,7 @@ import { elementSchema } from '../schemas';
 export default function ElementsOntologyTagging({
   closePanel,
   match: {
-    params: { elementId, answerId },
+    params: { elementId, questionnaireId, answerId },
   },
 }) {
   const handleSubmit = (update, concept, element) => {
@@ -43,7 +43,7 @@ export default function ElementsOntologyTagging({
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -54,7 +54,7 @@ export default function ElementsOntologyTagging({
         return (
           <Mutation
             resourceName="elements"
-            url={`/elements/${elementId}`}
+            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
             schema={elementSchema}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {

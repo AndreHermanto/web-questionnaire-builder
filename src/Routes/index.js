@@ -83,11 +83,6 @@ const sidebarGroups = [
         url: '/ontologies',
         icon: 'view_list',
       },
-      {
-        name: 'Elements',
-        url: '/elements',
-        icon: 'view_list',
-      },
     ],
   },
   {
@@ -160,8 +155,14 @@ class Routes extends Component {
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
-                <Route path="/elements/create" component={ElementsList} />
-                <Route path="/elements/:elementId" component={ElementsShow} />
+                <Route
+                  path="/questionnaires/:questionnaireId/elements/create"
+                  component={ElementsList}
+                />
+                <Route
+                  path="/questionnaires/:questionnaireId/elements/:elementId"
+                  component={ElementsShow}
+                />
                 <Route path="/elements" component={ElementsList} />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
                 <Route path="/landing-page" component={LandingPageList} />
@@ -198,34 +199,55 @@ class Routes extends Component {
             path="/questionnaires/:id/versions/:currentVersionId/duplicate"
             component={QuestionnairesDuplicate}
           />
-          <SidePanelRoute path="/elements/create" component={ElementsCreate} />
-          <SidePanelRoute path="/elements/section-add" component={ElementsAddHeader} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/create"
+            component={ElementsCreate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/section-add"
+            component={ElementsAddHeader}
+          />
 
-          <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/edit"
             component={ElementsEdit}
           />
-          <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
-          <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
-          <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
-          <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit"
+            component={ElementsEdit}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/delete"
+            component={ElementsDelete}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/duplicate"
+            component={ElementsDuplicate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/add-image"
+            component={ElementsAddImage}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit-logic"
+            component={ElementsLogicEdit}
+          />
 
           <SidePanelRoute
-            path="/elements/:elementId/answers/:id/add-image"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:id/add-image"
             component={AnswersAddImage}
           />
           <SidePanelRoute
-            path="/elements/:elementId/answers/:id/follow-up"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:id/follow-up"
             component={AnswersFollowUp}
           />
 
           <SidePanelRoute
-            path="/elements/:elementId/answers/:answerId/add-validation"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}
           />
           <SidePanelRoute
-            path="/elements/:elementId/answers/:answerId/ontology-tagging"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/ontology-tagging"
             component={ElementsOntologyTagging}
           />
           <SidePanelRoute

@@ -8,7 +8,7 @@ const AnswersFollowUp = (props) => {
   const {
     closePanel,
     match: {
-      params: { elementId, id },
+      params: { elementId, questionnaireId, id },
     },
   } = props;
   const handleSubmit = (update, values, element, answerId) => {
@@ -36,7 +36,7 @@ const AnswersFollowUp = (props) => {
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -47,7 +47,7 @@ const AnswersFollowUp = (props) => {
         return (
           <Mutation
             resourceName="elements"
-            url={`/elements/${elementId}`}
+            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
             schema={elementSchema}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {
