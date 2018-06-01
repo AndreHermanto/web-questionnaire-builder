@@ -200,6 +200,10 @@ class Routes extends Component {
           <SidePanelRoute path="/elements/section-add" component={ElementsAddHeader} />
 
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit"
+            component={ElementsEdit}
+          />
           <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
           <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />

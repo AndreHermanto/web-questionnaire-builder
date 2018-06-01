@@ -1,54 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { QueryResource, Mutation } from 'web-components';
-import { elementSchema } from './schemas';
 import ElementsForm from './ElementsForm';
+import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
+import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 
 export default function ElementsEdit({
   closePanel,
   match: {
-    params: { elementId },
+    params: { elementId, questionnaireId },
   },
 }) {
   return (
     <div>
-      <QueryResource
-        queries={[
-          {
-            resourceName: 'elements',
-            url: `/elements/${elementId}`,
-            schema: elementSchema,
-            filter: { id: elementId },
-          },
-        ]}
-      >
-        {({ elements }) => {
+      <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
+        {({ questionnaires, versions, elements }) => {
           if (!elements.length) {
             return <div>No Elements</div>;
           }
           const element = elements[0];
+          const questionnaire = questionnaires[0];
+          const version = versions[0];
           return (
-            <Mutation
-              resourceName="elements"
-              url={`/elements/${elementId}`}
-              schema={elementSchema}
+            <QuestionnaireUpdaterMutation
+              version={version}
+              questionnaire={questionnaire}
               post={closePanel}
               render={({ update, loading: pending }) => {
                 if (pending) {
                   return <div>loading...</div>;
                 }
-                const formProps = {
-                  form: 'elements-form',
-                  initialValues: element,
-                  onSubmit: update,
-                  onCancel: closePanel,
-                };
-                return <ElementsForm {...formProps} />;
+                return (
+                  <ElementsForm
+                    form={'elements-form'}
+                    initialValues={element}
+                    onSubmit={update}
+                    onCancel={closePanel}
+                  />
+                );
               }}
             />
           );
         }}
-      </QueryResource>
+      </QuestionnaireQueryResource>
     </div>
   );
 }
