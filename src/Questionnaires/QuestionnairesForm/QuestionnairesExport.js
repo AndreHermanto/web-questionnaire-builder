@@ -29,6 +29,7 @@ export default function PricePlanMappingsCreate({
           <Resource
             resourceName="versions"
             filter={{ id: currentVersionId }}
+            schema={versionSchema}
             render={({ versions }) => {
               if (loading && !versions.length) {
                 return <div>loading...</div>;

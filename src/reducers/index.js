@@ -24,6 +24,8 @@ const resourceReducers = Helpers.makeResourceReducers([
   'users',
   'previewResponses',
   'encryptedToken',
+  'conceptTerms',
+  'prefixTerms',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
