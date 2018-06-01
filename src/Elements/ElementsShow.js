@@ -10,6 +10,13 @@ const getTableActions = ({ id, elementId, type }) => {
       content: 'Add image',
       to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
     },
+    {
+      content: 'Ontology tagging ',
+      to: {
+        pathname: `/elements/${elementId}/answers/${id}/ontology-tagging`,
+        state: { modal: true },
+      },
+    },
   ];
 
   const validationAction = {
