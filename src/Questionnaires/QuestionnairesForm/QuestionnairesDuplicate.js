@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation, Confirmation, QueryResource } from 'web-components';
+import cloneDeep from 'lodash.clonedeep';
+import cuid from 'cuid';
+import { Mutation, Confirmation, QueryResource, Resource } from 'web-components';
 import moment from 'moment';
 import queryString from 'query-string';
 import {
@@ -13,6 +15,57 @@ import {
 /* eslint class-methods-use-this: 0 */
 /* eslint no-case-declarations: 0 */
 const currentTime = moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
+/*
+* loop through question if body length > 0
+* change the answers id first
+* then change the question id first
+*/
+
+/*eslint-disable */
+const generateNewVersionBody = body => {
+  let newElement;
+  const newBody = cloneDeep(body);
+  // i tried to do this with map, reduce, was too painful.
+
+  const blah = (logic, oldElementAnswer, index) =>
+    logic.replace(oldElementAnswer.id, newElement.answers[index].id);
+  for (let i = 0; i < newBody.length; i++) {
+    const oldElement = body[i];
+    newElement = newBody[i];
+
+    // update the current element
+    newElement.id = cuid();
+    // handle if there are answers
+    if (newElement.answers) {
+      newElement.answers.forEach(answer => {
+        answer.id = cuid();
+      });
+    }
+
+    // update the other elements logic
+    for (let j = 0; j < newBody.length; j++) {
+      const otherElement = newBody[j];
+      if (!otherElement.logic) {
+        continue;
+      }
+      // replace the element id, with the new one
+      otherElement.logic.replace(oldElement.id, newElement.id);
+
+      // original element doesnt have any answers, so we dont need to
+      // update the logic anymore
+      if (!newElement.answers) {
+        continue;
+      }
+      // new element has answers, so we do need to replace
+      otherElement.logic = oldElement.answers.reduce(
+        blah,
+        otherElement.logic.replace(oldElement.id, newElement.id),
+      );
+    }
+  }
+  return newBody;
+};
+/* eslint-enable */
 
 function QuestionnaireDuplicateForm({
   history,
@@ -89,13 +142,25 @@ function versionDuplicateForm({
           schema: questionnairesSchema,
           filter: { currentTitle },
         },
+
+        {
+          resourceName: 'versions',
+          url: `/questionnaires/${id}/versions`,
+          schema: versionsSchema,
+          filter: { id: currentVersionId },
+        },
       ]}
     >
-      {({ questionnaires }) => {
-        if (!questionnaires.length) {
+      {({ questionnaires, versions }) => {
+        if (!questionnaires.length || !versions.length) {
           return <div>No questionnaires</div>;
         }
         const questionnaire = questionnaires[0];
+        const versionData = { ...versions[0] };
+        delete versionData.id;
+        versionData.title = currentTitle;
+        const newVersionBody = generateNewVersionBody(versionData.body);
+        versionData.body = newVersionBody;
 
         return (
           <Mutation
@@ -117,7 +182,7 @@ function versionDuplicateForm({
                   content="Are you sure you want to create a new version for this questionnaire?"
                   confirmLabel="Yes"
                   cancelLabel="No"
-                  onConfirm={() => create(questionnaire)}
+                  onConfirm={() => create({ ...versionData, questionnaireId: questionnaire.id })}
                   onCancel={closePanel}
                 />
               );
@@ -131,23 +196,18 @@ function versionDuplicateForm({
 
 function QuestionnaireUpdateForm({ history, closePanel, currentTitle }) {
   return (
-    <QueryResource
-      queries={[
+    <Resource
+      resources={[
         {
           resourceName: 'questionnaires',
-          url: '/questionnaires',
-          schema: questionnairesSchema,
           filter: { currentTitle },
         },
         {
           resourceName: 'versions',
-          url: '/versions',
-          schema: versionsSchema,
-          filter: { currentTitle },
+          filter: { title: currentTitle },
         },
       ]}
-    >
-      {({ questionnaires, versions }) => {
+      render={({ questionnaires, versions }) => {
         if (!questionnaires.length || !versions.length) {
           return <div>No questionnaires or versions</div>;
         }
@@ -180,7 +240,7 @@ function QuestionnaireUpdateForm({ history, closePanel, currentTitle }) {
           />
         );
       }}
-    </QueryResource>
+    />
   );
 }
 
