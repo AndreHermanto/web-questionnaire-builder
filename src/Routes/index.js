@@ -39,6 +39,7 @@ import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
+import ElementsOntologyTagging from '../Elements/OntologyTagging/ElementsOntologyTagging';
 import AnswersAddImage from '../Elements/AnswersAddImage';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
@@ -200,6 +201,10 @@ class Routes extends Component {
           <SidePanelRoute path="/elements/section-add" component={ElementsAddHeader} />
 
           <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit"
+            component={ElementsEdit}
+          />
           <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
           <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
           <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
@@ -212,6 +217,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}
+          />
+          <SidePanelRoute
+            path="/elements/:elementId/answers/:answerId/ontology-tagging"
+            component={ElementsOntologyTagging}
           />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"

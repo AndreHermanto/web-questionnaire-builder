@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Query, Resource, Fields } from 'web-components';
-import { conceptsSchema } from './../schemas';
+import { prefixTermsSchema } from './../schemas';
 
 class Uomfields extends React.Component {
   constructor(props) {
@@ -28,14 +28,14 @@ class Uomfields extends React.Component {
     const { change, label, name } = this.props;
     return (
       <Query
-        resourceName="concepts"
+        resourceName="prefixTerms"
         url={url}
-        schema={conceptsSchema}
+        schema={prefixTermsSchema}
         render={() => (
           <Resource
-            resourceName="concepts"
-            render={({ concepts }) => {
-              const options = concepts.map(value => ({
+            resourceName="prefixTerms"
+            render={({ prefixTerms }) => {
+              const options = prefixTerms.map(value => ({
                 key: value.uri,
                 value: {
                   id: value.uri,
