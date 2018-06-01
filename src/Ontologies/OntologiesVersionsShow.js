@@ -136,6 +136,7 @@ class OntologiesVersionsShow extends React.Component {
                             {
                               content: 'Activate',
                               to: `/ontologies/${ontologyId}/versions/${versionId}/activate/`,
+                              hidden: ontologyVersion.active,
                             },
                           ]}
                         />
