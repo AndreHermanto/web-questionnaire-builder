@@ -41,6 +41,7 @@ import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import ElementsOntologyTagging from '../Elements/OntologyTagging/ElementsOntologyTagging';
 import AnswersAddImage from '../Elements/AnswersAddImage';
+import AnswersFollowUp from '../Elements/AnswersFollowUp';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -214,6 +215,11 @@ class Routes extends Component {
             path="/elements/:elementId/answers/:id/add-image"
             component={AnswersAddImage}
           />
+          <SidePanelRoute
+            path="/elements/:elementId/answers/:id/follow-up"
+            component={AnswersFollowUp}
+          />
+
           <SidePanelRoute
             path="/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}

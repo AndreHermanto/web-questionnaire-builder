@@ -11,6 +11,11 @@ const getTableActions = ({ id, elementId, type }) => {
       to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
     },
     {
+
+      content: 'Follow Up Question',
+      to: { pathname: `/elements/${elementId}/answers/${id}/follow-up`, state: { modal: true } },
+    },
+    {
       content: 'Ontology tagging ',
       to: {
         pathname: `/elements/${elementId}/answers/${id}/ontology-tagging`,
