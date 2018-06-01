@@ -6,6 +6,7 @@ import { reduxForm, formValueSelector } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
 import cuid from 'cuid';
 import { connect } from 'react-redux';
+import Uomfields from './Fields/Uomfields';
 
 const getAnswers = (type) => {
   switch (type) {
@@ -90,6 +91,14 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
         header="Answers"
         components={<Fields.Text name="text" label="Text" required />}
       />
+    )}
+
+    {type === 'uom' && <Uomfields name="uom1" change={change} label="Unit of Measurement 1" />}
+    {type === 'uoms' && (
+      <div>
+        <Uomfields name="uom1" change={change} label="Unit of Measurement 1" />
+        <Uomfields name="uom2" change={change} label="Unit of Measurement 2" />
+      </div>
     )}
     <Buttons
       actions={[

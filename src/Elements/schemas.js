@@ -10,5 +10,4 @@ export const conceptSchema = new schema.Entity('conceptTerms');
 export const conceptsSchema = [conceptSchema];
 
 export const prefixTermSchema = new schema.Entity('prefixTerms', {}, { idAttribute: 'uri' });
-
 export const prefixTermsSchema = [prefixTermSchema];
