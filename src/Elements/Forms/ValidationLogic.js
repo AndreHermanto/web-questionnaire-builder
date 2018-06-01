@@ -31,7 +31,7 @@ function updateValidationLogic(element, answerId, validationLogic) {
 function ValidationLogic({
   closePanel,
   match: {
-    params: { elementId, answerId },
+    params: { elementId, questionnaireId, answerId },
   },
 }) {
   return (
@@ -39,7 +39,7 @@ function ValidationLogic({
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -51,7 +51,7 @@ function ValidationLogic({
         return (
           <Mutation
             resourceName="elements"
-            url={`/elements/${elementId}`}
+            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
             schema={elementSchema}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {

@@ -8,7 +8,7 @@ const ElementsDuplicate = (props) => {
     closePanel,
     history,
     match: {
-      params: { elementId },
+      params: { elementId, questionnaireId },
     },
   } = props;
   return (
@@ -16,7 +16,7 @@ const ElementsDuplicate = (props) => {
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -30,7 +30,7 @@ const ElementsDuplicate = (props) => {
             resourceName="elements"
             url={'/elements'}
             schema={elementSchema}
-            post={() => history.push('/elements')}
+            post={() => history.push(`/questionnaires/${questionnaireId}`)}
             render={({ create, loading }) => {
               if (loading) {
                 return <div>loading...</div>;

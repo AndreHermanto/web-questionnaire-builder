@@ -8,7 +8,7 @@ const AnswersAddImage = (props) => {
   const {
     closePanel,
     match: {
-      params: { elementId, id },
+      params: { questionnaireId, elementId, id },
     },
   } = props;
   const handleSubmit = (update, values, element, answerId) => {
@@ -34,7 +34,7 @@ const AnswersAddImage = (props) => {
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -45,7 +45,7 @@ const AnswersAddImage = (props) => {
         return (
           <Mutation
             resourceName="elements"
-            url={`/elements/${elementId}`}
+            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
             schema={elementSchema}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {

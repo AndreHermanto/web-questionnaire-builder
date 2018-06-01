@@ -4,21 +4,26 @@ import { Grid } from 'semantic-ui-react';
 import { Buttons, Heading, Breadcrumbs, DefinitionList, Helpers, Table } from 'web-components';
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 
-const getTableActions = ({ id, elementId, type }) => {
+const getTableActions = ({ id, elementId, type, questionnaireId }) => {
   const actions = [
     {
       content: 'Add image',
-      to: { pathname: `/elements/${elementId}/answers/${id}/add-image`, state: { modal: true } },
+      to: {
+        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/add-image`,
+        state: { modal: true },
+      },
     },
     {
-
       content: 'Follow Up Question',
-      to: { pathname: `/elements/${elementId}/answers/${id}/follow-up`, state: { modal: true } },
+      to: {
+        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/follow-up`,
+        state: { modal: true },
+      },
     },
     {
       content: 'Ontology tagging ',
       to: {
-        pathname: `/elements/${elementId}/answers/${id}/ontology-tagging`,
+        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/ontology-tagging`,
         state: { modal: true },
       },
     },
@@ -26,7 +31,10 @@ const getTableActions = ({ id, elementId, type }) => {
 
   const validationAction = {
     content: 'Add validation',
-    to: { pathname: `/elements/${elementId}/answers/${id}/add-validation`, state: { modal: true } },
+    to: {
+      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/add-validation`,
+      state: { modal: true },
+    },
   };
 
   if (type === 'number' || type === 'text') actions.push(validationAction);
@@ -46,10 +54,10 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({ elementId, type }) => ({ id }) => ({
+const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id }) => ({
   key: id,
   cells: [Helpers.renderContent('id', id)],
-  actions: getTableActions({ elementId, type, id }),
+  actions: getTableActions({ elementId, type, id, questionnaireId }),
 });
 
 const renderProperty = (propertyName, value, element) => {
@@ -125,28 +133,28 @@ class ElementsShow extends React.Component {
                       {
                         content: 'Edit Logic',
                         to: {
-                          pathname: `/elements/${elementId}/edit-logic`,
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit-logic`,
                           state: { modal: true },
                         },
                       },
                       {
                         content: 'Add Image',
                         to: {
-                          pathname: `/elements/${elementId}/add-image`,
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
                           state: { modal: true },
                         },
                       },
                       {
                         content: 'Duplicate',
                         to: {
-                          pathname: `/elements/${elementId}/duplicate`,
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/duplicate`,
                           state: { modal: true },
                         },
                       },
                       {
                         content: 'Delete',
                         to: {
-                          pathname: `/elements/${elementId}/delete`,
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/delete`,
                           state: { modal: true },
                         },
                       },
@@ -158,7 +166,11 @@ class ElementsShow extends React.Component {
                 <Grid.Column width={12}>
                   <Table
                     headerRow={headerRow}
-                    renderBodyRow={renderBodyRow({ elementId, type: element.type })}
+                    renderBodyRow={renderBodyRow({
+                      elementId,
+                      type: element.type,
+                      questionnaireId,
+                    })}
                     tableData={element.answers}
                   />
                 </Grid.Column>

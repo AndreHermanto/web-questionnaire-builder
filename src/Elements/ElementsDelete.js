@@ -8,15 +8,15 @@ const ElementsDelete = (props) => {
     closePanel,
     history,
     match: {
-      params: { elementId },
+      params: { elementId, questionnaireId },
     },
   } = props;
   return (
     <Mutation
       resourceName="elements"
-      url={`/elements/${elementId}`}
+      url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
       schema={elementSchema}
-      post={() => history.push('/elements')}
+      post={() => history.push(`/questionnaires/${questionnaireId}`)}
       render={({ remove, loading }) => {
         if (loading) {
           return <div>loading...</div>;

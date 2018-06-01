@@ -7,7 +7,7 @@ import ElementsAddImageForm from './ElementsAddImageForm';
 function ElementsAddImage({
   closePanel,
   match: {
-    params: { elementId },
+    params: { elementId, questionnaireId },
   },
 }) {
   return (
@@ -15,7 +15,7 @@ function ElementsAddImage({
       queries={[
         {
           resourceName: 'elements',
-          url: `/elements/${elementId}`,
+          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
           schema: elementSchema,
           filter: { id: elementId },
         },
@@ -26,7 +26,7 @@ function ElementsAddImage({
         return (
           <Mutation
             resourceName="elements"
-            url={`/elements/${elementId}`}
+            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
             schema={elementSchema}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {
