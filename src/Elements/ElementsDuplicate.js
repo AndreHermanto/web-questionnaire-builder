@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation, Confirmation, QueryResource } from 'web-components';
-import { elementSchema } from './schemas';
+import { Confirmation } from 'web-components';
+import cuid from 'cuid';
+import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
+import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 
 const ElementsDuplicate = (props) => {
   const {
@@ -12,24 +14,15 @@ const ElementsDuplicate = (props) => {
     },
   } = props;
   return (
-    <QueryResource
-      queries={[
-        {
-          resourceName: 'elements',
-          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
-          schema: elementSchema,
-          filter: { id: elementId },
-        },
-      ]}
-    >
-      {({ elements }) => {
+    <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
+      {({ questionnaires, versions, elements }) => {
         const element = elements[0];
-        delete element.id;
+        const questionnaire = questionnaires[0];
+        const version = versions[0];
         return (
-          <Mutation
-            resourceName="elements"
-            url={'/elements'}
-            schema={elementSchema}
+          <QuestionnaireUpdaterMutation
+            questionnaire={questionnaire}
+            version={version}
             post={() => history.push(`/questionnaires/${questionnaireId}`)}
             render={({ create, loading }) => {
               if (loading) {
@@ -41,7 +34,12 @@ const ElementsDuplicate = (props) => {
                   content="Do you want to duplicate this element?"
                   confirmLabel="Yes, duplicate element"
                   cancelLabel="No"
-                  onConfirm={() => create(element)}
+                  onConfirm={() =>
+                    create({
+                      ...element,
+                      id: cuid(),
+                    })
+                  }
                   onCancel={closePanel}
                 />
               );
@@ -49,7 +47,7 @@ const ElementsDuplicate = (props) => {
           />
         );
       }}
-    </QueryResource>
+    </QuestionnaireQueryResource>
   );
 };
 ElementsDuplicate.propTypes = {

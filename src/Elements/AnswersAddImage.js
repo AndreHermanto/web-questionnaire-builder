@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { QueryResource, Mutation } from 'web-components';
-import { elementSchema } from './schemas';
 import ElementsAddImageForm from './ElementsAddImageForm';
+import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
+import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 
 const AnswersAddImage = (props) => {
   const {
@@ -30,23 +30,15 @@ const AnswersAddImage = (props) => {
     });
   };
   return (
-    <QueryResource
-      queries={[
-        {
-          resourceName: 'elements',
-          url: `/questionnaires/${questionnaireId}/elements/${elementId}`,
-          schema: elementSchema,
-          filter: { id: elementId },
-        },
-      ]}
-    >
-      {({ elements }) => {
+    <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
+      {({ questionnaires, versions, elements }) => {
         const element = elements[0];
+        const questionnaire = questionnaires[0];
+        const version = versions[0];
         return (
-          <Mutation
-            resourceName="elements"
-            url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
-            schema={elementSchema}
+          <QuestionnaireUpdaterMutation
+            questionnaire={questionnaire}
+            version={version}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {
               if (updateLoading) {
@@ -62,7 +54,7 @@ const AnswersAddImage = (props) => {
           />
         );
       }}
-    </QueryResource>
+    </QuestionnaireQueryResource>
   );
 };
 
