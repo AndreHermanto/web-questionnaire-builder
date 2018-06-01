@@ -8,7 +8,7 @@ import { consentTypesSchema } from '../LandingPage/schemas';
 const headerRow = [
   {
     label: 'Consent title',
-    propName: 'consentType',
+    propName: pricePlanMapping => pricePlanMapping.consentType.title,
   },
   {
     label: 'Created by',
