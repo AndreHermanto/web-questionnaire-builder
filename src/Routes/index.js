@@ -30,7 +30,6 @@ import OntologiesVersionsShow from '../Ontologies/OntologiesVersionsShow';
 import OntologiesVersionsDiffReportShow from '../Ontologies/OntologiesVersionsDiffReportShow';
 import OntologyCreate from '../Ontologies/forms/OntologyCreate';
 import OntologyEdit from '../Ontologies/forms/OntologyEdit';
-import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
 import ElementsDelete from '../Elements/ElementsDelete';
@@ -157,13 +156,12 @@ class Routes extends Component {
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
                 <Route
                   path="/questionnaires/:questionnaireId/elements/create"
-                  component={ElementsList}
+                  component={QuestionnairesShow}
                 />
                 <Route
                   path="/questionnaires/:questionnaireId/elements/:elementId"
                   component={ElementsShow}
                 />
-                <Route path="/elements" component={ElementsList} />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
                 <Route path="/landing-page" component={LandingPageList} />
                 <Route
