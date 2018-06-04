@@ -32,7 +32,7 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
                 body: [
                   ...version.body.slice(0, insertAtIndex),
                   {
-                    ...payload,
+                    ...payload.toJS(),
                     id: cuid(),
                   },
                   ...version.body.slice(insertAtIndex),

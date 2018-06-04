@@ -149,6 +149,13 @@ class QuestionnairesShow extends React.Component {
                                   state: { modal: true },
                                 },
                               },
+                              {
+                                content: 'Create questions',
+                                to: {
+                                  pathname: `/questionnaires/${questionnaireId}/elements/create`,
+                                  state: { modal: true },
+                                },
+                              },
                             ]}
                           />
                         </Grid.Column>
