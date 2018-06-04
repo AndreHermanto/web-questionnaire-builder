@@ -11,7 +11,8 @@ import {
   Buttons,
   QueryResource,
 } from 'web-components';
-import { versionSchema, questionnaireSchema, userSchema } from './schemas';
+import { userSchema } from './schemas';
+import QuestionnaireQueryResource from './QuestionnaireQueryResource';
 
 const renderProperty = (propertyName, value, pricePlan) => {
   switch (propertyName) {
@@ -71,36 +72,15 @@ class QuestionnairesShow extends React.Component {
         },
       ],
     });
+
     return (
       <div>
-        <QueryResource
-          queries={[
-            {
-              resourceName: 'questionnaires',
-              url: `/questionnaires/${questionnaireId}`,
-              schema: questionnaireSchema,
-              filter: { id: questionnaireId },
-            },
-          ]}
-        >
-          {({ loading, questionnaires }) => {
-            if (loading) {
-              return 'Loading latest version...';
-            }
-            const questionnaire = questionnaires[0];
+        <QuestionnaireQueryResource questionnaireId={questionnaireId}>
+          {({ versions }) => {
+            const version = versions[0];
             return (
               <QueryResource
                 queries={[
-                  {
-                    resourceName: 'versions',
-                    url: `/questionnaires/${questionnaireId}/versions/${
-                      questionnaire.currentVersionId
-                    }`,
-                    schema: versionSchema,
-                    filter: {
-                      id: questionnaire.currentVersionId,
-                    },
-                  },
                   {
                     resourceName: 'users',
                     url: '/me',
@@ -108,8 +88,7 @@ class QuestionnairesShow extends React.Component {
                   },
                 ]}
               >
-                {({ versions, users }) => {
-                  const version = versions[0];
+                {({ users }) => {
                   const user = users[0];
                   const currentVersionId = version.id;
                   return (
@@ -195,7 +174,7 @@ class QuestionnairesShow extends React.Component {
               </QueryResource>
             );
           }}
-        </QueryResource>
+        </QuestionnaireQueryResource>
       </div>
     );
   }

@@ -31,7 +31,6 @@ import OntologiesVersionsShow from '../Ontologies/OntologiesVersionsShow';
 import OntologiesVersionsDiffReportShow from '../Ontologies/OntologiesVersionsDiffReportShow';
 import OntologyCreate from '../Ontologies/forms/OntologyCreate';
 import OntologyEdit from '../Ontologies/forms/OntologyEdit';
-import ElementsList from '../Elements/ElementsList';
 import ElementsShow from '../Elements/ElementsShow';
 import ElementsEdit from '../Elements/ElementsEdit';
 import ElementsDelete from '../Elements/ElementsDelete';
@@ -40,7 +39,9 @@ import ElementsAddImage from '../Elements/ElementsAddImage';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
+import ElementsOntologyTagging from '../Elements/OntologyTagging/ElementsOntologyTagging';
 import AnswersAddImage from '../Elements/AnswersAddImage';
+import AnswersFollowUp from '../Elements/AnswersFollowUp';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -80,11 +81,6 @@ const sidebarGroups = [
       {
         name: 'Ontology',
         url: '/ontologies',
-        icon: 'view_list',
-      },
-      {
-        name: 'Elements',
-        url: '/elements',
         icon: 'view_list',
       },
     ],
@@ -159,9 +155,14 @@ class Routes extends Component {
                 <Route path="/ontologies/:ontologyId" component={OntologiesShow} />
                 <Route path="/ontologies/" component={OntologiesList} />
                 <Route path="/folders/:folderId" component={QuestionnaireFoldersList} />
-                <Route path="/elements/create" component={ElementsList} />
-                <Route path="/elements/:elementId" component={ElementsShow} />
-                <Route path="/elements" component={ElementsList} />
+                <Route
+                  path="/questionnaires/:questionnaireId/elements/create"
+                  component={QuestionnairesShow}
+                />
+                <Route
+                  path="/questionnaires/:questionnaireId/elements/:elementId"
+                  component={ElementsShow}
+                />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
                 <Route path="/landing-page" component={LandingPageList} />
                 <Route
@@ -201,21 +202,56 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/import-version"
             component={QuestionnairesVersionFileImport}
           />
-          <SidePanelRoute path="/elements/create" component={ElementsCreate} />
-          <SidePanelRoute path="/elements/section-add" component={ElementsAddHeader} />
-          <SidePanelRoute path="/elements/:elementId/edit" component={ElementsEdit} />
-          <SidePanelRoute path="/elements/:elementId/delete" component={ElementsDelete} />
-          <SidePanelRoute path="/elements/:elementId/duplicate" component={ElementsDuplicate} />
-          <SidePanelRoute path="/elements/:elementId/add-image" component={ElementsAddImage} />
-          <SidePanelRoute path="/elements/:elementId/edit-logic" component={ElementsLogicEdit} />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/create"
+            component={ElementsCreate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/section-add"
+            component={ElementsAddHeader}
+          />
 
           <SidePanelRoute
-            path="/elements/:elementId/answers/:id/add-image"
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit"
+            component={ElementsEdit}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit"
+            component={ElementsEdit}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/delete"
+            component={ElementsDelete}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/duplicate"
+            component={ElementsDuplicate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/add-image"
+            component={ElementsAddImage}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/edit-logic"
+            component={ElementsLogicEdit}
+          />
+
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/add-image"
             component={AnswersAddImage}
           />
           <SidePanelRoute
-            path="/elements/:elementId/answers/:answerId/add-validation"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/follow-up"
+            component={AnswersFollowUp}
+          />
+
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/ontology-tagging"
+            component={ElementsOntologyTagging}
           />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"

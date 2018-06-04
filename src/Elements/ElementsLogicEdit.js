@@ -1,34 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation, QueryResource } from 'web-components';
 import ElementsLogicForm from './ElementsLogicForm';
-import { elementSchema } from './schemas';
+
+import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
+import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 
 const ElementsLogicEdit = (props) => {
   const {
     closePanel,
     match: {
-      params: { elementId },
+      params: { elementId, questionnaireId },
     },
   } = props;
   return (
-    <QueryResource
-      queries={[
-        {
-          resourceName: 'elements',
-          url: `/elements/${elementId}`,
-          schema: elementSchema,
-          filter: { id: elementId },
-        },
-      ]}
-    >
-      {({ elements }) => {
+    <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
+      {({ questionnaires, versions, elements }) => {
         const element = elements[0];
+        const questionnaire = questionnaires[0];
+        const version = versions[0];
         return (
-          <Mutation
-            resourceName="elements"
-            url={`/elements/${elementId}`}
-            schema={elementSchema}
+          <QuestionnaireUpdaterMutation
+            questionnaire={questionnaire}
+            version={version}
             post={closePanel}
             render={({ update, loading: updateLoading }) => {
               if (updateLoading) {
@@ -46,7 +39,7 @@ const ElementsLogicEdit = (props) => {
           />
         );
       }}
-    </QueryResource>
+    </QuestionnaireQueryResource>
   );
 };
 ElementsLogicEdit.propTypes = {

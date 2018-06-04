@@ -1,20 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ElementsAddImageForm from './ElementsAddImageForm';
-import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
-import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
+import uniqBy from 'lodash.uniqby';
+import ElementsOntologyTaggingForm from './ElementsOntologyTaggingForm';
+import QuestionnaireQueryResource from '../../Questionnaires/QuestionnaireQueryResource';
+import QuestionnaireUpdaterMutation from '../QuestionnaireUpdaterMutation';
 
-const AnswersAddImage = (props) => {
-  const {
-    closePanel,
-    match: {
-      params: { questionnaireId, elementId, id },
-    },
-  } = props;
-  const handleSubmit = (update, values, element, answerId) => {
+export default function ElementsOntologyTagging({
+  closePanel,
+  match: {
+    params: { elementId, questionnaireId, answerId },
+  },
+}) {
+  const handleSubmit = (update, concept, element) => {
     const answer = element.answers.filter(ans => ans.id === answerId);
+    const newConcept = {
+      id: concept.uri,
+      label: concept.label ? concept.label : concept.displayLabel,
+      datasource: concept.datasource.acronym,
+      datasourceVersion: concept.dataSourceVersion
+        ? concept.dataSourceVersion.id
+        : concept.datasource.version,
+    };
+
     const newAnswer = Object.assign(answer[0], {
-      image: `${process.env.REACT_APP_BASE_URL}/download?id=${values.get('file').id}`,
+      concepts: uniqBy(answer[0].concepts.concat(newConcept), 'id'),
     });
 
     const newElementAnswers = element.answers.map((ans) => {
@@ -45,8 +54,8 @@ const AnswersAddImage = (props) => {
                 return <div>loading...</div>;
               }
               return (
-                <ElementsAddImageForm
-                  onSubmit={values => handleSubmit(update, values, element, id)}
+                <ElementsOntologyTaggingForm
+                  onAddOntology={concept => handleSubmit(update, concept, element)}
                   onCancel={closePanel}
                 />
               );
@@ -56,9 +65,9 @@ const AnswersAddImage = (props) => {
       }}
     </QuestionnaireQueryResource>
   );
-};
+}
 
-AnswersAddImage.propTypes = {
+ElementsOntologyTagging.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -66,5 +75,3 @@ AnswersAddImage.propTypes = {
     }).isRequired,
   }).isRequired,
 };
-
-export default AnswersAddImage;
