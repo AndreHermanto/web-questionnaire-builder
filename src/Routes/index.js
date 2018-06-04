@@ -232,11 +232,11 @@ class Routes extends Component {
           />
 
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:id/add-image"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/add-image"
             component={AnswersAddImage}
           />
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:id/follow-up"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/follow-up"
             component={AnswersFollowUp}
           />
 
