@@ -16,6 +16,7 @@ import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
+import QuestionnairesVersionFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesVersionFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
 import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
 import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
@@ -198,6 +199,10 @@ class Routes extends Component {
             component={QuestionnairesDuplicate}
           />
           <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/import-version"
+            component={QuestionnairesVersionFileImport}
+          />
+          <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/create"
             component={ElementsCreate}
           />
@@ -232,11 +237,11 @@ class Routes extends Component {
           />
 
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:id/add-image"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/add-image"
             component={AnswersAddImage}
           />
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:id/follow-up"
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/follow-up"
             component={AnswersFollowUp}
           />
 

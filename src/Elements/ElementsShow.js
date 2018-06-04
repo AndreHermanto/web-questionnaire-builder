@@ -50,28 +50,28 @@ const headerRow = [
     propName: 'text',
   },
   {
+    propName: 'type',
+  },
+  {
     propName: 'image',
   },
 ];
 
-const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id }) => ({
+const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) => ({
   key: id,
-  cells: [Helpers.renderContent('id', id)],
+  cells: [
+    Helpers.renderContent('id', id),
+    Helpers.renderContent('text', text),
+    Helpers.renderContent('type', type),
+  ],
   actions: getTableActions({ elementId, type, id, questionnaireId }),
 });
 
 const renderProperty = (propertyName, value, element) => {
   switch (propertyName) {
     case 'id':
-      return null;
     case 'answers':
-      if (element.type === 'textinformation') {
-        return null;
-      }
-      return {
-        label: Helpers.renderLabel(propertyName),
-        value: Helpers.renderContent(propertyName, value, element),
-      };
+      return null;
     default:
       return {
         label: Helpers.renderLabel(propertyName),

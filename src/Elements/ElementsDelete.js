@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation, Confirmation } from 'web-components';
-import { elementSchema } from './schemas';
+import { Confirmation } from 'web-components';
+import QuestionnaireQueryResource from './../Questionnaires/QuestionnaireQueryResource';
+import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 
 const ElementsDelete = (props) => {
   const {
@@ -12,27 +13,34 @@ const ElementsDelete = (props) => {
     },
   } = props;
   return (
-    <Mutation
-      resourceName="elements"
-      url={`/questionnaires/${questionnaireId}/elements/${elementId}`}
-      schema={elementSchema}
-      post={() => history.push(`/questionnaires/${questionnaireId}`)}
-      render={({ remove, loading }) => {
-        if (loading) {
-          return <div>loading...</div>;
-        }
+    <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
+      {({ questionnaires, versions }) => {
+        const questionnaire = questionnaires[0];
+        const version = versions[0];
         return (
-          <Confirmation
-            title="Delete Element?"
-            content="Deleting an element will remove it from the system forever"
-            confirmLabel="Yes, Delete Element"
-            cancelLabel="No"
-            onConfirm={() => remove(elementId)}
-            onCancel={closePanel}
+          <QuestionnaireUpdaterMutation
+            questionnaire={questionnaire}
+            version={version}
+            post={() => history.push(`/questionnaires/${questionnaireId}`)}
+            render={({ remove, loading: updateLoading }) => {
+              if (updateLoading) {
+                return <div>loading...</div>;
+              }
+              return (
+                <Confirmation
+                  title="Delete Element?"
+                  content="Deleting an element will remove it from the system forever"
+                  confirmLabel="Yes, Delete Element"
+                  cancelLabel="No"
+                  onConfirm={() => remove(elementId)}
+                  onCancel={closePanel}
+                />
+              );
+            }}
           />
         );
       }}
-    />
+    </QuestionnaireQueryResource>
   );
 };
 ElementsDelete.propTypes = {
