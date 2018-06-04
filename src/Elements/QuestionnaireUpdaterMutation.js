@@ -56,9 +56,21 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
               };
               return create(newVersion);
             };
+            const removeElement = (elementId) => {
+              // find the question with the same id in the version
+              // replace it
+              // call create to create the new payload, and then in post
+              // take the results and call update the questionnaire
+              const newVersion = {
+                ...version,
+                body: version.body.filter(element => element.id !== elementId),
+              };
+              return create(newVersion);
+            };
             return render({
               update: updateQuestionnaire,
               create: createQuestionnaire,
+              remove: removeElement,
               loading: updatingQuestionnaire || creatingVersion,
             });
           }}
