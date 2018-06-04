@@ -9,6 +9,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'questionnaires',
   'importedQuestionnaire',
   'folders',
+  'releases',
   'releaseReports',
   'ontologies',
   'ontologyVersions',

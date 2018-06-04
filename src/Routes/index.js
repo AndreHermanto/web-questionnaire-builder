@@ -22,6 +22,10 @@ import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/Questionn
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
 import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
 import QuestionnairesPreviewAsPatient from '../Questionnaires/QuestionnairesForm/QuestionnairesPreviewAsPatient';
+import ConsentTypesList from '../Releases/ConsentTypesList';
+import ReleasesConsentsShow from '../Releases/ReleasesConsentsShow';
+import ReleasesShow from '../Releases/ReleasesShow';
+import ReleasesCreate from '../Releases/ReleasesForm/ReleasesCreate';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -71,6 +75,11 @@ const sidebarGroups = [
         name: 'Questionnaires',
         url: '/questionnaires',
         icon: 'assignment',
+      },
+      {
+        name: 'Releases',
+        url: '/releases',
+        icon: 'unarchive',
       },
       {
         name: 'Release reports',
@@ -137,6 +146,12 @@ class Routes extends Component {
                 />
                 <Route path="/questionnaires/:questionnaireId" component={QuestionnairesShow} />
                 <Route path="/questionnaires" component={QuestionnairesList} />
+                <Route path="/releases/consents/:consentTypeId" component={ReleasesConsentsShow} />
+                <Route
+                  path="/releases/:releaseId/consents/:consentTypeId"
+                  component={ReleasesShow}
+                />
+                <Route path="/releases" component={ConsentTypesList} />
                 <Route path="/release-reports/:releaseReportId" component={ReleaseReportsShow} />
                 <Route path="/release-reports" component={ReleaseReportsList} />
                 <Route
@@ -176,7 +191,7 @@ class Routes extends Component {
         </Page>
         {/* Side Panel Content Here */}
         <Switch>
-          <SidePanelRoute path="/releases/create" component={() => <div />} />
+          <SidePanelRoute path="/releases/:consentTypeId/create" component={ReleasesCreate} />
           <SidePanelRoute path="/ontologies/create" component={OntologyCreate} />
           <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
           <SidePanelRoute
