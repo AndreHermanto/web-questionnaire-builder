@@ -153,6 +153,13 @@ class QuestionnairesShow extends React.Component {
                                 content: 'Import version',
                                 to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
                               },
+                              {
+                                content: 'Create questions',
+                                to: {
+                                  pathname: `/questionnaires/${questionnaireId}/elements/create`,
+                                  state: { modal: true },
+                                },
+                              },
                             ]}
                           />
                         </Grid.Column>
