@@ -149,6 +149,10 @@ class QuestionnairesShow extends React.Component {
                                   state: { modal: true },
                                 },
                               },
+                              {
+                                content: 'Import version',
+                                to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
+                              },
                             ]}
                           />
                         </Grid.Column>
