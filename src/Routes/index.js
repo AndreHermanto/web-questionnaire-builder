@@ -14,6 +14,7 @@ import {
 } from 'web-components';
 import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
+import QuestionnaireElementReOrder from '../Questionnaires/QuestionnaireElementReOrder';
 import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesVersionFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesVersionFileImport';
@@ -209,6 +210,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section-add"
             component={ElementsAddHeader}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:id/versions/:currentVersionId/elements/:elementid"
+            component={QuestionnaireElementReOrder}
           />
 
           <SidePanelRoute
