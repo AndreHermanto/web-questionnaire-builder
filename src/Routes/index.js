@@ -212,7 +212,7 @@ class Routes extends Component {
             component={ElementsAddHeader}
           />
           <SidePanelRoute
-            path="/questionnaires/:id/versions/:currentVersionId/elements/:elementid"
+            path="/questionnaires/:id/elements/:elementid"
             component={QuestionnaireElementReOrder}
           />
 

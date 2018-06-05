@@ -7,7 +7,7 @@ import { reduxForm } from 'redux-form/immutable';
 const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Element Re Order</Heading>
-    <Fields.Text name="index" label="Index" required />
+    <Fields.Number name="index" label="Index" required />
     <Buttons
       actions={[
         {

@@ -67,10 +67,22 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
               };
               return create(newVersion);
             };
+            const moveElement = (elementId, moveToIndex) => {
+              // find current element index
+              const fromIndex = version.body.findIndex(e => e.id === elementId);
+              // move element
+              version.body.splice(moveToIndex, 0, version.body.splice(fromIndex, 1)[0]);
+              const newVersion = {
+                ...version,
+                body: version.body,
+              };
+              return create(newVersion);
+            };
             return render({
               update: updateQuestionnaire,
               create: createQuestionnaire,
               remove: removeElement,
+              move: moveElement,
               loading: updatingQuestionnaire || creatingVersion,
             });
           }}

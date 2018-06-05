@@ -1,58 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Mutation, QueryResource } from 'web-components';
 import QuestionnaireElementReOrderForm from './QuestionnaireElementReOrderForm';
-import { versionSchema } from './schemas';
+import QuestionnaireQueryResource from './QuestionnaireQueryResource';
+import QuestionnaireUpdaterMutation from '../Elements/QuestionnaireUpdaterMutation';
 
 const QuestionnaireElementReOrder = (props) => {
   const {
     closePanel,
+    history,
     match: {
-      params: { currentVersionId, elementid },
+      params: { id, elementid },
     },
   } = props;
-  const handleSubmit = (update, version, elementId, values) => {
-    const currentIndex = version.body.map(element => element.id).indexOf(elementid);
-    const newIndex = values.get('index');
-    const newElements = version.body;
-    // Swap element in array
-    const temp = newElements[currentIndex];
-    newElements[currentIndex] = newElements[newIndex];
-    newElements[newIndex] = temp;
-
-    const newVersion = Object.assign(version, {
-      body: newElements,
-    });
-
-    update(newVersion);
-  };
   return (
-    <QueryResource
-      queries={[
-        {
-          resourceName: 'versions',
-          url: `/versions/${currentVersionId}`,
-          schema: versionSchema,
-          filter: { id: currentVersionId },
-        },
-      ]}
-    >
-      {({ versions }) => {
+    <QuestionnaireQueryResource questionnaireId={id} elementId={elementid}>
+      {({ questionnaires, versions }) => {
         const version = versions[0];
+        const questionnaire = questionnaires[0];
         return (
-          <Mutation
-            resourceName="versions"
-            url={`/versions/${currentVersionId}`}
-            schema={versionSchema}
-            post={closePanel}
-            render={({ update, loading: updateLoading }) => {
+          <QuestionnaireUpdaterMutation
+            questionnaire={questionnaire}
+            version={version}
+            post={() => history.push(`/questionnaires/${id}`)}
+            render={({ move, loading: updateLoading }) => {
               if (updateLoading) {
                 return <div>loading...</div>;
               }
               return (
                 <QuestionnaireElementReOrderForm
-                  form={`questions-order-${currentVersionId}`}
-                  onSubmit={value => handleSubmit(update, version, elementid, value)}
+                  form={`elements-order-${elementid}`}
+                  onSubmit={value => move(elementid, value.get('index'))}
                   onCancel={closePanel}
                 />
               );
@@ -60,10 +37,13 @@ const QuestionnaireElementReOrder = (props) => {
           />
         );
       }}
-    </QueryResource>
+    </QuestionnaireQueryResource>
   );
 };
 QuestionnaireElementReOrder.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
