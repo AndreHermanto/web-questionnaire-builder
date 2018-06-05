@@ -19,7 +19,8 @@ const ElementsDuplicate = (props) => {
         const element = elements[0];
         const questionnaire = questionnaires[0];
         const version = versions[0];
-        const elementIndex = version.body.map(e => e.id).indexOf(element.id);
+        const elementIndex = version.body.findIndex(e => e.id === element.id);
+
         return (
           <QuestionnaireUpdaterMutation
             questionnaire={questionnaire}
