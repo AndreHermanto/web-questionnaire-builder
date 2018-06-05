@@ -73,7 +73,7 @@ class QuestionnairesShow extends React.Component {
         {
           content: 'Re-Order',
           to: {
-            pathname: `/questionnaires/${questionnaireId}/elements/${id}`,
+            pathname: `/questionnaires/${questionnaireId}/elements/${id}/reorder`,
           },
         },
       ],
