@@ -19,6 +19,8 @@ const ElementsDuplicate = (props) => {
         const element = elements[0];
         const questionnaire = questionnaires[0];
         const version = versions[0];
+        const elementIndex = version.body.findIndex(e => e.id === element.id);
+
         return (
           <QuestionnaireUpdaterMutation
             questionnaire={questionnaire}
@@ -35,10 +37,13 @@ const ElementsDuplicate = (props) => {
                   confirmLabel="Yes, duplicate element"
                   cancelLabel="No"
                   onConfirm={() =>
-                    create({
-                      ...element,
-                      id: cuid(),
-                    })
+                    create(
+                      {
+                        ...element,
+                        id: cuid(),
+                      },
+                      elementIndex + 1,
+                    )
                   }
                   onCancel={closePanel}
                 />
