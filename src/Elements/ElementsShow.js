@@ -71,7 +71,17 @@ const renderProperty = (propertyName, value, element) => {
   switch (propertyName) {
     case 'id':
     case 'answers':
+    case 'internalId':
+    case 'baseQuestionId':
       return null;
+    case 'matrix':
+      if (element.type !== 'matrix') {
+        return null;
+      }
+      return {
+        label: Helpers.renderLabel(propertyName),
+        value: Helpers.renderContent(propertyName, value, element),
+      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),
