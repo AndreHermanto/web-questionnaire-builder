@@ -68,11 +68,6 @@ class GlossariesList extends React.Component {
                   );
                 }
 
-                const tableData = glossaries.map(glossary => ({
-                  type: 'ontology',
-                  ...glossary,
-                }));
-
                 return (
                   <div>
                     <Heading size="h1">Glossaries</Heading>
@@ -81,7 +76,7 @@ class GlossariesList extends React.Component {
                         <Table
                           headerRow={headerRow}
                           renderBodyRow={renderBodyRow}
-                          tableData={tableData}
+                          tableData={glossaries}
                         />
                       </Grid.Column>
                       <Grid.Column width={4}>
