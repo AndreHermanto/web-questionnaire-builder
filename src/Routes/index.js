@@ -67,6 +67,8 @@ import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFol
 import Page404 from '../page404';
 import ElementsCreate from '../Elements/ElementsCreate';
 import ElementsSectionCreate from '../Elements/ElementsSectionCreate';
+import ElementsCreateEndPage from '../Elements/ElementsCreateEndPage';
+import ElementsCreateStartPage from '../Elements/ElementsCreateStartPage';
 import GlossaryTermsList from '../GlossaryTerms/GlossaryTermsList';
 import GlossaryTermsCreate from '../GlossaryTerms/GlossaryTermsCreate';
 
@@ -157,6 +159,7 @@ class Routes extends Component {
                   path="/questionnaires/:questionnaireId/elements/:elementId"
                   component={ElementsShow}
                 />
+
                 <Route path="/questionnaires/:questionnaireId" component={QuestionnairesShow} />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases/consents/:consentTypeId" component={ReleasesConsentsShow} />
@@ -185,10 +188,6 @@ class Routes extends Component {
                 <Route
                   path="/questionnaires/:questionnaireId/elements/create"
                   component={QuestionnairesShow}
-                />
-                <Route
-                  path="/questionnaires/:questionnaireId/elements/:elementId"
-                  component={ElementsShow}
                 />
                 <Route path="/landing-page/consents/:consentTypeId" component={LandingPageShow} />
                 <Route path="/landing-page" component={LandingPageList} />
@@ -239,17 +238,20 @@ class Routes extends Component {
             component={ElementsSectionCreate}
           />
           <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/create-end-page"
+            component={ElementsCreateEndPage}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/create-start-page"
+            component={ElementsCreateStartPage}
+          />
+          <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section-add"
             component={ElementsAddHeader}
           />
           <SidePanelRoute
             path="/questionnaires/:id/elements/:elementid/reorder"
             component={QuestionnaireElementReOrder}
-          />
-
-          <SidePanelRoute
-            path="/questionnaires/:questionnaireId/elements/:elementId/edit"
-            component={ElementsEdit}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/edit"
