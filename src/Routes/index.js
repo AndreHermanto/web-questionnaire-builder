@@ -58,6 +58,7 @@ import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreat
 import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFoldersDelete';
 import Page404 from '../page404';
 import ElementsCreate from '../Elements/ElementsCreate';
+import GlossariesList from '../Glossaries/GlossariesList';
 
 const sidebarGroups = [
   {
@@ -82,6 +83,11 @@ const sidebarGroups = [
         name: 'Ontology',
         url: '/ontologies',
         icon: 'view_list',
+      },
+      {
+        name: 'Glossaries',
+        url: '/glossaries',
+        icon: 'speaker_notes',
       },
     ],
   },
@@ -170,6 +176,7 @@ class Routes extends Component {
                   component={PricePlanMappingsShow}
                 />
                 <Route path="/price-plan-mappings" component={PricePlanMappingsList} />
+                <Route path="/glossaries" component={GlossariesList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
