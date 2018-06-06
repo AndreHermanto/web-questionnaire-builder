@@ -58,6 +58,7 @@ import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreat
 import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFoldersDelete';
 import Page404 from '../page404';
 import ElementsCreate from '../Elements/ElementsCreate';
+import ElementsSectionCreate from '../Elements/ElementsSectionCreate';
 
 const sidebarGroups = [
   {
@@ -205,6 +206,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/create"
             component={ElementsCreate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/section/create"
+            component={ElementsSectionCreate}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section-add"
