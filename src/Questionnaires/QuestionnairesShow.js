@@ -59,7 +59,7 @@ class QuestionnairesShow extends React.Component {
         params: { questionnaireId },
       },
     } = this.props;
-    const renderBodyRow = ({ id, question, title, type }) => ({
+    const renderBodyRow = ({ id, question, title, type }, versionId) => ({
       key: id,
       cells: [
         <Link to={`/questionnaires/${questionnaireId}/elements/${id}`}>{question || title}</Link>,
@@ -69,6 +69,12 @@ class QuestionnairesShow extends React.Component {
         {
           content: 'Edit',
           to: { pathname: '' },
+        },
+        {
+          content: 'Re-Order',
+          to: {
+            pathname: `/questionnaires/${questionnaireId}/elements/${id}/reorder`,
+          },
         },
       ],
     });
@@ -176,7 +182,7 @@ class QuestionnairesShow extends React.Component {
                           {version.body && (
                             <Table
                               headerRow={headerRow}
-                              renderBodyRow={renderBodyRow}
+                              renderBodyRow={props => renderBodyRow(props, currentVersionId)}
                               tableData={version.body}
                             />
                           )}
