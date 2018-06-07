@@ -68,6 +68,9 @@ const headerRow = [
   {
     propName: 'image',
   },
+  {
+    propName: 'traitData',
+  },
 ];
 
 const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) => ({
