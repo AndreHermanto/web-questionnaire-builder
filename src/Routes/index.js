@@ -59,6 +59,7 @@ import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFol
 import Page404 from '../page404';
 import ElementsCreate from '../Elements/ElementsCreate';
 import GlossariesList from '../Glossaries/GlossariesList';
+import ElementsSectionCreate from '../Elements/ElementsSectionCreate';
 
 const sidebarGroups = [
   {
@@ -212,6 +213,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/create"
             component={ElementsCreate}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/section/create"
+            component={ElementsSectionCreate}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section-add"
