@@ -36,12 +36,14 @@ import ElementsEdit from '../Elements/ElementsEdit';
 import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsDuplicate from '../Elements/ElementsDuplicate';
 import ElementsAddImage from '../Elements/ElementsAddImage';
+import ElementsAddTrait from '../Elements/ElementsAddTrait';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import ElementsOntologyTagging from '../Elements/OntologyTagging/ElementsOntologyTagging';
 import AnswersAddImage from '../Elements/AnswersAddImage';
 import AnswersFollowUp from '../Elements/AnswersFollowUp';
+import AnswersAddTrait from '../Elements/AnswersAddTrait';
 import VersionActivateForm from '../Ontologies/forms/VersionActivateForm';
 import OntologyDeleteForm from '../Ontologies/forms/OntologyDeleteForm';
 import QuestionnaireFoldersList from '../QuestionnaireFolders/QuestionnaireFoldersList';
@@ -244,6 +246,10 @@ class Routes extends Component {
             component={ElementsAddImage}
           />
           <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/trait"
+            component={ElementsAddTrait}
+          />
+          <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/edit-logic"
             component={ElementsLogicEdit}
           />
@@ -264,6 +270,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/ontology-tagging"
             component={ElementsOntologyTagging}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/trait"
+            component={AnswersAddTrait}
           />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
