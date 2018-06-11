@@ -155,6 +155,13 @@ class ElementsShow extends React.Component {
                         },
                       },
                       {
+                        content: 'Add Validated Source',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                          state: { modal: true },
+                        },
+                      },
+                      {
                         content: 'Duplicate',
                         to: {
                           pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/duplicate`,
