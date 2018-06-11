@@ -9,6 +9,7 @@ const renderPageByType = (type, pageProps) => {
     case 'start':
     case 'end':
       return <ElementsShowStartEndPage {...pageProps} />;
+
     default:
       return <ElementsShowQuestionPage {...pageProps} />;
   }
