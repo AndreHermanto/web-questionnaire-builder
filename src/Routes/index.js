@@ -66,8 +66,9 @@ import PricePlanMappingsCreate from '../PricePlanMappings/PricePlanMappingsCreat
 import QuestionnaireFoldersDelete from '../QuestionnaireFolders/QuestionnaireFoldersDelete';
 import Page404 from '../page404';
 import ElementsCreate from '../Elements/ElementsCreate';
-import GlossariesList from '../Glossaries/GlossariesList';
 import ElementsSectionCreate from '../Elements/ElementsSectionCreate';
+import GlossaryTermsList from '../GlossaryTerms/GlossaryTermsList';
+import GlossaryTermsCreate from '../GlossaryTerms/GlossaryTermsCreate';
 
 const sidebarGroups = [
   {
@@ -99,8 +100,8 @@ const sidebarGroups = [
         icon: 'view_list',
       },
       {
-        name: 'Glossaries',
-        url: '/glossaries',
+        name: 'Glossary terms',
+        url: '/glossary-terms',
         icon: 'speaker_notes',
       },
     ],
@@ -196,7 +197,7 @@ class Routes extends Component {
                   component={PricePlanMappingsShow}
                 />
                 <Route path="/price-plan-mappings" component={PricePlanMappingsList} />
-                <Route path="/glossaries" component={GlossariesList} />
+                <Route path="/glossary-terms" component={GlossaryTermsList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
@@ -325,6 +326,7 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/user/:userId/preview-patient"
             component={QuestionnairesPreviewAsPatient}
           />
+          <SidePanelRoute path="/glossary-terms/create" component={GlossaryTermsCreate} />
         </Switch>
       </div>
     );
