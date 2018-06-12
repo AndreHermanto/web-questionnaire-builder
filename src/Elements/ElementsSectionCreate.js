@@ -16,7 +16,6 @@ const ElementSectionCreate = (props) => {
       {({ questionnaires, versions }) => {
         const questionnaire = questionnaires[0];
         const version = versions[0];
-        const questions = version.body;
         return (
           <QuestionnaireUpdaterMutation
             questionnaire={questionnaire}
@@ -30,10 +29,6 @@ const ElementSectionCreate = (props) => {
                 <ElementsSectionForm
                   form={'elements-section-form'}
                   onSubmit={value => create(value, version.body.length)}
-                  questions={questions}
-                  initialValues={{
-                    type: 'section',
-                  }}
                   onCancel={closePanel}
                 />
               );

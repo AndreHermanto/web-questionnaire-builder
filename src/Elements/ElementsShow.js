@@ -4,6 +4,8 @@ import { Grid } from 'semantic-ui-react';
 import { Buttons, Heading, Breadcrumbs, DefinitionList, Helpers, Table } from 'web-components';
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 
+const isQuestion = type => !(type === 'section' || type === 'start' || type === 'end');
+
 const getTableActions = ({ id, elementId, type, questionnaireId }) => {
   const actions = [
     {
@@ -196,19 +198,21 @@ class ElementsShow extends React.Component {
                   />
                 </Grid.Column>
               </Grid>
-              <Grid>
-                <Grid.Column width={12}>
-                  <Table
-                    headerRow={headerRow}
-                    renderBodyRow={renderBodyRow({
-                      elementId,
-                      type: element.type,
-                      questionnaireId,
-                    })}
-                    tableData={element.answers}
-                  />
-                </Grid.Column>
-              </Grid>
+              {isQuestion(element.type) && (
+                <Grid>
+                  <Grid.Column width={12}>
+                    <Table
+                      headerRow={headerRow}
+                      renderBodyRow={renderBodyRow({
+                        elementId,
+                        type: element.type,
+                        questionnaireId,
+                      })}
+                      tableData={element.answers}
+                    />
+                  </Grid.Column>
+                </Grid>
+              )}
             </div>
           );
         }}
