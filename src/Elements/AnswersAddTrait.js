@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Immutable from 'immutable';
 import AnswersAddTraitForm from './AnswersAddTraitForm';
 
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
@@ -12,26 +11,6 @@ function AnswersAddTrait({
     params: { elementId, questionnaireId, answerId },
   },
 }) {
-  const handleSubmit = (update, values, element, ansId) => {
-    const answer = element.answers.filter(ans => ans.id === ansId);
-    const newAnswer = Object.assign(answer[0], {
-      traitData: values.get('traits'),
-    });
-
-    const newElementAnswers = element.answers.map((ans) => {
-      if (ansId === ans.id) {
-        return newAnswer;
-      }
-      return ans;
-    });
-
-    update(
-      Immutable.fromJS({
-        ...element,
-        answers: newElementAnswers,
-      }),
-    );
-  };
   return (
     <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
       {({ questionnaires, versions, elements }) => {
@@ -49,7 +28,9 @@ function AnswersAddTrait({
               }
               return (
                 <AnswersAddTraitForm
-                  onSubmit={values => handleSubmit(update, values, element, answerId)}
+                  initialValues={element}
+                  answerId={answerId}
+                  onSubmit={update}
                   onCancel={closePanel}
                 />
               );

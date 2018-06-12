@@ -7,7 +7,7 @@ import { reduxForm } from 'redux-form/immutable';
 const ElementsAddTraitForm = ({ handleSubmit, onCancel, traits }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Element Trait</Heading>
-    <Fields.Select label="Traits" name="traits" options={traits} required />
+    <Fields.Select label="Trait" name="trait" options={traits} required />
 
     <Buttons
       actions={[

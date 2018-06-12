@@ -27,20 +27,16 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
         state: { modal: true },
       },
     },
-    {
-      content: 'Add trait',
-      to: {
-        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/trait`,
-        state: { modal: true },
+    ...((type === 'checkbox' || type === 'radio') && [
+      {
+        content: 'Add trait data',
+        to: {
+          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/trait`,
+          state: { modal: true },
+        },
       },
-    },
+    ]),
   ];
-
-  // Remove options to add trait if not checkbox or radio
-  if (type !== 'checkbox' && type !== 'radio') {
-    // Remember to update the index if the answers action changes
-    actions.splice(3, 1);
-  }
 
   const validationAction = {
     content: 'Add validation',

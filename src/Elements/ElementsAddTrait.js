@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { QueryResource } from 'web-components';
-import Immutable from 'immutable';
 import ElementsAddTraitForm from './ElementsAddTraitForm';
 import { traitsSchema } from './schemas';
 
@@ -47,14 +46,8 @@ function ElementsAddTrait({
                   return (
                     <ElementsAddTraitForm
                       traits={options}
-                      onSubmit={(values) => {
-                        update(
-                          Immutable.fromJS({
-                            ...element,
-                            trait: traits.find(trait => trait.id === values.get('traits')),
-                          }),
-                        );
-                      }}
+                      initialValues={element}
+                      onSubmit={update}
                       onCancel={closePanel}
                     />
                   );
