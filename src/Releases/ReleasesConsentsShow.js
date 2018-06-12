@@ -82,6 +82,13 @@ class ReleasesShow extends React.Component {
                           state: { modal: true },
                         },
                       },
+                      {
+                        content: 'Generate URLs',
+                        to: {
+                          pathname: `/releases/${consentTypeId}/generate-urls`,
+                          state: { modal: true },
+                        },
+                      },
                     ]}
                   />
                 </Grid.Column>

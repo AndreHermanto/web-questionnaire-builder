@@ -28,6 +28,7 @@ import ConsentTypesList from '../Releases/ConsentTypesList';
 import ReleasesConsentsShow from '../Releases/ReleasesConsentsShow';
 import ReleasesShow from '../Releases/ReleasesShow';
 import ReleasesCreate from '../Releases/ReleasesForm/ReleasesCreate';
+import ReleasesGenerateURLs from '../Releases/ReleasesGenerateURLs';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -209,6 +210,10 @@ class Routes extends Component {
         {/* Side Panel Content Here */}
         <Switch>
           <SidePanelRoute path="/releases/:consentTypeId/create" component={ReleasesCreate} />
+          <SidePanelRoute
+            path="/releases/:consentTypeId/generate-urls"
+            component={props => <ReleasesGenerateURLs {...props} />}
+          />
           <SidePanelRoute path="/ontologies/create" component={OntologyCreate} />
           <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
           <SidePanelRoute
