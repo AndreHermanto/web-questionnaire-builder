@@ -167,6 +167,11 @@ class ElementsShow extends React.Component {
                         },
                       },
                       {
+                        content: 'Add Validated Source',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                      },
+                      {
                         content: 'Add Trait',
                         to: {
                           pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,

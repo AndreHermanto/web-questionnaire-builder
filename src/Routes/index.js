@@ -41,6 +41,7 @@ import ElementsEdit from '../Elements/ElementsEdit';
 import ElementsDelete from '../Elements/ElementsDelete';
 import ElementsDuplicate from '../Elements/ElementsDuplicate';
 import ElementsAddImage from '../Elements/ElementsAddImage';
+import ElementsAddSource from '../Elements/ElementsAddSource';
 import ElementsAddTrait from '../Elements/ElementsAddTrait';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
@@ -264,6 +265,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/add-image"
             component={ElementsAddImage}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/add-source"
+            component={ElementsAddSource}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/trait"
