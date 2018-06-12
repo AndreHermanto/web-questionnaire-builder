@@ -4,20 +4,10 @@ import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
 import { reduxForm } from 'redux-form/immutable';
 
-const ElementsSectionForm = ({ handleSubmit, onCancel }) => (
+const ElementsAddTraitForm = ({ handleSubmit, onCancel, traits }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading size="h1">Sections</Heading>
-    <Heading size="h3">Remember: All headings must be uniquely named.</Heading>
-    <Fields.Text name="title" required />
-    <Fields.Radio
-      name="size"
-      label="Heading Size"
-      options={['1', '2', '3'].map(value => ({
-        key: value,
-        value,
-        text: `Heading ${value}`,
-      }))}
-    />
+    <Heading size="h1">Element Trait</Heading>
+    <Fields.Select label="Trait" name="trait" options={traits} required />
 
     <Buttons
       actions={[
@@ -34,13 +24,17 @@ const ElementsSectionForm = ({ handleSubmit, onCancel }) => (
     />
   </Form>
 );
-ElementsSectionForm.propTypes = {
+ElementsAddTraitForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  traits: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }).isRequired,
 };
-
-ElementsSectionForm.defaultProps = {};
 
 export default reduxForm({
   enableReinitialize: true,
-})(ElementsSectionForm);
+  form: 'elements-trait-form',
+})(ElementsAddTraitForm);

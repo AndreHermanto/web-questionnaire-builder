@@ -29,9 +29,10 @@ const ElementsLogicEdit = (props) => {
               }
               return (
                 <ElementsLogicForm
-                  form={`element-logic-edit-${elementId}`}
+                  form={'element-logic-edit'}
                   initialValues={element}
                   onSubmit={update}
+                  questions={version.body}
                   onCancel={closePanel}
                 />
               );

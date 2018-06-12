@@ -4,6 +4,8 @@ import { Grid } from 'semantic-ui-react';
 import { Buttons, Heading, Breadcrumbs, DefinitionList, Helpers, Table } from 'web-components';
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 
+const isQuestion = type => !(type === 'section' || type === 'start' || type === 'end');
+
 const getTableActions = ({ id, elementId, type, questionnaireId }) => {
   const actions = [
     {
@@ -27,6 +29,15 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
         state: { modal: true },
       },
     },
+    ...((type === 'checkbox' || type === 'radio') && [
+      {
+        content: 'Add trait data',
+        to: {
+          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/trait`,
+          state: { modal: true },
+        },
+      },
+    ]),
   ];
 
   const validationAction = {
@@ -54,6 +65,9 @@ const headerRow = [
   },
   {
     propName: 'image',
+  },
+  {
+    propName: 'traitData',
   },
 ];
 
@@ -155,6 +169,18 @@ class ElementsShow extends React.Component {
                         },
                       },
                       {
+                        content: 'Add Validated Source',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                      },
+                      {
+                        content: 'Add Trait',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
+                          state: { modal: true },
+                        },
+                      },
+                      {
                         content: 'Duplicate',
                         to: {
                           pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/duplicate`,
@@ -172,19 +198,21 @@ class ElementsShow extends React.Component {
                   />
                 </Grid.Column>
               </Grid>
-              <Grid>
-                <Grid.Column width={12}>
-                  <Table
-                    headerRow={headerRow}
-                    renderBodyRow={renderBodyRow({
-                      elementId,
-                      type: element.type,
-                      questionnaireId,
-                    })}
-                    tableData={element.answers}
-                  />
-                </Grid.Column>
-              </Grid>
+              {isQuestion(element.type) && (
+                <Grid>
+                  <Grid.Column width={12}>
+                    <Table
+                      headerRow={headerRow}
+                      renderBodyRow={renderBodyRow({
+                        elementId,
+                        type: element.type,
+                        questionnaireId,
+                      })}
+                      tableData={element.answers}
+                    />
+                  </Grid.Column>
+                </Grid>
+              )}
             </div>
           );
         }}

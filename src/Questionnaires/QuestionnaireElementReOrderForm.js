@@ -4,21 +4,10 @@ import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
 import { reduxForm } from 'redux-form/immutable';
 
-const ElementsSectionForm = ({ handleSubmit, onCancel }) => (
+const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading size="h1">Sections</Heading>
-    <Heading size="h3">Remember: All headings must be uniquely named.</Heading>
-    <Fields.Text name="title" required />
-    <Fields.Radio
-      name="size"
-      label="Heading Size"
-      options={['1', '2', '3'].map(value => ({
-        key: value,
-        value,
-        text: `Heading ${value}`,
-      }))}
-    />
-
+    <Heading size="h1">Element Re Order</Heading>
+    <Fields.Number name="index" label="Index" required />
     <Buttons
       actions={[
         {
@@ -34,13 +23,11 @@ const ElementsSectionForm = ({ handleSubmit, onCancel }) => (
     />
   </Form>
 );
-ElementsSectionForm.propTypes = {
+QuestionnaireElementReOrderForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
-ElementsSectionForm.defaultProps = {};
-
 export default reduxForm({
   enableReinitialize: true,
-})(ElementsSectionForm);
+})(QuestionnaireElementReOrderForm);

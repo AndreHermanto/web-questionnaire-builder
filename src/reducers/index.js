@@ -9,6 +9,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'questionnaires',
   'importedQuestionnaire',
   'folders',
+  'releases',
   'releaseReports',
   'ontologies',
   'ontologyVersions',
@@ -27,6 +28,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'conceptTerms',
   'prefixTerms',
   'glossaryTerms',
+  'traits',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,

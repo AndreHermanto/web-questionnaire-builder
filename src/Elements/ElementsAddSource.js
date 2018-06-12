@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ElementsSectionForm from './ElementsSectionForm';
+import ElementsAddSourceForm from './ElementsAddSourceForm';
+
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 
-const ElementSectionCreate = (props) => {
-  const {
-    closePanel,
-    match: {
-      params: { questionnaireId },
-    },
-  } = props;
+function ElementsAddValidatedSource({
+  closePanel,
+  match: {
+    params: { elementId, questionnaireId },
+  },
+}) {
   return (
-    <QuestionnaireQueryResource questionnaireId={questionnaireId}>
-      {({ questionnaires, versions }) => {
+    <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
+      {({ questionnaires, versions, elements }) => {
+        const element = elements[0];
         const questionnaire = questionnaires[0];
         const version = versions[0];
         return (
@@ -21,14 +22,14 @@ const ElementSectionCreate = (props) => {
             questionnaire={questionnaire}
             version={version}
             post={closePanel}
-            render={({ create, loading }) => {
-              if (loading) {
+            render={({ update, loading: updateLoading }) => {
+              if (updateLoading) {
                 return <div>loading...</div>;
               }
               return (
-                <ElementsSectionForm
-                  form={'elements-section-form'}
-                  onSubmit={value => create(value, version.body.length)}
+                <ElementsAddSourceForm
+                  initialValues={element}
+                  onSubmit={update}
                   onCancel={closePanel}
                 />
               );
@@ -38,9 +39,9 @@ const ElementSectionCreate = (props) => {
       }}
     </QuestionnaireQueryResource>
   );
-};
+}
 
-ElementSectionCreate.propTypes = {
+ElementsAddValidatedSource.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -49,4 +50,4 @@ ElementSectionCreate.propTypes = {
   }).isRequired,
 };
 
-export default ElementSectionCreate;
+export default ElementsAddValidatedSource;
