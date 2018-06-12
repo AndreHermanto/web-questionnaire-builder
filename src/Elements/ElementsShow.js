@@ -27,6 +27,15 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
         state: { modal: true },
       },
     },
+    ...((type === 'checkbox' || type === 'radio') && [
+      {
+        content: 'Add trait data',
+        to: {
+          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/trait`,
+          state: { modal: true },
+        },
+      },
+    ]),
   ];
 
   const validationAction = {
@@ -54,6 +63,9 @@ const headerRow = [
   },
   {
     propName: 'image',
+  },
+  {
+    propName: 'traitData',
   },
 ];
 
@@ -151,6 +163,13 @@ class ElementsShow extends React.Component {
                         content: 'Add Image',
                         to: {
                           pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
+                          state: { modal: true },
+                        },
+                      },
+                      {
+                        content: 'Add Trait',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
                           state: { modal: true },
                         },
                       },
