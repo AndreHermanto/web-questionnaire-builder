@@ -71,6 +71,9 @@ import ElementsCreateEndPage from '../Elements/ElementsCreateEndPage';
 import ElementsCreateStartPage from '../Elements/ElementsCreateStartPage';
 import GlossaryTermsList from '../GlossaryTerms/GlossaryTermsList';
 import GlossaryTermsCreate from '../GlossaryTerms/GlossaryTermsCreate';
+import GlossaryTermsEdit from '../GlossaryTerms/GlossaryTermsEdit';
+import GlossaryTermsShow from '../GlossaryTerms/GlossaryTermsShow';
+import GlossaryTermsDelete from '../GlossaryTerms/GlossaryTermsDelete';
 
 const sidebarGroups = [
   {
@@ -196,6 +199,7 @@ class Routes extends Component {
                   component={PricePlanMappingsShow}
                 />
                 <Route path="/price-plan-mappings" component={PricePlanMappingsList} />
+                <Route path="/glossary-terms/:glossaryTermId" component={GlossaryTermsShow} />
                 <Route path="/glossary-terms" component={GlossaryTermsList} />
                 <Route component={Page404} />
               </Switch>
@@ -329,6 +333,14 @@ class Routes extends Component {
             component={QuestionnairesPreviewAsPatient}
           />
           <SidePanelRoute path="/glossary-terms/create" component={GlossaryTermsCreate} />
+          <SidePanelRoute
+            path="/glossary-terms/:glossaryTermId/edit"
+            component={GlossaryTermsEdit}
+          />
+          <SidePanelRoute
+            path="/glossary-terms/:glossaryTermId/delete"
+            component={GlossaryTermsDelete}
+          />
         </Switch>
       </div>
     );

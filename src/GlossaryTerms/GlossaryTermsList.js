@@ -22,7 +22,7 @@ const headerRow = [
 
 const renderBodyRow = ({ id, name }) => ({
   key: id,
-  cells: [<Link to={`/glossaries/${id}`}>{name}</Link>],
+  cells: [<Link to={`/glossary-terms/${id}`}>{name}</Link>],
   actions: [],
 });
 
