@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ElementsForm from './ElementsForm';
 import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
+import ElementStartEndPageForm from './Forms/ElementStartEndPageForm';
 
-export default function ElementsCreate({
+export default function ElementsCreateEndPage({
   closePanel,
   match: {
     params: { questionnaireId },
@@ -27,10 +27,12 @@ export default function ElementsCreate({
                   return <div>loading...</div>;
                 }
                 return (
-                  <ElementsForm
-                    form={'elements-form'}
-                    onSubmit={value => create(value, version.body.length - 1)}
+                  <ElementStartEndPageForm
+                    initialValues={{
+                      type: 'end',
+                    }}
                     onCancel={closePanel}
+                    onSubmit={value => create(value, version.body.length)}
                   />
                 );
               }}
@@ -42,7 +44,7 @@ export default function ElementsCreate({
   );
 }
 
-ElementsCreate.propTypes = {
+ElementsCreateEndPage.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({

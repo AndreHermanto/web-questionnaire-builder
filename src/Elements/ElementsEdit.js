@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ElementsForm from './ElementsForm';
+import ElementStartEndPageForm from './Forms/ElementStartEndPageForm';
 import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 
+const renderFormByType = (type, formProps) => {
+  switch (type) {
+    case 'start':
+    case 'end':
+      return <ElementStartEndPageForm {...formProps} />;
+    default:
+      return <ElementsForm {...formProps} />;
+  }
+};
 export default function ElementsEdit({
   closePanel,
   match: {
@@ -29,14 +39,13 @@ export default function ElementsEdit({
                 if (pending) {
                   return <div>loading...</div>;
                 }
-                return (
-                  <ElementsForm
-                    form={'elements-form'}
-                    initialValues={element}
-                    onSubmit={update}
-                    onCancel={closePanel}
-                  />
-                );
+                const formProps = {
+                  form: 'elements-form',
+                  initialValues: element,
+                  onSubmit: update,
+                  onCancel: closePanel,
+                };
+                return renderFormByType(element.type, formProps);
               }}
             />
           );

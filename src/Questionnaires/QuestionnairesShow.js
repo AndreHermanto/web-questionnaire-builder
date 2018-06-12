@@ -29,7 +29,7 @@ const renderProperty = (propertyName, value, pricePlan) => {
 
 const headerRow = [
   {
-    propName: element => element.title || element.question,
+    propName: element => element.title || element.question || element.text,
     label: 'Content',
   },
   {
@@ -59,16 +59,25 @@ class QuestionnairesShow extends React.Component {
         params: { questionnaireId },
       },
     } = this.props;
-    const renderBodyRow = ({ id, question, title, type }, versionId) => ({
+    const renderBodyRow = ({ id, question, title, type, text }) => ({
       key: id,
       cells: [
-        <Link to={`/questionnaires/${questionnaireId}/elements/${id}`}>{question || title}</Link>,
+        <Link to={`/questionnaires/${questionnaireId}/elements/${id}`}>
+          {question || title || text}
+        </Link>,
         type,
       ],
       actions: [
         {
           content: 'Edit',
-          to: { pathname: '' },
+          to: `/questionnaires/${questionnaireId}/elements/${id}/edit`,
+        },
+        {
+          content: 'Delete',
+          to: {
+            pathname: `/questionnaires/${questionnaireId}/elements/${id}/delete`,
+            state: { modal: true },
+          },
         },
         {
           content: 'Re-Order',
@@ -97,6 +106,7 @@ class QuestionnairesShow extends React.Component {
                 {({ users }) => {
                   const user = users[0];
                   const currentVersionId = version.id;
+
                   return (
                     <div>
                       <Breadcrumbs
@@ -173,6 +183,24 @@ class QuestionnairesShow extends React.Component {
                                   state: { modal: true },
                                 },
                               },
+                              ...(!version.body.find(element => element.type === 'start') && [
+                                {
+                                  content: 'Create start page',
+                                  to: {
+                                    pathname: `/questionnaires/${questionnaireId}/elements/create-start-page`,
+                                    state: { modal: true },
+                                  },
+                                },
+                              ]),
+                              ...(!version.body.find(element => element.type === 'end') && [
+                                {
+                                  content: 'Create end page',
+                                  to: {
+                                    pathname: `/questionnaires/${questionnaireId}/elements/create-end-page`,
+                                    state: { modal: true },
+                                  },
+                                },
+                              ]),
                             ]}
                           />
                         </Grid.Column>
