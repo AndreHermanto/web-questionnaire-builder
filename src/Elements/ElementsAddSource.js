@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fromJS } from 'immutable';
 import ElementsAddSourceForm from './ElementsAddSourceForm';
 
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
@@ -29,14 +28,8 @@ function ElementsAddValidatedSource({
               }
               return (
                 <ElementsAddSourceForm
-                  onSubmit={values =>
-                    update(
-                      fromJS({
-                        ...element,
-                        questionSource: values.get('questionSource'),
-                      }),
-                    )
-                  }
+                  initialValues={element}
+                  onSubmit={update}
                   onCancel={closePanel}
                 />
               );
