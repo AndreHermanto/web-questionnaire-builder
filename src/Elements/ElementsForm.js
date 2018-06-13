@@ -48,10 +48,16 @@ const getAnswers = (type) => {
 };
 
 const showAnswers = type => type === 'radio' || type === 'checkbox' || type === 'matrix';
+const requiredOptions = [
+  { key: 'YES', value: true, text: 'Yes' },
+  { key: 'NO', value: false, text: 'No' },
+];
+
 let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
     <Fields.Text name="question" required />
+    <Fields.Select name="required" options={requiredOptions} required />
     <Fields.Select
       name="type"
       options={[
