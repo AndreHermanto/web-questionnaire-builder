@@ -33,7 +33,7 @@ then
   | tr -d '[[:space:]]')
 
   # ecr setup
-  ACCOUNT="822459375388"
+  ACCOUNT="946635200951"
   REGION="ap-southeast-2"
   REGISTRY="$ACCOUNT.dkr.ecr.$REGION.amazonaws.com"
   REPOSITORY="$bamboo_planRepository_name"
@@ -45,7 +45,7 @@ then
 
   # make the image
   echo "Creating Docker Image for Web Application $REPOSITORY with Tag:$TAG"
-  eval `aws ecr get-login --region $REGION`
+  eval `aws ecr get-login --region $REGION --no-include-email --profile production`
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$TAG .
   docker push $REGISTRY/$REPOSITORY:$TAG
 
