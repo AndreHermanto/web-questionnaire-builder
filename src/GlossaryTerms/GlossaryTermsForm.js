@@ -31,6 +31,7 @@ let GlossaryTermsForm = ({ initialValues, handleSubmit, onCancel, submitting }) 
     <Fields.Text name="displayText" required />
     <Fields.Text name="definition" required />
     <CustomLabel>Synonyms</CustomLabel>
+
     <Fields.Array
       name="synonyms"
       header="Synonyms"
