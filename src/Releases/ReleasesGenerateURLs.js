@@ -65,9 +65,6 @@ class ReleasesGenerateURLs extends Component {
       >
         {({ consentTypes }) => (
           <ReleasesGenerateURLsForm
-            initialValues={{
-              consentTypeId: consentTypes[0].id,
-            }}
             consentTypeTitle={consentTypes[0].title}
             releaseUrls={this.state.releaseUrls}
             errorMessage={this.state.errorMessage}

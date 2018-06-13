@@ -34,16 +34,16 @@ const renderBodyRow = ({ url }) => ({
 });
 
 const ReleasesGenerateURLsForm = ({
-  initialValues,
   releaseUrls,
   errorMessage,
+  consentTypeTitle,
   handleSubmit,
   onCancel,
   submitting,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Generate Release URLs</Heading>
-    <Heading as="h3">Consent: {initialValues.get('consentTypeTitle')}</Heading>
+    <Heading as="h3">Consent: {consentTypeTitle}</Heading>
     <Fields.Number required name="count" label="Count" />
     <Buttons
       actions={[
@@ -77,9 +77,7 @@ ReleasesGenerateURLsForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  initialValues: PropTypes.shape({
-    consentTypeId: PropTypes.string,
-  }).isRequired,
+  consentTypeTitle: PropTypes.string.isRequired,
   releaseUrls: PropTypes.arrayOf(
     PropTypes.shape({
       url: PropTypes.string.isRequired,
