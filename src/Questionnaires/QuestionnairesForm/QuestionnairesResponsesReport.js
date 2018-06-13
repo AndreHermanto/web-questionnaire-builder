@@ -21,7 +21,7 @@ export default function QuestionnairesResponsesReport({
         )}`,
         {
           method: 'GET',
-          header: { jwt: rest.getAccessToken() },
+          headers: { jwt: rest.getAccessToken() },
         },
       );
       await response.json();
