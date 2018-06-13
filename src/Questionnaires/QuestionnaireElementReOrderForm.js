@@ -4,10 +4,18 @@ import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
 import { reduxForm } from 'redux-form/immutable';
 
-const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel }) => (
+const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel, questionOptions }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Element Re Order</Heading>
-    <Fields.Number name="index" label="Index" required />
+    <Fields.Select name="question" options={questionOptions} required />
+    <Fields.Radio
+      name="position"
+      label="Position"
+      options={[
+        { key: 'AFTER', text: 'After', value: 'AFTER' },
+        { key: 'BEFORE', text: 'Before', value: 'BEFORE' },
+      ]}
+    />
     <Buttons
       actions={[
         {
@@ -26,6 +34,7 @@ const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel }) => (
 QuestionnaireElementReOrderForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  questionOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
 };
 
 export default reduxForm({

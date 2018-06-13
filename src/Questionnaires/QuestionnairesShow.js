@@ -79,12 +79,14 @@ class QuestionnairesShow extends React.Component {
             state: { modal: true },
           },
         },
-        {
-          content: 'Re-Order',
-          to: {
-            pathname: `/questionnaires/${questionnaireId}/elements/${id}/reorder`,
+        ...(!(type === 'start' || type === 'end') && [
+          {
+            content: 'Re-Order',
+            to: {
+              pathname: `/questionnaires/${questionnaireId}/elements/${id}/reorder`,
+            },
           },
-        },
+        ]),
       ],
     });
 
