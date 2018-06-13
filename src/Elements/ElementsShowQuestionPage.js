@@ -54,9 +54,6 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
 
 const headerRow = [
   {
-    propName: 'id',
-  },
-  {
     propName: 'text',
   },
   {
@@ -68,15 +65,14 @@ const headerRow = [
   {
     propName: 'traitData',
   },
+  {
+    propName: 'followUp',
+  },
 ];
 
 const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) => ({
   key: id,
-  cells: [
-    Helpers.renderContent('id', id),
-    Helpers.renderContent('text', text),
-    Helpers.renderContent('type', type),
-  ],
+  cells: [Helpers.renderContent('text', text), Helpers.renderContent('type', type)],
   actions: getTableActions({ elementId, type, id, questionnaireId }),
 });
 
@@ -86,6 +82,7 @@ const renderProperty = (propertyName, value, element) => {
     case 'answers':
     case 'internalId':
     case 'baseQuestionId':
+    case 'displayLogic':
       return null;
     case 'matrix':
       if (element.type !== 'matrix') {
