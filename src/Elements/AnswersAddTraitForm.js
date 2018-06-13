@@ -11,7 +11,7 @@ const AnswersAddTraitForm = ({ handleSubmit, onCancel, answerId, initialValues }
   return (
     <Form onSubmit={handleSubmit}>
       <Heading size="h1">Answer Trait</Heading>
-      <Fields.Text label="Traits" name={`answers.${answerIndex}.traitData`} required />
+      <Fields.Text label="Trait Data" name={`answers.${answerIndex}.traitData`} required />
 
       <Buttons
         actions={[
