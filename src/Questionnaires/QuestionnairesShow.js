@@ -124,39 +124,6 @@ class QuestionnairesShow extends React.Component {
                           <Buttons
                             actions={[
                               {
-                                content: 'Delete',
-                                to: `/questionnaires/${questionnaireId}/delete`,
-                              },
-                              {
-                                content: 'Download',
-                                onClick: () =>
-                                  this.downloadQuestionnaire(questionnaireId, currentVersionId),
-                              },
-                              {
-                                content: 'Export questionnaire',
-                                to: {
-                                  pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
-                                  state: { modal: true },
-                                },
-                              },
-                              {
-                                content: 'Move to Folder',
-                                to: `/questionnaires/${version.questionnaireId}/versions/${
-                                  version.id
-                                }/move-to-folder`,
-                              },
-                              {
-                                content: 'Duplicate',
-                                to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
-                              },
-                              {
-                                content: 'Generate responses report',
-                                to: {
-                                  pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
-                                  state: { modal: true },
-                                },
-                              },
-                              {
                                 content: 'Preview as Patient',
                                 to: {
                                   pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/user/${
@@ -166,41 +133,89 @@ class QuestionnairesShow extends React.Component {
                                 },
                               },
                               {
-                                content: 'Import version',
-                                to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
+                                name: 'Questions',
+                                actions: [
+                                  {
+                                    content: 'Create questions',
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/elements/create`,
+                                      state: { modal: true },
+                                    },
+                                  },
+                                  {
+                                    content: 'Create Sections',
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/elements/section/create`,
+                                      state: { modal: true },
+                                    },
+                                  },
+                                  ...(!version.body.find(element => element.type === 'start') && [
+                                    {
+                                      content: 'Create start page',
+                                      to: {
+                                        pathname: `/questionnaires/${questionnaireId}/elements/create-start-page`,
+                                        state: { modal: true },
+                                      },
+                                    },
+                                  ]),
+                                  ...(!version.body.find(element => element.type === 'end') && [
+                                    {
+                                      content: 'Create end page',
+                                      to: {
+                                        pathname: `/questionnaires/${questionnaireId}/elements/create-end-page`,
+                                        state: { modal: true },
+                                      },
+                                    },
+                                  ]),
+                                ],
                               },
                               {
-                                content: 'Create questions',
-                                to: {
-                                  pathname: `/questionnaires/${questionnaireId}/elements/create`,
-                                  state: { modal: true },
-                                },
+                                name: 'Questionnaires',
+                                actions: [
+                                  {
+                                    content: 'Delete',
+                                    to: `/questionnaires/${questionnaireId}/delete`,
+                                  },
+                                  {
+                                    content: 'Move to Folder',
+                                    to: `/questionnaires/${version.questionnaireId}/versions/${
+                                      version.id
+                                    }/move-to-folder`,
+                                  },
+                                  {
+                                    content: 'Duplicate',
+                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
+                                  },
+                                ],
                               },
                               {
-                                content: 'Create Sections',
-                                to: {
-                                  pathname: `/questionnaires/${questionnaireId}/elements/section/create`,
-                                  state: { modal: true },
-                                },
+                                name: 'Import / Export',
+                                actions: [
+                                  {
+                                    content: 'Download',
+                                    onClick: () =>
+                                      this.downloadQuestionnaire(questionnaireId, currentVersionId),
+                                  },
+                                  {
+                                    content: 'Export Current Version',
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
+                                      state: { modal: true },
+                                    },
+                                  },
+                                  {
+                                    content: 'Generate responses report',
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
+                                      state: { modal: true },
+                                    },
+                                  },
+                                  {
+                                    content: 'Import new version',
+                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
+                                  },
+                                ],
                               },
-                              ...(!version.body.find(element => element.type === 'start') && [
-                                {
-                                  content: 'Create start page',
-                                  to: {
-                                    pathname: `/questionnaires/${questionnaireId}/elements/create-start-page`,
-                                    state: { modal: true },
-                                  },
-                                },
-                              ]),
-                              ...(!version.body.find(element => element.type === 'end') && [
-                                {
-                                  content: 'Create end page',
-                                  to: {
-                                    pathname: `/questionnaires/${questionnaireId}/elements/create-end-page`,
-                                    state: { modal: true },
-                                  },
-                                },
-                              ]),
                             ]}
                           />
                         </Grid.Column>
