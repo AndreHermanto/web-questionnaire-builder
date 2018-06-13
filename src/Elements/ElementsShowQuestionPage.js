@@ -92,6 +92,7 @@ const renderProperty = (propertyName, value, element) => {
     case 'isBold':
     case 'isColor':
     case 'isItalic':
+    case 'closed':
       return null;
     case 'matrix':
       if (element.type !== 'matrix') {

@@ -7,12 +7,15 @@ import { Buttons, Heading, Breadcrumbs, DefinitionList, Helpers } from 'web-comp
 const renderProperty = (propertyName, value, element) => {
   switch (propertyName) {
     case 'id':
+    case 'internalId':
+    case 'baseQuestionId':
     case 'color':
     case 'buttonText':
     case 'fontSize':
     case 'isBold':
     case 'isColor':
     case 'isItalic':
+    case 'closed':
       return null;
     case 'text': {
       return {
