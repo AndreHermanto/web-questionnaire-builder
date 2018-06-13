@@ -57,7 +57,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
     <Fields.Text name="question" required />
-    <Fields.Select name="required" options={requiredOptions} required />
+    <Fields.Radio name="required" options={requiredOptions} required />
     <Fields.Select
       name="type"
       options={[
