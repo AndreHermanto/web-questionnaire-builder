@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Query, Resource, Table, Heading, Helpers } from 'web-components';
+import { QueryResource, Table, Heading, Helpers } from 'web-components';
 import { releaseReportsSchema } from './schemas';
 
 const headerRow = [
@@ -62,51 +62,53 @@ class ReleaseReportsList extends React.Component {
   static propTypes = {};
   render() {
     return (
-      <div>
-        <Query
-          resourceName="releaseReports"
-          url="/release-reports"
-          schema={releaseReportsSchema}
-          render={({ loading, error }) => (
-            <Resource
-              resourceName="releaseReports"
-              render={({ releaseReports }) => {
-                if (loading && !releaseReports.length) {
-                  return <div>loading...</div>;
-                }
-                if (error) {
-                  return <div>Error: {error}</div>;
-                }
-                if (releaseReports.length === 0 || !releaseReports[0]) {
-                  return (
-                    <Grid>
-                      <Grid.Column width={12}>
-                        <Message negative>
-                          <Message.Header>No questionnaire found</Message.Header>
-                        </Message>
-                      </Grid.Column>
-                    </Grid>
-                  );
-                }
-                return (
-                  <div>
-                    <Heading size="h1">Release Reports</Heading>
-                    <Grid>
-                      <Grid.Column width={12}>
-                        <Table
-                          headerRow={headerRow}
-                          renderBodyRow={renderBodyRow}
-                          tableData={releaseReports}
-                        />
-                      </Grid.Column>
-                    </Grid>
-                  </div>
-                );
-              }}
-            />
-          )}
-        />
-      </div>
+      <QueryResource
+        queries={[
+          {
+            name: 'releaseReports',
+            resourceName: 'releaseReports',
+            url: '/release-reports',
+            schema: releaseReportsSchema,
+            paginate: true,
+            page: 1,
+            itemsPerPage: 10,
+          },
+        ]}
+      >
+        {({
+          releaseReports,
+          paginator: {
+            releaseReports: { LoadMoreButton },
+          },
+        }) => {
+          if (releaseReports.length === 0 || !releaseReports[0]) {
+            return (
+              <Grid>
+                <Grid.Column width={12}>
+                  <Message negative>
+                    <Message.Header>No questionnaire found</Message.Header>
+                  </Message>
+                </Grid.Column>
+              </Grid>
+            );
+          }
+          return (
+            <div>
+              <Heading size="h1">Release Reports</Heading>
+              <Grid>
+                <Grid.Column width={12}>
+                  <Table
+                    headerRow={headerRow}
+                    renderBodyRow={renderBodyRow}
+                    tableData={releaseReports}
+                  />
+                  <LoadMoreButton />
+                </Grid.Column>
+              </Grid>
+            </div>
+          );
+        }}
+      </QueryResource>
     );
   }
 }
