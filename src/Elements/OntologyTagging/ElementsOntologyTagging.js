@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import uniqBy from 'lodash.uniqby';
+import { fromJS } from 'immutable';
 import ElementsOntologyTaggingForm from './ElementsOntologyTaggingForm';
 import QuestionnaireQueryResource from '../../Questionnaires/QuestionnaireQueryResource';
 import QuestionnaireUpdaterMutation from '../QuestionnaireUpdaterMutation';
@@ -33,10 +34,12 @@ export default function ElementsOntologyTagging({
       return ans;
     });
 
-    update({
-      ...element,
-      answers: newElementAnswers,
-    });
+    update(
+      fromJS({
+        ...element,
+        answers: newElementAnswers,
+      }),
+    );
   };
   return (
     <QuestionnaireQueryResource questionnaireId={questionnaireId} elementId={elementId}>
