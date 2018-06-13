@@ -33,7 +33,6 @@ const ElementStartEndPageForm = ({
       <Fields.FileUpload
         label="Image"
         name="image"
-        required
         maxFileSize={MAX_FILE_SIZE}
         supportedFileExtensions={SUPPORTED_FILE_EXTENSIONS}
       />
