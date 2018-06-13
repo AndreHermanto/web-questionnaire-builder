@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cuid from 'cuid';
+import { Iterable } from 'immutable';
 import { Mutation } from 'web-components';
 import { versionSchema, questionnaireSchema } from '../Questionnaires/schemas';
 
@@ -32,7 +33,7 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
                 body: [
                   ...version.body.slice(0, insertAtIndex),
                   {
-                    ...payload.toJS(),
+                    ...(Iterable.isIterable(payload) ? payload.toJS() : payload),
                     id: cuid(),
                   },
                   ...version.body.slice(insertAtIndex),
@@ -45,11 +46,12 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
               // replace it
               // call create to create the new payload, and then in post
               // take the results and call update the questionnaire
+              const pojoPayload = Iterable.isIterable(payload) ? payload.toJS() : payload;
               const newVersion = {
                 ...version,
                 body: version.body.map((element) => {
-                  if (element.id === payload.get('id')) {
-                    return payload.toJS();
+                  if (element.id === pojoPayload.id) {
+                    return pojoPayload;
                   }
                   return element;
                 }),
