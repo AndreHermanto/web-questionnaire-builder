@@ -56,6 +56,7 @@ const headerRow = [
     propName: 'title',
   },
   {
+    propName: 'afterPayment',
     label: 'Requires payment',
   },
 ];
@@ -100,8 +101,11 @@ const ReleasesForm = ({
   return (
     <Form onSubmit={handleSubmit}>
       <Heading size="h1">Create Release</Heading>
-      <Heading as="h3">Consent: {initialValues.get('consentTypeId')}</Heading>
+      {initialValues.get('consentTypeId') && (
+        <Heading as="h3">Consent: {initialValues.get('consentTypeId')}</Heading>
+      )}
       <Fields.Select
+        required
         multiple
         name="questionnaires"
         label="Questionnaires"

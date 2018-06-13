@@ -12,6 +12,29 @@ export default function ReleasesCreate({
     params: { consentTypeId },
   },
 }) {
+  const getReleaseData = (releases) => {
+    const latestDate = new Date(
+      Math.max.apply(null, releases.map(release => new Date(release.dateCreated))),
+    );
+    return releases.filter(
+      release => moment(release.dateCreated).format() === moment(latestDate).format(),
+    );
+  };
+  const getQuestionnaireAfterPayment = (releaseData, questionnaires) =>
+    releaseData[0].questionnaires.reduce((result, releaseQuestionnaire) => {
+      questionnaires.map((questionnaire) => {
+        if (questionnaire.id === releaseQuestionnaire.questionnaireId) {
+          return result.push({
+            id: questionnaire.id,
+            afterPayment: releaseQuestionnaire.afterPayment,
+            title: questionnaire.currentTitle,
+            versionPublished: questionnaire.currentVersionId,
+          });
+        }
+        return '';
+      });
+      return result;
+    }, []);
   return (
     <div>
       <QueryResource
@@ -35,39 +58,18 @@ export default function ReleasesCreate({
         ]}
       >
         {({ releases, questionnaires, users }) => {
-          if (!releases.length) {
-            return <div>No release found.</div>;
+          let releaseData;
+          let questionnaireAfterPayment;
+          if (releases.length > 0) {
+            releaseData = getReleaseData(releases);
+            questionnaireAfterPayment = getQuestionnaireAfterPayment(releaseData, questionnaires);
           }
-          const latestDate = new Date(
-            Math.max.apply(null, releases.map(release => new Date(release.dateCreated))),
-          );
-          const releaseData = releases.filter(
-            release => moment(release.dateCreated).format() === moment(latestDate).format(),
-          );
 
           const questionnaireOptions = questionnaires.map(questionnaire => ({
             key: questionnaire.id,
             value: questionnaire.id,
             text: questionnaire.currentTitle,
           }));
-
-          const questionnaireAfterPayment = releaseData[0].questionnaires.reduce(
-            (result, releaseQuestionnaire) => {
-              questionnaires.map((questionnaire) => {
-                if (questionnaire.id === releaseQuestionnaire.questionnaireId) {
-                  return result.push({
-                    id: questionnaire.id,
-                    afterPayment: releaseQuestionnaire.afterPayment,
-                    title: questionnaire.currentTitle,
-                    versionPublished: questionnaire.currentVersionId,
-                  });
-                }
-                return '';
-              });
-              return result;
-            },
-            [],
-          );
 
           return (
             <Mutation
@@ -84,13 +86,17 @@ export default function ReleasesCreate({
                     questionnaireData={questionnaires}
                     questionnaireOptions={questionnaireOptions}
                     initialValues={{
-                      consentTypeId: releaseData[0].consentTypeId,
-                      questionnaires: releaseData[0].questionnaires.map(
-                        questionnaire => questionnaire.questionnaireId,
-                      ),
-                      notificationEmail: releaseData[0].notificationEmail,
-                      notificationFrequency: releaseData[0].notificationFrequency,
-                      questionnaireAfterPayment,
+                      consentTypeId: releaseData ? releaseData[0].consentTypeId : '',
+                      questionnaires: releaseData
+                        ? releaseData[0].questionnaires.map(
+                          questionnaire => questionnaire.questionnaireId,
+                        )
+                        : [],
+                      notificationEmail: releaseData ? releaseData[0].notificationEmail : '',
+                      notificationFrequency: releaseData
+                        ? releaseData[0].notificationFrequency
+                        : '',
+                      questionnaireAfterPayment: questionnaireAfterPayment || [],
                     }}
                     onSubmit={(values) => {
                       const data = values.toJS();
@@ -107,7 +113,7 @@ export default function ReleasesCreate({
                       );
 
                       const payload = {
-                        consentTypeId: data.consentTypeId,
+                        consentTypeId,
                         creatorName: `${users[0].lastName} ${users[0].firstName}`,
                         dateCreated: new Date(),
                         notificationEmail: data.notificationEmail,
