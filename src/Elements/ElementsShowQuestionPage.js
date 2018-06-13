@@ -146,26 +146,28 @@ class ElementsShowQuestionPage extends React.Component {
                     state: { modal: true },
                   },
                 },
-                {
-                  content: 'Add Image',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
-                    state: { modal: true },
+                ...(element.type !== 'section' && [
+                  {
+                    content: 'Add Image',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
+                      state: { modal: true },
+                    },
                   },
-                },
-                {
-                  content: 'Add Validated Source',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                  {
+                    content: 'Add Validated Source',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                    },
                   },
-                },
-                {
-                  content: 'Add Trait',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
-                    state: { modal: true },
+                  {
+                    content: 'Add Trait',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
+                      state: { modal: true },
+                    },
                   },
-                },
+                ]),
                 {
                   content: 'Duplicate',
                   to: {
