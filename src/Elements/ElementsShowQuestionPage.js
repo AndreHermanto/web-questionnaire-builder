@@ -82,6 +82,13 @@ const renderProperty = (propertyName, value, element) => {
     case 'answers':
     case 'internalId':
     case 'baseQuestionId':
+    case 'color':
+    case 'buttonText':
+    case 'fontSize':
+    case 'isBold':
+    case 'isColor':
+    case 'isItalic':
+    case 'closed':
     case 'displayLogic':
       return null;
     case 'matrix':
