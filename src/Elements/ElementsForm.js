@@ -13,7 +13,6 @@ const getAnswers = (type) => {
     case 'matrix':
     case 'radio':
     case 'checkbox':
-    case 'text':
     case 'weight':
     case 'height':
     case 'date':
@@ -22,6 +21,15 @@ const getAnswers = (type) => {
         {
           id: cuid(),
           text: '',
+          concepts: [],
+        },
+      ]);
+    case 'text':
+      return fromJS([
+        {
+          id: cuid(),
+          text: '',
+          singleLine: false,
           concepts: [],
         },
       ]);
@@ -93,11 +101,25 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
       />
     )}
 
-    {type === 'uom' && <Uomfields name="uom1" change={change} label="Unit of Measurement 1" />}
+    {type === 'text' && (
+      <Fields.Radio
+        name="answers.0.singleLine"
+        label="Single Line Only"
+        options={[false, true].map(value => ({
+          key: value,
+          value,
+          text: Helpers.renderContent('singleLine', value),
+        }))}
+      />
+    )}
+
+    {type === 'uom' && (
+      <Uomfields name="answers.0.uom1" change={change} label="Unit of Measurement 1" />
+    )}
     {type === 'uoms' && (
       <div>
-        <Uomfields name="uom1" change={change} label="Unit of Measurement 1" />
-        <Uomfields name="uom2" change={change} label="Unit of Measurement 2" />
+        <Uomfields name="answers.0.uom1" change={change} label="Unit of Measurement 1" />
+        <Uomfields name="answers.0.uom2" change={change} label="Unit of Measurement 2" />
       </div>
     )}
     <Buttons
