@@ -29,11 +29,13 @@ function ElementsAddTrait({
             const element = elements[0];
             const questionnaire = questionnaires[0];
             const version = versions[0];
-            const options = traits.map(trait => ({
-              key: trait.id,
-              text: trait.label,
-              value: trait.id,
-            }));
+            const options = traits
+              .filter(trait => trait.types.includes(element.type))
+              .map(trait => ({
+                key: trait.id,
+                text: trait.label,
+                value: trait.id,
+              }));
             return (
               <QuestionnaireUpdaterMutation
                 questionnaire={questionnaire}
