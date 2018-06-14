@@ -118,7 +118,7 @@ class ElementsShowQuestionPage extends React.Component {
               content: questionnaire.currentTitle,
               to: `/questionnaires/${questionnaireId}`,
             },
-            { content: element.question },
+            { content: element.question || element.title },
           ]}
         />
         <Heading size="h1">{element.question}</Heading>
