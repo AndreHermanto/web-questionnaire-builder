@@ -66,6 +66,9 @@ const headerRow = [
     propName: 'traitData',
   },
   {
+    propName: 'concepts',
+  },
+  {
     propName: 'followUp',
   },
 ];
