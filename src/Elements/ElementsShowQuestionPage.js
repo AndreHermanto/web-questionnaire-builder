@@ -54,9 +54,6 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
 
 const headerRow = [
   {
-    propName: 'id',
-  },
-  {
     propName: 'text',
   },
   {
@@ -68,15 +65,14 @@ const headerRow = [
   {
     propName: 'traitData',
   },
+  {
+    propName: 'followUp',
+  },
 ];
 
 const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) => ({
   key: id,
-  cells: [
-    Helpers.renderContent('id', id),
-    Helpers.renderContent('text', text),
-    Helpers.renderContent('type', type),
-  ],
+  cells: [Helpers.renderContent('text', text), Helpers.renderContent('type', type)],
   actions: getTableActions({ elementId, type, id, questionnaireId }),
 });
 
@@ -93,6 +89,7 @@ const renderProperty = (propertyName, value, element) => {
     case 'isColor':
     case 'isItalic':
     case 'closed':
+    case 'displayLogic':
       return null;
     case 'matrix':
       if (element.type !== 'matrix') {
@@ -128,7 +125,7 @@ class ElementsShowQuestionPage extends React.Component {
               content: questionnaire.currentTitle,
               to: `/questionnaires/${questionnaireId}`,
             },
-            { content: element.question },
+            { content: element.question || element.title },
           ]}
         />
         <Heading size="h1">{element.question}</Heading>

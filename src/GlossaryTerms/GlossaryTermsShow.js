@@ -41,6 +41,7 @@ class GlossaryTermsShow extends React.Component {
               resourceName: 'glossaryTerms',
               url: `/glossary-terms/${glossaryTermId}`,
               schema: glossaryTermSchema,
+              filter: { id: glossaryTermId },
             },
           ]}
           render={({ glossaryTerms }) => {
