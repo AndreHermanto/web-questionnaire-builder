@@ -28,6 +28,7 @@ import ConsentTypesList from '../Releases/ConsentTypesList';
 import ReleasesConsentsShow from '../Releases/ReleasesConsentsShow';
 import ReleasesShow from '../Releases/ReleasesShow';
 import ReleasesCreate from '../Releases/ReleasesForm/ReleasesCreate';
+import ReleasesGenerateURLs from '../Releases/ReleasesGenerateURLs';
 import ReleaseReportsList from '../ReleaseReports/ReleaseReportsList';
 import ReleaseReportsShow from '../ReleaseReports/ReleaseReportsShow';
 import OntologiesList from '../Ontologies/OntologiesList';
@@ -69,6 +70,8 @@ import ElementsCreate from '../Elements/ElementsCreate';
 import ElementsSectionCreate from '../Elements/ElementsSectionCreate';
 import ElementsCreateEndPage from '../Elements/ElementsCreateEndPage';
 import ElementsCreateStartPage from '../Elements/ElementsCreateStartPage';
+import ElementsAddGlossaryAnnotation from '../Elements/GlossaryAnnotation/ElementsAddGlossaryAnnotation';
+import AnswersAddGlossaryAnnotation from '../Elements/GlossaryAnnotation/AnswersAddGlossaryAnnotation';
 import GlossaryTermsList from '../GlossaryTerms/GlossaryTermsList';
 import GlossaryTermsCreate from '../GlossaryTerms/GlossaryTermsCreate';
 import GlossaryTermsEdit from '../GlossaryTerms/GlossaryTermsEdit';
@@ -209,6 +212,10 @@ class Routes extends Component {
         {/* Side Panel Content Here */}
         <Switch>
           <SidePanelRoute path="/releases/:consentTypeId/create" component={ReleasesCreate} />
+          <SidePanelRoute
+            path="/releases/:consentTypeId/generate-urls"
+            component={props => <ReleasesGenerateURLs {...props} />}
+          />
           <SidePanelRoute path="/ontologies/create" component={OntologyCreate} />
           <SidePanelRoute path="/ontologies/:ontologyId/edit" component={OntologyEdit} />
           <SidePanelRoute
@@ -340,6 +347,14 @@ class Routes extends Component {
           <SidePanelRoute
             path="/glossary-terms/:glossaryTermId/delete"
             component={GlossaryTermsDelete}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/glossary-terms/create"
+            component={ElementsAddGlossaryAnnotation}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/glossary-terms/create"
+            component={AnswersAddGlossaryAnnotation}
           />
         </Switch>
       </div>

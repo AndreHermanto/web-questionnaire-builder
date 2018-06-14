@@ -54,9 +54,6 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
 
 const headerRow = [
   {
-    propName: 'id',
-  },
-  {
     propName: 'text',
   },
   {
@@ -71,15 +68,14 @@ const headerRow = [
   {
     propName: 'concepts',
   },
+  {
+    propName: 'followUp',
+  },
 ];
 
 const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) => ({
   key: id,
-  cells: [
-    Helpers.renderContent('id', id),
-    Helpers.renderContent('text', text),
-    Helpers.renderContent('type', type),
-  ],
+  cells: [Helpers.renderContent('text', text), Helpers.renderContent('type', type)],
   actions: getTableActions({ elementId, type, id, questionnaireId }),
 });
 
@@ -89,6 +85,14 @@ const renderProperty = (propertyName, value, element) => {
     case 'answers':
     case 'internalId':
     case 'baseQuestionId':
+    case 'color':
+    case 'buttonText':
+    case 'fontSize':
+    case 'isBold':
+    case 'isColor':
+    case 'isItalic':
+    case 'closed':
+    case 'displayLogic':
       return null;
     case 'matrix':
       if (element.type !== 'matrix') {
@@ -124,7 +128,7 @@ class ElementsShowQuestionPage extends React.Component {
               content: questionnaire.currentTitle,
               to: `/questionnaires/${questionnaireId}`,
             },
-            { content: element.question },
+            { content: element.question || element.title },
           ]}
         />
         <Heading size="h1">{element.question}</Heading>
@@ -149,26 +153,28 @@ class ElementsShowQuestionPage extends React.Component {
                     state: { modal: true },
                   },
                 },
-                {
-                  content: 'Add Image',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
-                    state: { modal: true },
+                ...(element.type !== 'section' && [
+                  {
+                    content: 'Add Image',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
+                      state: { modal: true },
+                    },
                   },
-                },
-                {
-                  content: 'Add Validated Source',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                  {
+                    content: 'Add Validated Source',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                    },
                   },
-                },
-                {
-                  content: 'Add Trait',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
-                    state: { modal: true },
+                  {
+                    content: 'Add Trait',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
+                      state: { modal: true },
+                    },
                   },
-                },
+                ]),
                 {
                   content: 'Duplicate',
                   to: {

@@ -26,6 +26,7 @@ class QuestionnaireQueryResource extends React.Component {
         >
           {({ questionnaires }) => {
             const questionnaire = questionnaires[0];
+            if (!questionnaire) return <div>No questionnaire!</div>;
             return (
               <QueryResource
                 queries={[

@@ -4,7 +4,7 @@ import { Mutation } from 'web-components';
 import { questionnaireSchema, versionSchema } from '../schemas';
 import QuestionnairesCreateForm from './QuestionnairesCreateForm';
 
-export default function QuestionnairesCreate({ closePanel }) {
+export default function QuestionnairesCreate({ closePanel, history }) {
   return (
     <div>
       <Mutation
@@ -18,6 +18,7 @@ export default function QuestionnairesCreate({ closePanel }) {
           const versionPayload = {
             questionnaireId: questionnaire.id,
             title: questionnaire.currentTitle,
+            body: [],
           };
 
           const createVersionMutation = {
@@ -39,7 +40,7 @@ export default function QuestionnairesCreate({ closePanel }) {
           });
           actions.update(updateQuestionnaireMutation, questionnairePayload);
 
-          closePanel();
+          history.push(`/questionnaires/${questionnaire.id}`);
         }}
         render={({ create, loading: pending, error }) => {
           if (pending) {
@@ -58,4 +59,7 @@ export default function QuestionnairesCreate({ closePanel }) {
 
 QuestionnairesCreate.propTypes = {
   closePanel: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };

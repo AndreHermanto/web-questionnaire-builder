@@ -21,14 +21,18 @@ export default function QuestionnairesResponsesReport({
         )}`,
         {
           method: 'GET',
-          header: { jwt: rest.getAccessToken() },
+          headers: { jwt: rest.getAccessToken() },
         },
       );
-      await response.json();
-      // eslint-disable-next-line no-alert
-      alert(
-        'A new responses report will be created and you will be notified by email when this will become available.',
-      );
+      if (response.ok) {
+        // eslint-disable-next-line no-alert
+        alert(
+          'A new responses report will be created and you will be notified by email when this will become available.',
+        );
+      } else {
+        // eslint-disable-next-line no-alert
+        alert(`Error generating responses report : ${response.status}`);
+      }
     } catch (err) {
       // eslint-disable-next-line no-alert
       alert(`Error generating responses report : ${err}`);

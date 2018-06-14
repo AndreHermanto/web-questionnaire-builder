@@ -28,12 +28,11 @@ const ElementStartEndPageForm = ({
     <Heading size="h1" style={{ textTransform: 'capitalize' }}>
       {type} page
     </Heading>
-    <Fields.Text name="text" required />
+    <Fields.TextArea name="text" required />
     {(!initialValues.get('image') || !image) && (
       <Fields.FileUpload
         label="Image"
         name="image"
-        required
         maxFileSize={MAX_FILE_SIZE}
         supportedFileExtensions={SUPPORTED_FILE_EXTENSIONS}
       />
