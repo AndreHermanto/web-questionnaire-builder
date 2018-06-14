@@ -119,6 +119,13 @@ class QuestionnairesShow extends React.Component {
                       <Grid>
                         <Grid.Column width={12}>
                           <DefinitionList listData={version} renderProperty={renderProperty} />
+                          {version.body && (
+                            <Table
+                              headerRow={headerRow}
+                              renderBodyRow={props => renderBodyRow(props, currentVersionId)}
+                              tableData={version.body}
+                            />
+                          )}
                         </Grid.Column>
                         <Grid.Column width={4}>
                           <Buttons
@@ -218,17 +225,6 @@ class QuestionnairesShow extends React.Component {
                               },
                             ]}
                           />
-                        </Grid.Column>
-                      </Grid>
-                      <Grid>
-                        <Grid.Column width={12}>
-                          {version.body && (
-                            <Table
-                              headerRow={headerRow}
-                              renderBodyRow={props => renderBodyRow(props, currentVersionId)}
-                              tableData={version.body}
-                            />
-                          )}
                         </Grid.Column>
                       </Grid>
                     </div>
