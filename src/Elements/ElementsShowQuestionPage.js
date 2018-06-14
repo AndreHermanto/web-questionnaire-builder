@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
-import { Buttons, Heading, Breadcrumbs, DefinitionList, Helpers, Table } from 'web-components';
+import {
+  QueryResource,
+  Buttons,
+  Heading,
+  Breadcrumbs,
+  DefinitionList,
+  Helpers,
+  Table,
+} from 'web-components';
+import { traitsSchema } from './schemas';
 
 const isQuestion = type => !(type === 'section' || type === 'start' || type === 'end');
 
@@ -76,7 +85,7 @@ const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) =
   actions: getTableActions({ elementId, type, id, questionnaireId }),
 });
 
-const renderProperty = (propertyName, value, element) => {
+const renderProperty = (propertyName, value, element, traitLabel) => {
   switch (propertyName) {
     case 'id':
     case 'answers':
@@ -91,6 +100,11 @@ const renderProperty = (propertyName, value, element) => {
     case 'closed':
     case 'displayLogic':
       return null;
+    case 'trait':
+      return {
+        label: Helpers.renderLabel(propertyName),
+        value: Helpers.renderContent(propertyName, traitLabel, element),
+      };
     case 'matrix':
       if (element.type !== 'matrix') {
         return null;
@@ -117,95 +131,117 @@ class ElementsShowQuestionPage extends React.Component {
   render() {
     const { questionnaireId, questionnaire, element, elementId } = this.props;
     return (
-      <div>
-        <Breadcrumbs
-          sections={[
-            { content: 'Questionnaires', to: '/questionnaires' },
-            {
-              content: questionnaire.currentTitle,
-              to: `/questionnaires/${questionnaireId}`,
-            },
-            { content: element.question || element.title },
-          ]}
-        />
-        <Heading size="h1">{element.question}</Heading>
-        <Grid>
-          <Grid.Column width={12}>
-            <DefinitionList listData={element} renderProperty={renderProperty} />
-          </Grid.Column>
-          <Grid.Column width={4}>
-            <Buttons
-              actions={[
+      <QueryResource
+        queries={[
+          {
+            resourceName: 'traits',
+            url: '/traits',
+            schema: traitsSchema,
+            filter: { id: element.trait },
+          },
+        ]}
+      >
+        {({ traits }) => (
+          <div>
+            <Breadcrumbs
+              sections={[
+                { content: 'Questionnaires', to: '/questionnaires' },
                 {
-                  content: 'Edit',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit`,
-                    state: { modal: true },
-                  },
+                  content: questionnaire.currentTitle,
+                  to: `/questionnaires/${questionnaireId}`,
                 },
-                {
-                  content: 'Edit Logic',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit-logic`,
-                    state: { modal: true },
-                  },
-                },
-                ...(element.type !== 'section' && [
-                  {
-                    content: 'Add Image',
-                    to: {
-                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
-                      state: { modal: true },
-                    },
-                  },
-                  {
-                    content: 'Add Validated Source',
-                    to: {
-                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
-                    },
-                  },
-                  {
-                    content: 'Add Trait',
-                    to: {
-                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
-                      state: { modal: true },
-                    },
-                  },
-                ]),
-                {
-                  content: 'Duplicate',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/duplicate`,
-                    state: { modal: true },
-                  },
-                },
-                {
-                  content: 'Delete',
-                  to: {
-                    pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/delete`,
-                    state: { modal: true },
-                  },
-                },
+                { content: element.question || element.title },
               ]}
             />
-          </Grid.Column>
-        </Grid>
-        {isQuestion(element.type) && (
-          <Grid>
-            <Grid.Column width={12}>
-              <Table
-                headerRow={headerRow}
-                renderBodyRow={renderBodyRow({
-                  elementId,
-                  type: element.type,
-                  questionnaireId,
-                })}
-                tableData={element.answers}
-              />
-            </Grid.Column>
-          </Grid>
+            <Heading size="h1">{element.question}</Heading>
+            <Grid>
+              <Grid.Column width={12}>
+                {traits.length ? (
+                  <DefinitionList
+                    listData={element}
+                    renderProperty={(propertyName, value, el) =>
+                      renderProperty(propertyName, value, el, traits[0].label)
+                    }
+                  />
+                ) : (
+                  <DefinitionList listData={element} renderProperty={renderProperty} />
+                )}
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Buttons
+                  actions={[
+                    {
+                      content: 'Edit',
+                      to: {
+                        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit`,
+                        state: { modal: true },
+                      },
+                    },
+                    {
+                      content: 'Edit Logic',
+                      to: {
+                        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit-logic`,
+                        state: { modal: true },
+                      },
+                    },
+                    ...(element.type !== 'section' && [
+                      {
+                        content: 'Add Image',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
+                          state: { modal: true },
+                        },
+                      },
+                      {
+                        content: 'Add Validated Source',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                        },
+                      },
+                      {
+                        content: 'Add Trait',
+                        to: {
+                          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
+                          state: { modal: true },
+                        },
+                      },
+                    ]),
+                    {
+                      content: 'Duplicate',
+                      to: {
+                        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/duplicate`,
+                        state: { modal: true },
+                      },
+                    },
+                    {
+                      content: 'Delete',
+                      to: {
+                        pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/delete`,
+                        state: { modal: true },
+                      },
+                    },
+                  ]}
+                />
+              </Grid.Column>
+            </Grid>
+            {isQuestion(element.type) && (
+              <Grid>
+                <Grid.Column width={12}>
+                  <Table
+                    headerRow={headerRow}
+                    renderBodyRow={renderBodyRow({
+                      elementId,
+                      type: element.type,
+                      questionnaireId,
+                    })}
+                    tableData={element.answers}
+                  />
+                </Grid.Column>
+              </Grid>
+            )}
+          </div>
         )}
-      </div>
+      </QueryResource>
     );
   }
 }
