@@ -18,6 +18,7 @@ export default function QuestionnairesCreate({ closePanel, history }) {
           const versionPayload = {
             questionnaireId: questionnaire.id,
             title: questionnaire.currentTitle,
+            body: [],
           };
 
           const createVersionMutation = {
