@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ElementsForm from './ElementsForm';
 import ElementStartEndPageForm from './Forms/ElementStartEndPageForm';
+import ElementsSectionForm from './ElementsSectionForm';
+
 import QuestionnaireUpdaterMutation from './QuestionnaireUpdaterMutation';
 import QuestionnaireQueryResource from '../Questionnaires/QuestionnaireQueryResource';
 
@@ -10,6 +12,8 @@ const renderFormByType = (type, formProps) => {
     case 'start':
     case 'end':
       return <ElementStartEndPageForm {...formProps} />;
+    case 'section':
+      return <ElementsSectionForm {...formProps} />;
     default:
       return <ElementsForm {...formProps} />;
   }
