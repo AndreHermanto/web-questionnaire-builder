@@ -36,6 +36,13 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
           state: { modal: true },
         },
       },
+      {
+        content: 'Add glossary annotation',
+        to: {
+          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/glossary-terms/create`,
+          state: { modal: true },
+        },
+      },
     ]),
   ];
 
@@ -189,6 +196,15 @@ class ElementsShowQuestionPage extends React.Component {
                     state: { modal: true },
                   },
                 },
+                ...((element.type === 'radio' || element.type === 'checkbox') && [
+                  {
+                    content: 'Add glossary annotation',
+                    to: {
+                      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/glossary-terms/create`,
+                      state: { modal: true },
+                    },
+                  },
+                ]),
               ]}
             />
           </Grid.Column>
