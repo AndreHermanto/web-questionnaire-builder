@@ -29,29 +29,8 @@ export default function ElementsAddGlossaryAnnotation({
 
                 return (
                   <GlossaryAnnotationForm
-                    onSubmit={(values) => {
-                      update(
-                        values.set(
-                          'glossaryTermAnnotations',
-                          values
-                            .get('glossaryTermAnnotations')
-                            .map(glossaryTermAnnotation => glossaryTermAnnotation.delete('term')),
-                        ),
-                      );
-                    }}
-                    formType="question"
-                    initialValues={
-                      element.glossaryTermAnnotations
-                        ? Object.assign(element, {
-                          glossaryTermAnnotations: element.glossaryTermAnnotations.map(
-                            glossaryTermAnnotation =>
-                              Object.assign(glossaryTermAnnotation, {
-                                term: glossaryTermAnnotation.glossaryTerm.id,
-                              }),
-                          ),
-                        })
-                        : element
-                    }
+                    onSubmit={update}
+                    initialValues={element}
                     onCancel={closePanel}
                   />
                 );

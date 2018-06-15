@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fromJS } from 'immutable';
 import QuestionnaireUpdaterMutation from './../QuestionnaireUpdaterMutation';
 import QuestionnaireQueryResource from '../../Questionnaires/QuestionnaireQueryResource';
 import GlossaryAnnotationForm from './GlossaryAnnotationForm';
@@ -18,7 +17,6 @@ export default function AnswersAddGlossaryAnnotation({
           const questionnaire = questionnaires[0];
           const version = versions[0];
           const element = elements[0];
-          const answer = element.answers.filter(ans => ans.id === answerId);
           return (
             <QuestionnaireUpdaterMutation
               version={version}
@@ -30,40 +28,9 @@ export default function AnswersAddGlossaryAnnotation({
                 }
                 return (
                   <GlossaryAnnotationForm
-                    formType="answer"
-                    initialValues={
-                      answer[0].glossaryTermAnnotations
-                        ? Object.assign(answer[0], {
-                          glossaryTermAnnotations: answer[0].glossaryTermAnnotations.map(
-                            glossaryTermAnnotation =>
-                              Object.assign(glossaryTermAnnotation, {
-                                term: glossaryTermAnnotation.glossaryTerm.id,
-                              }),
-                          ),
-                        })
-                        : answer[0]
-                    }
-                    onSubmit={(values) => {
-                      update(
-                        fromJS(
-                          Object.assign(element, {
-                            answers: element.answers.map((ans) => {
-                              if (ans.id === answerId) {
-                                return values.set(
-                                  'glossaryTermAnnotations',
-                                  values
-                                    .get('glossaryTermAnnotations')
-                                    .map(glossaryTermAnnotation =>
-                                      glossaryTermAnnotation.delete('term'),
-                                    ),
-                                );
-                              }
-                              return ans;
-                            }),
-                          }),
-                        ),
-                      );
-                    }}
+                    answerId={answerId}
+                    initialValues={element}
+                    onSubmit={update}
                     onCancel={closePanel}
                   />
                 );

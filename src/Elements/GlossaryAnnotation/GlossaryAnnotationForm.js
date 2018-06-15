@@ -8,89 +8,98 @@ import { glossaryTermsSchema } from '../../GlossaryTerms/schemas';
 
 /* eslint "react/require-default-props": "off" */
 const GlossaryAnnotationForm = ({
-  change,
   handleSubmit,
   onCancel,
-  formType,
-  question,
-  answer,
   glossaryTermAnnotations,
   submitting,
-}) => (
-  <Form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
-    <Heading size="h1">Glossary Annotation</Heading>
-    <Heading size="h3">{formType === 'question' ? 'Question' : 'Answer'}</Heading>
-    <p>{formType === 'question' ? question : answer}</p>
-    <Heading size="h3">Edit glossary</Heading>
-    <QueryResource
-      queries={[
-        {
-          resourceName: 'glossaryTerms',
-          url: '/glossary-terms',
-          schema: glossaryTermsSchema,
-        },
-      ]}
-    >
-      {({ glossaryTerms }) => (
-        <Fields.Array
-          name="glossaryTermAnnotations"
-          header="Glossary"
-          required
-          components={
-            <div>
-              <Fields.Text name="text" required disabled />
-              <Fields.Select
-                name="term"
-                label="Glossary term"
-                options={glossaryTerms.map(value => ({
-                  key: value.id,
-                  value: value.id,
-                  text: value.name,
-                }))}
-                onChange={(e, value) => {
-                  const term = glossaryTerms.filter(glossaryTerm => glossaryTerm.id === value);
-                  const glossaryTermAnnotationsIndex = glossaryTermAnnotations.size - 1;
-                  change(
-                    `glossaryTermAnnotations.${glossaryTermAnnotationsIndex}.text`,
-                    term[0].name,
-                  );
-                  change(
-                    `glossaryTermAnnotations.${glossaryTermAnnotationsIndex}.glossaryTerm`,
-                    term[0],
-                  );
-                }}
-                required
-              />
-            </div>
-          }
-        />
-      )}
-    </QueryResource>
+  answerId,
+  initialValues,
+}) => {
+  const answerIndex = initialValues
+    .get('answers')
+    .findIndex(answer => answer.get('id') === answerId);
+  return (
+    <Form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
+      <Heading size="h1">Glossary Annotation</Heading>
+      <Heading size="h3">{answerId ? 'Answer' : 'Question'}</Heading>
+      <p>
+        {answerId
+          ? initialValues.getIn(['answers', answerIndex, 'text'])
+          : initialValues.get('question')}
+      </p>
+      <Heading size="h3">Edit glossary</Heading>
+      <QueryResource
+        queries={[
+          {
+            resourceName: 'glossaryTerms',
+            url: '/glossary-terms',
+            schema: glossaryTermsSchema,
+          },
+        ]}
+      >
+        {({ glossaryTerms }) => (
+          <Fields.Array
+            name={
+              answerId
+                ? `answers.${answerIndex}.glossaryTermAnnotations`
+                : 'glossaryTermAnnotations'
+            }
+            header="Glossary"
+            required
+            components={
+              <div>
+                <Fields.Text name="text" required />
+                <Fields.Select
+                  name="glossaryTerm"
+                  label="Glossary term"
+                  options={glossaryTerms.map(value => ({
+                    key: value.id,
+                    value,
+                    text: value.name,
+                  }))}
+                  required
+                />
+              </div>
+            }
+          />
+        )}
+      </QueryResource>
 
-    <Buttons
-      actions={[
-        {
-          content: 'Create',
-          type: 'submit',
-          disabled: !glossaryTermAnnotations || submitting,
-        },
-        {
-          content: 'Cancel',
-          onClick: onCancel,
-          type: 'button',
-        },
-      ]}
-    />
-  </Form>
-);
+      <Buttons
+        actions={[
+          {
+            content: 'Create',
+            type: 'submit',
+            disabled: !glossaryTermAnnotations || submitting,
+          },
+          {
+            content: 'Cancel',
+            onClick: onCancel,
+            type: 'button',
+          },
+        ]}
+      />
+    </Form>
+  );
+};
 GlossaryAnnotationForm.propTypes = {
-  change: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  formType: PropTypes.string.isRequired,
-  question: PropTypes.string,
-  answer: PropTypes.string,
+  initialValues: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    answers: PropTypes.arrayOf({
+      id: PropTypes.string.isRequired,
+      glossaryTermAnnotations: PropTypes.arrayOf({
+        text: PropTypes.string.isRequired,
+        term: PropTypes.arrayOf({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+        }),
+      }),
+    }),
+  }),
+  answerId: PropTypes.string,
   glossaryTermAnnotations: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
