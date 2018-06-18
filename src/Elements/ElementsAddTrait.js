@@ -34,8 +34,9 @@ function ElementsAddTrait({
               .map(trait => ({
                 key: trait.id,
                 text: trait.label,
-                value: trait.id,
+                value: trait,
               }));
+
             return (
               <QuestionnaireUpdaterMutation
                 questionnaire={questionnaire}
