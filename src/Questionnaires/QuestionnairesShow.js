@@ -14,15 +14,20 @@ import {
 import { userSchema } from './schemas';
 import QuestionnaireQueryResource from './QuestionnaireQueryResource';
 
-const renderProperty = (propertyName, value, pricePlan) => {
+const renderProperty = (propertyName, value, questionnaire) => {
   switch (propertyName) {
     case 'body':
     case 'id':
       return null;
+    case 'title':
+      return {
+        label: Helpers.renderLabel(propertyName),
+        value: Helpers.renderContent(propertyName, value || 'No name'),
+      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),
-        value: Helpers.renderContent(propertyName, value, pricePlan),
+        value: Helpers.renderContent(propertyName, value, questionnaire),
       };
   }
 };

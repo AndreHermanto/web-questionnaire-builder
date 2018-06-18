@@ -48,7 +48,7 @@ const renderBodyRow = ({ id, type, currentTitle, creatorName, lastUpdated, statu
         </CustomLink>
       ) : (
         <CustomLink to={`/questionnaires/${id}`}>
-          <span className={type}>{currentTitle}</span>
+          <span className={type}>{currentTitle || 'No Name'}</span>
         </CustomLink>
       )}
     </span>,
