@@ -24,6 +24,7 @@ const ExamplesForm = ({ initialValues, handleSubmit, onCancel, submitting }) => 
             content: initialValues ? 'Update Example' : 'Create Example',
             type: 'submit',
             disabled: submitting,
+            'data-test': 'submit-example-button',
           },
           {
             content: 'Cancel',
