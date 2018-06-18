@@ -9,25 +9,33 @@ const QuestionnaireElementReOrder = (props) => {
     closePanel,
     history,
     match: {
-      params: { id, elementId },
+      params: { questionnaireId, elementId },
     },
   } = props;
   return (
-    <QuestionnaireQueryResource questionnaireId={id} elementId={elementId}>
+    <QuestionnaireQueryResource questionnaireId={questionnaireId}>
       {({ questionnaires, versions }) => {
         const version = versions[0];
         const questionnaire = questionnaires[0];
         const questions = version.body.filter(data => data.type !== 'end' || data.type !== 'start');
-        const questionOptions = questions.map(value => ({
-          key: value.id,
-          text: value.question || value.title,
-          value: value.id,
-        }));
+
+        const questionOptions = questions.reduce((previousValue, element, index) => {
+          if (element.type === 'end' || element.type === 'start' || element.id === elementId) {
+            return previousValue;
+          }
+          return previousValue.concat([
+            {
+              key: index,
+              text: element.question || element.title,
+              value: index,
+            },
+          ]);
+        }, []);
         return (
           <QuestionnaireUpdaterMutation
             questionnaire={questionnaire}
             version={version}
-            post={() => history.push(`/questionnaires/${id}`)}
+            post={() => history.push(`/questionnaires/${questionnaireId}`)}
             render={({ move, loading: updateLoading }) => {
               if (updateLoading) {
                 return <div>loading...</div>;
@@ -41,14 +49,8 @@ const QuestionnaireElementReOrder = (props) => {
                      * get move to index base on position after(+1)/before(-1)
                      * if it >= 0 or >= question length then return current index
                      */
-                    const questionIndex = questions.findIndex(
-                      question => question.id === value.get('question'),
-                    );
-                    const moveToIndex =
-                      value.get('position') === 'AFTER' ? questionIndex + 1 : questionIndex - 1;
-
-                    const newPos = Math.min(Math.max(moveToIndex, 0), questions.length - 1);
-
+                    const moveToIndex = value.get('index') + value.get('position');
+                    const newPos = Math.min(Math.max(moveToIndex, 0), questions.length);
                     move(elementId, newPos);
                   }}
                   onCancel={closePanel}

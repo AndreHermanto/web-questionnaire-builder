@@ -7,13 +7,13 @@ import { reduxForm } from 'redux-form/immutable';
 const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel, questionOptions }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Element Re Order</Heading>
-    <Fields.Select name="question" options={questionOptions} required />
+    <Fields.Select name="index" options={questionOptions} required />
     <Fields.Radio
       name="position"
       label="Position"
       options={[
-        { key: 'AFTER', text: 'After', value: 'AFTER' },
-        { key: 'BEFORE', text: 'Before', value: 'BEFORE' },
+        { key: 'AFTER', text: 'After', value: 1 },
+        { key: 'BEFORE', text: 'Before', value: -1 },
       ]}
     />
     <Buttons
