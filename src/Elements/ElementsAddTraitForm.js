@@ -27,7 +27,7 @@ const ElementsAddTraitForm = ({ handleSubmit, onCancel, traits }) => (
 ElementsAddTraitForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  traits: PropTypes.shape({
+  traits: PropTypes.arrayOf({
     key: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
