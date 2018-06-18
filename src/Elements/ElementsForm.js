@@ -8,7 +8,7 @@ import cuid from 'cuid';
 import { connect } from 'react-redux';
 import Uomfields from './Fields/Uomfields';
 
-const getAnswers = (type) => {
+const getDefaultAnswer = (type) => {
   switch (type) {
     case 'matrix':
     case 'radio':
@@ -17,42 +17,39 @@ const getAnswers = (type) => {
     case 'height':
     case 'date':
     case 'number':
-      return fromJS([
-        {
-          id: cuid(),
-          text: '',
-          concepts: [],
-        },
-      ]);
+      return {
+        id: cuid(),
+        text: '',
+        concepts: [],
+      };
     case 'text':
-      return fromJS([
-        {
-          id: cuid(),
-          text: '',
-          singleLine: false,
-          concepts: [],
-        },
-      ]);
+      return {
+        id: cuid(),
+        text: '',
+        singleLine: false,
+        concepts: [],
+      };
     case 'uom':
-      return fromJS([
-        {
-          id: cuid(),
-          uom1: {},
-          concepts: [],
-        },
-      ]);
+      return {
+        id: cuid(),
+        uom1: {},
+        concepts: [],
+      };
     case 'uoms':
-      return fromJS([
-        {
-          id: cuid(),
-          uom1: {},
-          uom2: {},
-          concepts: [],
-        },
-      ]);
+      return {
+        id: cuid(),
+        uom1: {},
+        uom2: {},
+        concepts: [],
+      };
     default:
-      return [];
+      return null;
   }
+};
+const getAnswers = (type) => {
+  const answers = fromJS([getDefaultAnswer(type)] || []);
+  console.log('answers', answers);
+  return answers;
 };
 
 const showAnswers = type => type === 'radio' || type === 'checkbox' || type === 'matrix';
@@ -103,6 +100,11 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
       <Fields.Array
         name="answers"
         header="Answers"
+        defaultAddedValue={() => {
+          const answer = getDefaultAnswer(type);
+          console.log('new answer is', answer);
+          return answer;
+        }}
         components={<Fields.Text name="text" label="Text" required />}
       />
     )}
