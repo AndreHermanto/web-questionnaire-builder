@@ -154,7 +154,7 @@ class ElementsShowQuestionPage extends React.Component {
                   },
                 },
                 {
-                  content: 'Edit Logic',
+                  content: 'Edit Visibility Logic',
                   to: {
                     pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit-logic`,
                     state: { modal: true },
@@ -198,7 +198,7 @@ class ElementsShowQuestionPage extends React.Component {
                 },
                 ...((element.type === 'radio' || element.type === 'checkbox') && [
                   {
-                    content: 'Add glossary annotation',
+                    content: 'Add Glossary Annotation',
                     to: {
                       pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/glossary-terms/create`,
                       state: { modal: true },
