@@ -7,13 +7,16 @@ import { versionSchema, questionnaireSchema } from '../Questionnaires/schemas';
 
 const updateAnswersId = ({ body, ...rest }) => {
   const updatedBody = body.map(({ answers, ...questionRest }) => {
-    const updatedAnswersWithId = answers.map((answer) => {
-      if (!answer.id) {
-        return { ...answer, id: cuid() };
-      }
-      return answer;
-    });
-    return { ...questionRest, answers: updatedAnswersWithId };
+    if (answers) {
+      const updatedAnswersWithId = answers.map((answer) => {
+        if (!answer.id) {
+          return { ...answer, id: cuid() };
+        }
+        return answer;
+      });
+      return { ...questionRest, answers: updatedAnswersWithId };
+    }
+    return { ...questionRest, answers };
   });
   return { body: updatedBody, ...rest };
 };
