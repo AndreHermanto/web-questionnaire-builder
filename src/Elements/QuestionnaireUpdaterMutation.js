@@ -5,19 +5,6 @@ import { Iterable } from 'immutable';
 import { Mutation } from 'web-components';
 import { versionSchema, questionnaireSchema } from '../Questionnaires/schemas';
 
-const updateAnswersId = ({ body, ...rest }) => {
-  const updatedBody = body.map(({ answers, ...questionRest }) => {
-    const updatedAnswersWithId = answers.map((answer) => {
-      if (!answer.id) {
-        return { ...answer, id: cuid() };
-      }
-      return answer;
-    });
-    return { ...questionRest, answers: updatedAnswersWithId };
-  });
-  return { body: updatedBody, ...rest };
-};
-
 export default function QuestionnaireUpdaterMutation({ post, render, version, questionnaire }) {
   return (
     <Mutation
@@ -52,7 +39,7 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
                   ...version.body.slice(insertAtIndex),
                 ],
               };
-              return create(updateAnswersId(newVersion));
+              return create(newVersion);
             };
             const updateQuestionnaire = (payload) => {
               // find the question with the same id in the version
@@ -69,7 +56,7 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
                   return element;
                 }),
               };
-              return create(updateAnswersId(newVersion));
+              return create(newVersion);
             };
             const removeElement = (elementId) => {
               // find the question with the same id in the version
@@ -80,7 +67,7 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
                 ...version,
                 body: version.body.filter(element => element.id !== elementId),
               };
-              return create(updateAnswersId(newVersion));
+              return create(newVersion);
             };
             const moveElement = (elementId, moveToIndex) => {
               // find current element index
@@ -91,7 +78,7 @@ export default function QuestionnaireUpdaterMutation({ post, render, version, qu
                 ...version,
                 body: version.body,
               };
-              return create(updateAnswersId(newVersion));
+              return create(newVersion);
             };
             return render({
               update: updateQuestionnaire,
