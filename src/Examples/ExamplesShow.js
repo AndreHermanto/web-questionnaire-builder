@@ -32,11 +32,7 @@ class ExamplesShow extends React.Component {
     }).isRequired,
   };
   render() {
-    const {
-      match: {
-        params: { exampleId },
-      },
-    } = this.props;
+    const { match: { params: { exampleId } } } = this.props;
 
     return (
       <div>
@@ -71,10 +67,12 @@ class ExamplesShow extends React.Component {
                         {
                           content: 'Edit',
                           to: `/examples/${exampleId}/edit`,
+                          'data-test': 'edit-example-button',
                         },
                         {
                           content: 'Delete',
                           to: `/examples/${exampleId}/delete`,
+                          'data-test': 'delete-example-button',
                         },
                       ]}
                     />

@@ -9,12 +9,14 @@
     "fetch-mock": "^6.0.0",
     "flow-bin": "^0.65.0",
     "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
     "lint-staged": "^6.1.0",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "moment": "^2.18.1",
     "prettier": "^1.10.2",
     "prop-types": "^15.6.0",
+    "puppeteer": "^1.5.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^16.2.0",
@@ -47,9 +49,11 @@
     "e2e-test:bamboo": "npm run e2e-test -- --env bamboo",
     "e2e-test:chrome": "npm run e2e-test -- --env chrome",
     "e2e-test:firefox": "npm run e2e-test -- --env firefox",
+    "e2e": "npm test -- --testMatch=\"**/*.e2e.js\"",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "eslint": "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/",
+    "eslint":
+      "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/",
     "release:start": "./scripts/release-start.sh",
     "release:finish": "./scripts/release-finish.sh"
   },
@@ -72,10 +76,7 @@
     "selenium-server": "^3.6.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier-eslint --single-quote --write",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,json,css}": ["prettier-eslint --single-quote --write", "git add"]
   },
   "homepage": "."
 }
