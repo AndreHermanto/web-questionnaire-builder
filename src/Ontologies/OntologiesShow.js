@@ -55,6 +55,11 @@ const renderProperty = (propertyName, value) => {
         label: 'Ontology ID',
         value,
       };
+    case 'lastUpdated':
+      return {
+        label: Helpers.renderLabel(propertyName),
+        value: Helpers.renderContent('timestamp', value),
+      };
     default:
       return {
         label: Helpers.renderLabel(propertyName),
