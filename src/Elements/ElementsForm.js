@@ -48,7 +48,6 @@ const getDefaultAnswer = (type) => {
 };
 const getAnswers = (type) => {
   const answers = fromJS([getDefaultAnswer(type)] || []);
-  console.log('answers', answers);
   return answers;
 };
 
@@ -61,7 +60,7 @@ const requiredOptions = [
 let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
-    <Fields.Text name="question" required />
+    <Fields.TextArea name="question" required />
     <Fields.Radio name="required" options={requiredOptions} required />
     <Fields.Select
       name="type"
@@ -102,7 +101,6 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
         header="Answers"
         defaultAddedValue={() => {
           const answer = getDefaultAnswer(type);
-          console.log('new answer is', answer);
           return answer;
         }}
         components={<Fields.Text name="text" label="Text" required />}
