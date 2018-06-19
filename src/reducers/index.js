@@ -29,6 +29,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'prefixTerms',
   'glossaryTerms',
   'traits',
+  'applications',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,

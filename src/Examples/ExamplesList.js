@@ -68,6 +68,7 @@ class ExamplesList extends React.Component {
                       {
                         content: 'Add Example',
                         to: { pathname: '/examples/create', state: { modal: true } },
+                        'data-test': 'add-example-button',
                       },
                       {
                         content: 'Second Button',
