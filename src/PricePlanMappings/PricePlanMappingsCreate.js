@@ -68,11 +68,16 @@ export default function PricePlanMappingsCreate({ closePanel }) {
                         text: consentType.title,
                       }));
 
-                    const pricePlanOptions = pricePlans.map(pricePlan => ({
-                      key: pricePlan.id,
-                      value: pricePlan.id,
-                      text: pricePlan.title,
-                    }));
+                    const pricePlanIds = pricePlanMappings.map(
+                      pricePlanMapping => pricePlanMapping.pricePlanId,
+                    );
+                    const pricePlanOptions = pricePlans
+                      .filter(pricePlan => !pricePlanIds.includes(pricePlan.id))
+                      .map(pricePlan => ({
+                        key: pricePlan.id,
+                        value: pricePlan.id,
+                        text: pricePlan.title,
+                      }));
                     return (
                       <PricePlanMappingsForm
                         form="price-plans-form"

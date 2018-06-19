@@ -13,7 +13,7 @@ const PricePlanMappingsForm = ({
 }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Create price plan</Heading>
-    {consentTypeOptions.length > 0 ? (
+    {consentTypeOptions.length > 0 && pricePlanOptions.length > 0 ? (
       <div>
         <Fields.Select
           options={consentTypeOptions}
@@ -24,7 +24,7 @@ const PricePlanMappingsForm = ({
         <Fields.Select options={pricePlanOptions} name="pricePlanId" label="Price Plan" required />
       </div>
     ) : (
-      <div>No Consent available</div>
+      <div>No Consent or Price Plan Available</div>
     )}
 
     <Buttons
