@@ -6,7 +6,12 @@ import CreateEditFormBase from './CreateEditFormBase';
 
 /* eslint class-methods-use-this: 0 */
 /* eslint no-case-declarations: 0 */
-function OntologyEdit({ closePanel, match: { params: { ontologyId } } }) {
+function OntologyEdit({
+  closePanel,
+  match: {
+    params: { ontologyId },
+  },
+}) {
   return (
     <Query
       resourceName="ontologies"

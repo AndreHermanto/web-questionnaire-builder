@@ -11,12 +11,19 @@ const QuestionnaireTagsEdit = (props) => {
       params: { questionnaireId },
     },
   } = props;
-  const handleTagSubmit = (create, values) => {
-    const payload = {
-      questionnaireId,
-      tagId: values.get('tagId'),
-    };
-    create(payload);
+  const handleTagSubmit = async (create, values, initialValues) => {
+    const tags = values.get('tagId');
+
+    tags.forEach(async (tag) => {
+      if (!initialValues.includes(tag)) {
+        const payload = {
+          questionnaireId,
+          tagId: tag,
+        };
+
+        await create(payload);
+      }
+    });
   };
   return (
     <Query
@@ -42,11 +49,9 @@ const QuestionnaireTagsEdit = (props) => {
             if (error) {
               return <div>Error: {error}</div>;
             }
-            const filteredTags = tags.filter(
-              tag =>
-                !questionnaireTags.map(questionnareTag => questionnareTag.tagId).includes(tag.id),
-            );
-            const tagsOption = filteredTags.map(tag => ({
+            const initialValues = questionnaireTags.map(tag => tag.tagId);
+
+            const tagsOption = tags.map(tag => ({
               key: tag.id,
               text: tag.name,
               value: tag.id,
@@ -62,15 +67,13 @@ const QuestionnaireTagsEdit = (props) => {
                   if (updateLoading) {
                     return <div>loading...</div>;
                   }
-                  if (tagsOption.length < 1) {
-                    return <div>You cannot add any more tags</div>;
-                  }
                   return (
                     <QuestionnaireTagsForm
                       form={`tag-${questionnaireId}`}
                       options={tagsOption}
+                      initialValues={{ tagId: initialValues }}
                       onSubmit={(values) => {
-                        handleTagSubmit(create, values);
+                        handleTagSubmit(create, values, initialValues);
                       }}
                       onCancel={closePanel}
                     />
