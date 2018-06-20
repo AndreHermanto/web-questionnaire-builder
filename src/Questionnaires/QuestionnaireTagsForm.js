@@ -2,31 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
-import { reduxForm, formValueSelector } from 'redux-form/immutable';
-import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form/immutable';
 
-let TagsForm = ({ handleSubmit, onCancel, submitting, options, tagOptions }) => (
+const TagsForm = ({
+  handleSubmit,
+  onCancel,
+  submitting,
+  options,
+  questionnaireId,
+  currentVersionId,
+}) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Add Tags</Heading>
-    <Fields.Radio
-      name="tagOptions"
-      label="Tag options"
-      options={[
-        { key: 'new', text: 'new tag', value: 'new' },
-        { key: 'current', text: 'current tag', value: 'current' },
-      ]}
-    />
-    {tagOptions === 'current' && (
-      <Fields.Select name="tagId" label="Tags" options={options} multiple />
-    )}
-    {tagOptions === 'new' && <Fields.Text name="tag" label="tag" />}
+    <Fields.Select name="tagId" label="Tags" options={options} multiple />
     <div>
       <Buttons
         actions={[
           {
-            content: 'Add Tags',
+            content: 'Add Tags to Questionnaire',
             type: 'submit',
             disabled: submitting,
+          },
+          {
+            content: 'Add new tag',
+            to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/addNewTag`,
           },
           {
             content: 'Cancel',
@@ -48,19 +47,14 @@ TagsForm.propTypes = {
       text: PropTypes.string,
       value: PropTypes.string,
     }),
-  ).isRequired,
-  tagOptions: PropTypes.string.isRequired,
+  ),
+  questionnaireId: PropTypes.string.isRequired,
+  currentVersionId: PropTypes.string.isRequired,
 };
-
-TagsForm = connect((state, props) => {
-  const selector = formValueSelector(props.form);
-  const tagOptions = selector(state, 'tagOptions');
-  const tagId = selector(state, 'tagId');
-  return {
-    tagOptions,
-    tagId,
-  };
-})(TagsForm);
+TagsForm.defaultProps = {
+  initialValues: undefined,
+  options: undefined,
+};
 
 export default reduxForm({
   enableReinitialize: true,

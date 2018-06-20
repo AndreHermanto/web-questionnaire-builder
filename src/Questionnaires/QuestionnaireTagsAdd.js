@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { Mutation, Resource, Query } from 'web-components';
 import QuestionnaireTagsForm from './QuestionnaireTagsForm';
 import { questionnaireTagSchema } from './schemas';
+import { tagsSchema } from '../Tags/schemas';
 
 const QuestionnaireTagsEdit = (props) => {
   const {
     closePanel,
     match: {
-      params: { questionnaireId },
+      params: { questionnaireId, currentVersionId },
     },
   } = props;
-  const handleTagSubmit = async (create, values, initialValues) => {
-    const tags = values.get('tagId');
-
-    tags.forEach(async (tag) => {
+  const handleTagSubmit = async (create, createTags, values, initialValues) => {
+    const tagIds = values.get('tagId');
+    tagIds.forEach(async (tag) => {
       if (!initialValues.includes(tag)) {
         const payload = {
           questionnaireId,
@@ -32,6 +32,11 @@ const QuestionnaireTagsEdit = (props) => {
           resourceName: 'questionnaireTags',
           url: `/questionnaire-tags?questionnaireId=${questionnaireId}`,
           schema: questionnaireTagSchema,
+        },
+        {
+          resourceName: 'tags',
+          url: '/tags',
+          schema: tagsSchema,
         },
       ]}
       render={({ error }) => (
@@ -63,8 +68,8 @@ const QuestionnaireTagsEdit = (props) => {
                 url={'/questionnaire-tags'}
                 schema={questionnaireTagSchema}
                 post={closePanel}
-                render={({ create, loading: updateLoading }) => {
-                  if (updateLoading) {
+                render={({ create, loading: updateLoadingQuestionnaireTags }) => {
+                  if (updateLoadingQuestionnaireTags) {
                     return <div>loading...</div>;
                   }
                   return (
@@ -77,6 +82,8 @@ const QuestionnaireTagsEdit = (props) => {
                       onSubmit={(values) => {
                         handleTagSubmit(create, values, initialValues);
                       }}
+                      questionnaireId={questionnaireId}
+                      currentVersionId={currentVersionId}
                       onCancel={closePanel}
                     />
                   );

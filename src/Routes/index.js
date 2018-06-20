@@ -78,6 +78,7 @@ import GlossaryTermsCreate from '../GlossaryTerms/GlossaryTermsCreate';
 import GlossaryTermsEdit from '../GlossaryTerms/GlossaryTermsEdit';
 import GlossaryTermsShow from '../GlossaryTerms/GlossaryTermsShow';
 import GlossaryTermsDelete from '../GlossaryTerms/GlossaryTermsDelete';
+import TagsCreate from '../Tags/TagsCreate';
 
 const sidebarGroups = [
   {
@@ -318,6 +319,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/trait"
             component={AnswersAddTrait}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/addNewTag"
+            component={TagsCreate}
           />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
