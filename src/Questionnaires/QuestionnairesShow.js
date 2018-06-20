@@ -114,6 +114,7 @@ class QuestionnairesShow extends React.Component {
                   const user = users[0];
                   const currentVersionId = version.id;
 
+<<<<<<< HEAD
                   return (
                     <div>
                       <Breadcrumbs
@@ -245,6 +246,51 @@ class QuestionnairesShow extends React.Component {
             );
           }}
         </QuestionnaireQueryResource>
+=======
+                return (
+                  <div>
+                    <Breadcrumbs
+                      sections={[
+                        { content: 'Questionnaires', to: '/questionnaires' },
+                        { content: version.title },
+                      ]}
+                    />
+                    <Heading size="h1">{version.title}</Heading>
+                    <Grid>
+                      <Grid.Column width={12}>
+                        <DefinitionList listData={version} renderProperty={renderProperty} />
+                      </Grid.Column>
+                      <Grid.Column width={4}>
+                        <Buttons
+                          actions={[
+                            {
+                              content: 'Delete',
+                              to: `/questionnaires/${id}/delete`,
+                            },
+                            {
+                              content: 'Add Tag',
+                              to: `/questionnaires/${id}/versions/${currentVersionId}/addTag`,
+                            },
+                          ]}
+                        />
+                      </Grid.Column>
+                    </Grid>
+                    <Grid>
+                      <Grid.Column width={12}>
+                        {/* <Table
+                          headerRow={headerRow}
+                          renderBodyRow={renderBodyRow}
+                          tableData={version.body.filter(element => element.question)}
+                        /> */}
+                      </Grid.Column>
+                    </Grid>
+                  </div>
+                );
+              }}
+            />
+          )}
+        />
+>>>>>>> change some stuffs!
       </div>
     );
   }

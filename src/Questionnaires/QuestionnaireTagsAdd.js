@@ -71,7 +71,9 @@ const QuestionnaireTagsEdit = (props) => {
                     <QuestionnaireTagsForm
                       form={`tag-${questionnaireId}`}
                       options={tagsOption}
-                      initialValues={{ tagId: initialValues }}
+                      initialValues={{
+                        tagId: initialValues || [],
+                      }}
                       onSubmit={(values) => {
                         handleTagSubmit(create, values, initialValues);
                       }}

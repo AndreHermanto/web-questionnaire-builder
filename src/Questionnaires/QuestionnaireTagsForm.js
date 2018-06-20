@@ -2,12 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
-import { reduxForm } from 'redux-form/immutable';
+import { reduxForm, formValueSelector } from 'redux-form/immutable';
+import { connect } from 'react-redux';
 
-const TagsForm = ({ handleSubmit, onCancel, submitting, options }) => (
+let TagsForm = ({ handleSubmit, onCancel, submitting, options, tagOptions }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Add Tags</Heading>
-    <Fields.Select multiple name="tagId" header="Tags" options={options} />
+    <Fields.Radio
+      name="tagOptions"
+      label="Tag options"
+      options={[
+        { key: 'new', text: 'new tag', value: 'new' },
+        { key: 'current', text: 'current tag', value: 'current' },
+      ]}
+    />
+    {tagOptions === 'current' && (
+      <Fields.Select name="tagId" label="Tags" options={options} multiple />
+    )}
+    {tagOptions === 'new' && <Fields.Text name="tag" label="tag" />}
     <div>
       <Buttons
         actions={[
@@ -37,7 +49,19 @@ TagsForm.propTypes = {
       value: PropTypes.string,
     }),
   ).isRequired,
+  tagOptions: PropTypes.string.isRequired,
 };
+
+TagsForm = connect((state, props) => {
+  const selector = formValueSelector(props.form);
+  const tagOptions = selector(state, 'tagOptions');
+  const tagId = selector(state, 'tagId');
+  return {
+    tagOptions,
+    tagId,
+  };
+})(TagsForm);
+
 export default reduxForm({
   enableReinitialize: true,
 })(TagsForm);
