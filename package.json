@@ -52,8 +52,7 @@
     "e2e": "npm test -- --testMatch=\"**/*.e2e.js\"",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "eslint":
-      "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/",
+    "eslint": "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/",
     "release:start": "./scripts/release-start.sh",
     "release:finish": "./scripts/release-finish.sh"
   },
@@ -76,7 +75,10 @@
     "selenium-server": "^3.6.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": ["prettier-eslint --single-quote --write", "git add"]
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier-eslint --single-quote --write",
+      "git add"
+    ]
   },
   "homepage": "."
 }
