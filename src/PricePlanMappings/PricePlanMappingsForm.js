@@ -32,7 +32,7 @@ const PricePlanMappingsForm = ({
         {
           content: 'Create',
           type: 'submit',
-          disabled: submitting || consentTypeOptions.length === 0,
+          disabled: submitting || !consentTypeOptions.length || !pricePlanOptions,
         },
         {
           content: 'Go back',
