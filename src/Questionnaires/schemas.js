@@ -24,4 +24,4 @@ export const encryptedTokenSchema = new schema.Entity(
 );
 
 export const questionnaireTagSchema = new schema.Entity('questionnaireTags');
-export const questionnaireTagsSchema = new schema.Array(questionnaireTagSchema);
+export const questionnaireTagsSchema = [questionnaireTagSchema];

@@ -4,16 +4,10 @@ import { Form } from 'semantic-ui-react';
 import { Heading, Fields, Buttons } from 'web-components';
 import { reduxForm } from 'redux-form/immutable';
 
-const TagsForm = ({
-  handleSubmit,
-  onCancel,
-  submitting,
-  options,
-  questionnaireId,
-  currentVersionId,
-}) => (
+const TagsForm = ({ handleSubmit, onCancel, submitting, options, questionnaireId }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Add Tags</Heading>
+    <Heading size="h3">If desired tag doesn't exist, please create a new tag first</Heading>
     <Fields.Select name="tagId" label="Tags" options={options} multiple />
     <div>
       <Buttons
@@ -25,7 +19,7 @@ const TagsForm = ({
           },
           {
             content: 'Add new tag',
-            to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/addNewTag`,
+            to: `/questionnaires/${questionnaireId}/addNewTag`,
           },
           {
             content: 'Cancel',
@@ -49,10 +43,8 @@ TagsForm.propTypes = {
     }),
   ),
   questionnaireId: PropTypes.string.isRequired,
-  currentVersionId: PropTypes.string.isRequired,
 };
 TagsForm.defaultProps = {
-  initialValues: undefined,
   options: undefined,
 };
 

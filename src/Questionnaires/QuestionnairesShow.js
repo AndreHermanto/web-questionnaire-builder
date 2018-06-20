@@ -11,8 +11,9 @@ import {
   Buttons,
   QueryResource,
 } from 'web-components';
-import { userSchema } from './schemas';
+import { userSchema, questionnaireTagsSchema } from './schemas';
 import QuestionnaireQueryResource from './QuestionnaireQueryResource';
+import { tagsSchema } from '../Tags/schemas';
 
 const renderProperty = (propertyName, value, questionnaire) => {
   switch (propertyName) {
@@ -108,11 +109,30 @@ class QuestionnairesShow extends React.Component {
                     url: '/me',
                     schema: userSchema,
                   },
+                  {
+                    resourceName: 'questionnaireTags',
+                    url: `/questionnaire-tags?questionnaireId=${questionnaireId}`,
+                    schema: questionnaireTagsSchema,
+                    filter: { questionnaireId },
+                  },
+                  {
+                    resourceName: 'tags',
+                    url: '/tags',
+                    schema: tagsSchema,
+                  },
                 ]}
               >
-                {({ users }) => {
+                {({ users, questionnaireTags, tags }) => {
                   const user = users[0];
                   const currentVersionId = version.id;
+
+                  const filteredTags = tags.filter(tag =>
+                    questionnaireTags
+                      .map(questionnareTag => questionnareTag.tagId)
+                      .includes(tag.id),
+                  );
+                  const tagsName = filteredTags.map(tag => tag.name);
+                  version.tags = tagsName;
 
                   return (
                     <div>
@@ -192,7 +212,7 @@ class QuestionnairesShow extends React.Component {
                                   },
                                   {
                                     content: 'Add Tag',
-                                    to: `/questionnaires/${questionnaireId}/editTag`,
+                                    to: `/questionnaires/${questionnaireId}/addTag`,
                                   },
                                   {
                                     content: 'Move to Folder',

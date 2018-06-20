@@ -247,7 +247,7 @@ class Routes extends Component {
             component={ElementsCreate}
           />
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/editTag"
+            path="/questionnaires/:questionnaireId/addTag"
             component={QuestionnaireTagsAdd}
           />
           <SidePanelRoute
@@ -321,7 +321,7 @@ class Routes extends Component {
             component={AnswersAddTrait}
           />
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/versions/:currentVersionId/addNewTag"
+            path="/questionnaires/:questionnaireId/addNewTag"
             component={TagsCreate}
           />
           <SidePanelRoute
