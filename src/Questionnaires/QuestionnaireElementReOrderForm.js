@@ -13,7 +13,7 @@ const QuestionnaireElementReOrderForm = ({ handleSubmit, onCancel, questionOptio
       label="Position"
       options={[
         { key: 'AFTER', text: 'After', value: 1 },
-        { key: 'BEFORE', text: 'Before', value: -1 },
+        { key: 'BEFORE', text: 'Before', value: 0 },
       ]}
     />
     <Buttons
