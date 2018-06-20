@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'semantic-ui-react';
+import { Form, Divider } from 'semantic-ui-react';
 import { Heading, Fields, Buttons, Helpers } from 'web-components';
 import { reduxForm, formValueSelector } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
@@ -57,7 +57,7 @@ const requiredOptions = [
   { key: 'NO', value: false, text: 'No' },
 ];
 
-let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
+let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Elements</Heading>
     <Fields.TextArea name="question" required />
@@ -128,6 +128,22 @@ let ElementsForm = ({ handleSubmit, onCancel, type, change }) => (
         <Uomfields name="answers.0.uom2" change={change} label="Unit of Measurement 2" />
       </div>
     )}
+
+    {questionOptions.length > 0 && (
+      <div>
+        <Divider />,
+        <Heading as="h3">Placement</Heading>
+        <Fields.Radio
+          name="position"
+          label="Position"
+          options={[
+            { key: 'AFTER', text: 'After', value: 1 },
+            { key: 'BEFORE', text: 'Before', value: 0 },
+          ]}
+        />
+        <Fields.Select name="index" label="Question" options={questionOptions} required />
+      </div>
+    )}
     <Buttons
       actions={[
         {
@@ -148,6 +164,7 @@ ElementsForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   type: PropTypes.string,
+  questionOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
 };
 
 ElementsForm.defaultProps = {

@@ -16,7 +16,22 @@ export default function ElementsCreate({
         {({ questionnaires, versions }) => {
           const questionnaire = questionnaires[0];
           const version = versions[0];
+          const questions = version.body.filter(
+            data => data.type !== 'end' || data.type !== 'start',
+          );
 
+          const questionOptions = questions.reduce((previousValue, element, index) => {
+            if (element.type === 'end' || element.type === 'start') {
+              return previousValue;
+            }
+            return previousValue.concat([
+              {
+                key: index,
+                text: element.question || element.title,
+                value: index,
+              },
+            ]);
+          }, []);
           return (
             <QuestionnaireUpdaterMutation
               version={version}
@@ -29,8 +44,13 @@ export default function ElementsCreate({
                 return (
                   <ElementsForm
                     form={'elements-form'}
-                    onSubmit={value => create(value, version.body.length - 1)}
+                    onSubmit={(value) => {
+                      const moveToIndex = value.get('index') + value.get('position');
+                      const newPos = Math.min(Math.max(moveToIndex, 0), questions.length);
+                      create(value, newPos);
+                    }}
                     onCancel={closePanel}
+                    questionOptions={questionOptions}
                   />
                 );
               }}
