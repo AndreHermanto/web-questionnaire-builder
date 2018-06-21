@@ -131,7 +131,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
 
     {questionOptions.length > 0 && (
       <div>
-        <Divider />,
+        <Divider />
         <Heading as="h3">Placement</Heading>
         <Fields.Radio
           name="position"
@@ -140,6 +140,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
             { key: 'AFTER', text: 'After', value: 1 },
             { key: 'BEFORE', text: 'Before', value: 0 },
           ]}
+          required
         />
         <Fields.Select name="index" label="Question" options={questionOptions} required />
       </div>
