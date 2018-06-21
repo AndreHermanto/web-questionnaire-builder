@@ -13,11 +13,15 @@ import ValidationLogicTextForm from './ValidationLogicTextForm';
 
 function getNumericValidationLogic(element, answerId) {
   const { validationLogic } = element.answers.find(answer => answer.id === answerId);
-  return validationLogic ? convertNumericValidationLogicToForm(validationLogic) : null;
+  return validationLogic && validationLogic.number
+    ? convertNumericValidationLogicToForm(validationLogic.number)
+    : null;
 }
 function getTextValidationLogic(element, answerId) {
   const { validationLogic } = element.answers.find(answer => answer.id === answerId);
-  return validationLogic ? convertRegexValidationLogicToForm(validationLogic) : null;
+  return validationLogic && validationLogic.text
+    ? convertRegexValidationLogicToForm(validationLogic.text)
+    : null;
 }
 function updateValidationLogic(element, answerId, validationLogic) {
   const answers = element.answers.map((answer) => {
@@ -40,7 +44,7 @@ function ValidationLogic({
         const element = elements[0];
         const questionnaire = questionnaires[0];
         const version = versions[0];
-        let validationLogic = getNumericValidationLogic(element, answerId);
+
         return (
           <QuestionnaireUpdaterMutation
             questionnaire={questionnaire}
@@ -52,7 +56,7 @@ function ValidationLogic({
               }
 
               if (element.type === 'text') {
-                validationLogic = getTextValidationLogic(element, answerId);
+                const validationLogic = getTextValidationLogic(element, answerId);
                 return (
                   <ValidationLogicTextForm
                     initialValues={validationLogic}
@@ -61,7 +65,9 @@ function ValidationLogic({
                         element.type,
                         values.get('regex'),
                       );
-                      const payload = updateValidationLogic(element, answerId, answerValidation);
+                      const payload = updateValidationLogic(element, answerId, {
+                        text: answerValidation,
+                      });
                       update(payload);
                     }}
                     onCancel={closePanel}
@@ -70,6 +76,7 @@ function ValidationLogic({
               }
 
               // element.type === 'number'
+              const validationLogic = getNumericValidationLogic(element, answerId);
               return (
                 <ValidationLogicNumericForm
                   initialValues={validationLogic}
@@ -78,7 +85,9 @@ function ValidationLogic({
                       element.type,
                       values.toJS(),
                     );
-                    const payload = updateValidationLogic(element, answerId, answerValidation);
+                    const payload = updateValidationLogic(element, answerId, {
+                      number: answerValidation,
+                    });
                     update(payload);
                   }}
                   onCancel={closePanel}
