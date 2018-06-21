@@ -49,13 +49,11 @@ const sidebarGroups = [
 ];
 
 class Routes extends Component {
-  static getDerivedStateFromProps(props, state) {
-    const { location } = state;
-    // set previousLocation if props.location is not modal
-    if (!get(location, 'state.modal', false)) {
+  static getDerivedStateFromProps(props) {
+    // set location if props.location is not modal
+    if (!get(props, 'location.state.modal', false)) {
       return {
         location: props.location,
-        previousLocation: location,
       };
     }
     return null;
@@ -65,7 +63,6 @@ class Routes extends Component {
     super(props);
     this.state = {
       location: this.props.location,
-      previousLocation: '',
     };
   }
 
@@ -73,12 +70,7 @@ class Routes extends Component {
     if (!me) {
       return <RedirectToLogin />;
     }
-    const { location } = this.props;
-    const { previousLocation } = this.state;
-    const isModal = !!(
-      (location.state && location.state.modal && previousLocation !== location) ||
-      previousLocation === location
-    );
+    const { location } = this.state;
 
     return (
       <div>
@@ -88,7 +80,7 @@ class Routes extends Component {
             <SideBarComponent name={'Examples'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
-              <Switch location={isModal ? previousLocation : location}>
+              <Switch location={location}>
                 <Redirect exact from="/" to="/examples" />
                 <Route path="/examples/create" component={ExamplesList} />
                 <Route path="/examples/:exampleId" component={ExamplesShow} />
