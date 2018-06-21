@@ -1,14 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { Heading, Fields, Buttons } from 'web-components';
 import { reduxForm } from 'redux-form/immutable';
 
 const TagsForm = ({ handleSubmit, onCancel, submitting, options, questionnaireId }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Add Tags</Heading>
-    <Heading size="h3">If desired tag doesn't exist, please create a new tag first</Heading>
-    <Fields.Select name="tagId" label="Tags" options={options} multiple />
+    <Heading size="h3">
+      If desired tag does not exist, please{' '}
+      <Link
+        to={{
+          pathname: '/tags/create',
+          state: { modal: true },
+        }}
+      >
+        create a new tag
+      </Link>{' '}
+      first
+    </Heading>
+    <Fields.Select name="tagId" label="Tags" options={options} />
     <div>
       <Buttons
         actions={[

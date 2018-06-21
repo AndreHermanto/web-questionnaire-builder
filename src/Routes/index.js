@@ -16,7 +16,8 @@ import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import QuestionnaireElementReOrder from '../Questionnaires/QuestionnaireElementReOrder';
 import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
-import QuestionnaireTagsAdd from '../Questionnaires/QuestionnaireTagsAdd';
+import QuestionnaireTagsAdd from '../QuestionnaireTags/QuestionnaireTagsAdd';
+import QuestionnaireTagsDelete from '../QuestionnaireTags/QuestionnaireTagsDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesVersionFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesVersionFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
@@ -247,8 +248,12 @@ class Routes extends Component {
             component={ElementsCreate}
           />
           <SidePanelRoute
-            path="/questionnaires/:questionnaireId/addTag"
+            path="/questionnaires/:questionnaireId/tags/add"
             component={QuestionnaireTagsAdd}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/tags/:questionnaireTagId/delete"
+            component={QuestionnaireTagsDelete}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section/create"
@@ -320,10 +325,7 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/trait"
             component={AnswersAddTrait}
           />
-          <SidePanelRoute
-            path="/questionnaires/:questionnaireId/addNewTag"
-            component={TagsCreate}
-          />
+          <SidePanelRoute path="/tags/create" component={TagsCreate} />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
             component={LandingPageEdit}

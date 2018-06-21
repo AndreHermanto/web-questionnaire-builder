@@ -9,22 +9,10 @@ const QuestionnaireTagsEdit = (props) => {
   const {
     closePanel,
     match: {
-      params: { questionnaireId, currentVersionId },
+      params: { questionnaireId },
     },
   } = props;
-  const handleTagSubmit = async (create, values, initialValues) => {
-    const tagIds = values.get('tagId');
-    tagIds.forEach(async (tag) => {
-      if (!initialValues.includes(tag)) {
-        const payload = {
-          questionnaireId,
-          tagId: tag,
-        };
 
-        await create(payload);
-      }
-    });
-  };
   return (
     <QueryResource
       queries={[
@@ -42,9 +30,8 @@ const QuestionnaireTagsEdit = (props) => {
       ]}
     >
       {({ questionnaireTags, tags }) => {
-        const initialValues = questionnaireTags.map(tag => tag.tagId);
-
-        const tagsOption = tags.map(tag => ({
+        const alreadyUsedTagIds = questionnaireTags.map(tag => tag.tagId);
+        const tagsOption = tags.filter(tag => !alreadyUsedTagIds.includes(tag.id)).map(tag => ({
           key: tag.id,
           text: tag.name,
           value: tag.id,
@@ -65,13 +52,9 @@ const QuestionnaireTagsEdit = (props) => {
                   form={`tag-${questionnaireId}`}
                   options={tagsOption}
                   initialValues={{
-                    tagId: initialValues || [],
+                    questionnaireId,
                   }}
-                  onSubmit={(values) => {
-                    handleTagSubmit(create, values, initialValues);
-                  }}
-                  questionnaireId={questionnaireId}
-                  currentVersionId={currentVersionId}
+                  onSubmit={create}
                   onCancel={closePanel}
                 />
               );
