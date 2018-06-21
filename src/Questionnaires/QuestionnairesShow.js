@@ -30,7 +30,7 @@ const renderProperty = (propertyName, value, questionnaire) => {
               state: { modal: true },
             }}
           >
-            {index && ', '}
+            {!!index && ', '}
             {Helpers.renderContent('tag', questionnaireTags.tag)}
           </Link>
         )),
