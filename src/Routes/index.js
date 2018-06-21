@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import get from 'lodash.get';
 import {
   Authorized,
   AuthTokenValidator,
@@ -132,24 +133,28 @@ const sidebarGroups = [
 ];
 
 class Routes extends Component {
-  componentWillUpdate(nextProps) {
-    const { location } = this.props;
-    // set previousLocation if props.location is not modal
-    if (nextProps.history.action !== 'POP' && (!location.state || !location.state.modal)) {
-      this.previousLocation = this.props.location;
+  static getDerivedStateFromProps(props) {
+    // set location if props.location is not modal
+    if (!get(props, 'location.state.modal', false)) {
+      return {
+        location: props.location,
+      };
     }
+    return null;
   }
-  previousLocation = this.props.location;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: this.props.location,
+    };
+  }
 
   renderWithAuthorization = ({ me }) => {
     if (!me) {
       return <RedirectToLogin />;
     }
-    const { location } = this.props;
-    const isModal = !!(
-      (location.state && location.state.modal && this.previousLocation !== location) ||
-      this.previousLocation === location
-    );
+    const { location } = this.state;
 
     return (
       <div>
@@ -159,7 +164,7 @@ class Routes extends Component {
             <SideBarComponent name={'Questionnaires Builder'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
-              <Switch location={isModal ? this.previousLocation : location}>
+              <Switch location={location}>
                 <Redirect exact from="/" to="/questionnaires" />
                 <Route
                   path="/questionnaires/:questionnaireId/elements/:elementId"
