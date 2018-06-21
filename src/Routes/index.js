@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import get from 'lodash.get';
 import {
   Authorized,
   AuthTokenValidator,
@@ -48,23 +49,35 @@ const sidebarGroups = [
 ];
 
 class Routes extends Component {
-  componentWillUpdate(nextProps) {
-    const { location } = this.props;
+  static getDerivedStateFromProps(props, state) {
+    const { location } = state;
     // set previousLocation if props.location is not modal
-    if (nextProps.history.action !== 'POP' && (!location.state || !location.state.modal)) {
-      this.previousLocation = this.props.location;
+    if (!get(location, 'state.modal', false)) {
+      return {
+        location: props.location,
+        previousLocation: location,
+      };
     }
+    return null;
   }
-  previousLocation = this.props.location;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: this.props.location,
+      previousLocation: '',
+    };
+  }
 
   renderWithAuthorization = ({ me }) => {
     if (!me) {
       return <RedirectToLogin />;
     }
     const { location } = this.props;
+    const { previousLocation } = this.state;
     const isModal = !!(
-      (location.state && location.state.modal && this.previousLocation !== location) ||
-      this.previousLocation === location
+      (location.state && location.state.modal && previousLocation !== location) ||
+      previousLocation === location
     );
 
     return (
@@ -75,7 +88,7 @@ class Routes extends Component {
             <SideBarComponent name={'Examples'} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
-              <Switch location={isModal ? this.previousLocation : location}>
+              <Switch location={isModal ? previousLocation : location}>
                 <Redirect exact from="/" to="/examples" />
                 <Route path="/examples/create" component={ExamplesList} />
                 <Route path="/examples/:exampleId" component={ExamplesShow} />
