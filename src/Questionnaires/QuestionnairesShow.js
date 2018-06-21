@@ -187,6 +187,10 @@ class QuestionnairesShow extends React.Component {
                                 name: 'Questionnaires',
                                 actions: [
                                   {
+                                    content: 'Edit Title',
+                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/edit-title`,
+                                  },
+                                  {
                                     content: 'Delete',
                                     to: `/questionnaires/${questionnaireId}/delete`,
                                   },
