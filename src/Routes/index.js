@@ -17,6 +17,8 @@ import QuestionnairesList from '../Questionnaires/QuestionnairesList';
 import QuestionnairesShow from '../Questionnaires/QuestionnairesShow';
 import QuestionnaireElementReOrder from '../Questionnaires/QuestionnaireElementReOrder';
 import QuestionnairesDelete from '../Questionnaires/QuestionnairesDelete';
+import QuestionnaireTagsAdd from '../QuestionnaireTags/QuestionnaireTagsAdd';
+import QuestionnaireTagsDelete from '../QuestionnaireTags/QuestionnaireTagsDelete';
 import QuestionnairesFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesFileImport';
 import QuestionnairesVersionFileImport from '../Questionnaires/QuestionnairesForm/QuestionnairesVersionFileImport';
 import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/QuestionnairesDuplicate';
@@ -78,6 +80,7 @@ import GlossaryTermsCreate from '../GlossaryTerms/GlossaryTermsCreate';
 import GlossaryTermsEdit from '../GlossaryTerms/GlossaryTermsEdit';
 import GlossaryTermsShow from '../GlossaryTerms/GlossaryTermsShow';
 import GlossaryTermsDelete from '../GlossaryTerms/GlossaryTermsDelete';
+import TagsCreate from '../Tags/TagsCreate';
 
 const sidebarGroups = [
   {
@@ -250,6 +253,14 @@ class Routes extends Component {
             component={ElementsCreate}
           />
           <SidePanelRoute
+            path="/questionnaires/:questionnaireId/tags/add"
+            component={QuestionnaireTagsAdd}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/tags/:questionnaireTagId/delete"
+            component={QuestionnaireTagsDelete}
+          />
+          <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/section/create"
             component={ElementsSectionCreate}
           />
@@ -319,6 +330,7 @@ class Routes extends Component {
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/trait"
             component={AnswersAddTrait}
           />
+          <SidePanelRoute path="/tags/create" component={TagsCreate} />
           <SidePanelRoute
             path="/landing-page/consents/:consentTypeId/edit"
             component={LandingPageEdit}

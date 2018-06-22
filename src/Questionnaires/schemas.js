@@ -22,3 +22,6 @@ export const encryptedTokenSchema = new schema.Entity(
   {},
   { idAttribute: 'consentTypeId' },
 );
+
+export const questionnaireTagSchema = new schema.Entity('questionnaireTags');
+export const questionnaireTagsSchema = [questionnaireTagSchema];

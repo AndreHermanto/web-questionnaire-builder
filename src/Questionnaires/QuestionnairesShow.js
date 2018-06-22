@@ -11,17 +11,34 @@ import {
   Buttons,
   QueryResource,
 } from 'web-components';
-import { userSchema } from './schemas';
+import { userSchema, questionnaireTagsSchema } from './schemas';
 import QuestionnaireQueryResource from './QuestionnaireQueryResource';
+import { tagsSchema } from '../Tags/schemas';
 
 const renderProperty = (propertyName, value, questionnaire) => {
   switch (propertyName) {
     case 'body':
     case 'id':
       return null;
+    case 'questionnaireTags': {
+      return {
+        label: Helpers.renderLabel('tags'),
+        value: value.map((questionnaireTags, index) => (
+          <Link
+            to={{
+              pathname: `/questionnaires/${questionnaire.id}/tags/${questionnaireTags.id}/delete`,
+              state: { modal: true },
+            }}
+          >
+            {!!index && ', '}
+            {Helpers.renderContent('tag', questionnaireTags.tag)}
+          </Link>
+        )),
+      };
+    }
     case 'title':
       return {
-        label: Helpers.renderLabel(propertyName),
+        label: Helpers.renderLabel('tags'),
         value: Helpers.renderContent(propertyName, value || 'No name'),
       };
     default:
@@ -108,11 +125,33 @@ class QuestionnairesShow extends React.Component {
                     url: '/me',
                     schema: userSchema,
                   },
+                  {
+                    resourceName: 'questionnaireTags',
+                    url: `/questionnaire-tags?questionnaireId=${questionnaireId}`,
+                    schema: questionnaireTagsSchema,
+                    filter: { questionnaireId },
+                  },
+                  {
+                    resourceName: 'tags',
+                    url: '/tags',
+                    schema: tagsSchema,
+                  },
                 ]}
               >
-                {({ users }) => {
+                {({ users, questionnaireTags, tags }) => {
                   const user = users[0];
                   const currentVersionId = version.id;
+
+                  // embed the questionnaire tag with the actual tag
+                  const questionnaireTagsWithTag = questionnaireTags.map(qt => ({
+                    ...qt,
+                    tag: tags.find(tag => tag.id === qt.tagId),
+                  }));
+                  // only add the tags to the version if
+                  // there are some
+                  if (questionnaireTagsWithTag.length) {
+                    version.questionnaireTags = questionnaireTagsWithTag;
+                  }
 
                   return (
                     <div>
@@ -189,6 +228,10 @@ class QuestionnairesShow extends React.Component {
                                   {
                                     content: 'Delete',
                                     to: `/questionnaires/${questionnaireId}/delete`,
+                                  },
+                                  {
+                                    content: 'Add Tag',
+                                    to: `/questionnaires/${questionnaireId}/tags/add`,
                                   },
                                   {
                                     content: 'Move to Folder',
