@@ -46,6 +46,7 @@ export default function ElementsEdit({
                 const formProps = {
                   form: 'elements-form',
                   initialValues: element,
+                  questionOptions: [],
                   onSubmit: update,
                   onCancel: closePanel,
                 };
