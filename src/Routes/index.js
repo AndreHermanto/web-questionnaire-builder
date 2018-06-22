@@ -27,6 +27,7 @@ import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/Questionn
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
 import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
 import QuestionnairesPreviewAsPatient from '../Questionnaires/QuestionnairesForm/QuestionnairesPreviewAsPatient';
+import QuestionnairesEditTitle from '../Questionnaires/QuestionnairesForm/QuestionnairesEditTitle';
 import ConsentTypesList from '../Releases/ConsentTypesList';
 import ReleasesConsentsShow from '../Releases/ReleasesConsentsShow';
 import ReleasesShow from '../Releases/ReleasesShow';
@@ -247,6 +248,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/import-version"
             component={QuestionnairesVersionFileImport}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/versions/:currentVersionId/edit-title"
+            component={QuestionnairesEditTitle}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/create"
