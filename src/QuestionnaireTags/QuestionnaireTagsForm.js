@@ -30,10 +30,6 @@ const TagsForm = ({ handleSubmit, onCancel, submitting, options, questionnaireId
             disabled: submitting,
           },
           {
-            content: 'Add new tag',
-            to: `/questionnaires/${questionnaireId}/addNewTag`,
-          },
-          {
             content: 'Cancel',
             onClick: onCancel,
             type: 'button',
