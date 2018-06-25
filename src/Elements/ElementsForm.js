@@ -26,7 +26,6 @@ const getDefaultAnswer = (type) => {
       return {
         id: cuid(),
         text: '',
-        singleLine: false,
         concepts: [],
       };
     case 'uom':
