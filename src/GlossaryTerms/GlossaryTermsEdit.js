@@ -18,6 +18,7 @@ export default function GlossaryTermsEdit({
           resourceName: 'glossaryTerms',
           url: `/glossary-terms/${glossaryTermId}`,
           schema: glossaryTermSchema,
+          filter: { id: glossaryTermId },
         },
       ]}
       render={({ glossaryTerms }) => {
