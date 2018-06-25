@@ -1,24 +1,13 @@
-import puppeteer from 'puppeteer';
 import fetch from 'isomorphic-fetch';
+import { jwt, appUrl, getNewPage, closePage } from '../e2e/Browser';
 
 let page;
-let browser;
-const width = 1440;
-const height = 900;
 
-const jwt = '1234';
-const appUrl = 'http://localhost:3000/#';
 beforeAll(async () => {
-  browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 250,
-    args: [`--window-size=${width},${height}`],
-  });
-  page = await browser.newPage();
-  await page.setViewport({ width, height });
+  page = await getNewPage();
 });
 afterAll(() => {
-  browser.close();
+  closePage(page);
 });
 
 let examples = [];
