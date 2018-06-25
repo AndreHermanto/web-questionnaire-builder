@@ -7,12 +7,10 @@ class Uomfields extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: '',
+      url: '/prefix-search/concepts?prefix=&category=uom', // this is to avoid the 404 api error on initial mounting
       searchQuery: '',
     };
-
     this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSearchChange = (e, { searchQuery }) => {
@@ -21,7 +19,6 @@ class Uomfields extends React.Component {
       url: `/prefix-search/concepts?prefix=${searchQuery}&category=uom`,
     });
   };
-  handleChange = (e, { searchQuery, searchValue }) => this.setState({ searchQuery, searchValue });
 
   render() {
     const { url } = this.state;
@@ -39,9 +36,9 @@ class Uomfields extends React.Component {
                 key: value.uri,
                 value: {
                   id: value.uri,
-                  label: value.label,
+                  label: value.displayLabel,
                 },
-                text: value.label,
+                text: value.displayLabel,
               }));
 
               return (
