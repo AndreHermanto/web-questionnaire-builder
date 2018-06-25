@@ -109,7 +109,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
 
     {type === 'text' && (
       <Fields.Radio
-        name="answers.0.singleLine"
+        name="singleLine"
         label="Single Line Only"
         options={[false, true].map(value => ({
           key: value,
