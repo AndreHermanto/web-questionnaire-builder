@@ -82,6 +82,8 @@ import GlossaryTermsEdit from '../GlossaryTerms/GlossaryTermsEdit';
 import GlossaryTermsShow from '../GlossaryTerms/GlossaryTermsShow';
 import GlossaryTermsDelete from '../GlossaryTerms/GlossaryTermsDelete';
 import TagsCreate from '../Tags/TagsCreate';
+import WorkingGroupsList from '../WorkingGroups/WorkingGroupsList';
+import WorkingGroupsSwitch from '../WorkingGroups/WorkingGroupsSwitch';
 
 const sidebarGroups = [
   {
@@ -131,6 +133,11 @@ const sidebarGroups = [
         name: 'Landing page',
         url: '/landing-page',
         icon: 'web_asset',
+      },
+      {
+        name: 'Groups',
+        url: '/working-groups',
+        icon: 'group',
       },
     ],
   },
@@ -214,6 +221,7 @@ class Routes extends Component {
                 <Route path="/price-plan-mappings" component={PricePlanMappingsList} />
                 <Route path="/glossary-terms/:glossaryTermId" component={GlossaryTermsShow} />
                 <Route path="/glossary-terms" component={GlossaryTermsList} />
+                <Route path="/working-groups" component={WorkingGroupsList} />
                 <Route component={Page404} />
               </Switch>
             </Content>
@@ -378,6 +386,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/glossary-terms/create"
             component={AnswersAddGlossaryAnnotation}
+          />
+          <SidePanelRoute
+            path="/working-groups/:workingGroupId/switch"
+            component={WorkingGroupsSwitch}
           />
         </Switch>
       </div>

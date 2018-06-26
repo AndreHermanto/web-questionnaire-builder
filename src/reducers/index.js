@@ -33,6 +33,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'questionnaireTags',
   'tags',
   'applications',
+  'context',
 ]);
 const exampleReducer = combineReducers({
   form: formReducer,
