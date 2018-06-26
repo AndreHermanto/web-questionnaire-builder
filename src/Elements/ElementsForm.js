@@ -67,7 +67,6 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         'radio',
         'checkbox',
         'text',
-        'textinformation',
         'weight',
         'height',
         'date',
