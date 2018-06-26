@@ -136,6 +136,7 @@ const sidebarGroups = [
   },
 ];
 
+const appName = 'Questionnaires Builder';
 class Routes extends Component {
   static getDerivedStateFromProps(props) {
     // set location if props.location is not modal
@@ -164,8 +165,8 @@ class Routes extends Component {
       <div>
         <Page>
           <div>
-            <NavBar signOut={redirectToLogout} />
-            <SideBarComponent name={'Questionnaires Builder'} groups={sidebarGroups} />
+            <NavBar signOut={redirectToLogout} appName={appName} />
+            <SideBarComponent name={appName} groups={sidebarGroups} />
             {/* Regular Content */}
             <Content>
               <Switch location={location}>
