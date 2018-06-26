@@ -10,11 +10,12 @@ import {
 } from '../../helpers/validationLogic';
 import ValidationLogicNumericForm from './ValidationLogicNumericForm';
 import ValidationLogicTextForm from './ValidationLogicTextForm';
+import ValidationLogicUOMsForm from './ValidationLogicUOMsForm';
 
-function getNumericValidationLogic(element, answerId) {
+function getNumericValidationLogic(element, answerId, propertyName) {
   const { validationLogic } = element.answers.find(answer => answer.id === answerId);
-  return validationLogic && validationLogic.number
-    ? convertNumericValidationLogicToForm(validationLogic.number)
+  return validationLogic && validationLogic[propertyName]
+    ? convertNumericValidationLogicToForm(validationLogic[propertyName])
     : null;
 }
 function getTextValidationLogic(element, answerId) {
@@ -54,45 +55,94 @@ function ValidationLogic({
               if (updateLoading) {
                 return <div>loading...</div>;
               }
-
-              if (element.type === 'text') {
-                const validationLogic = getTextValidationLogic(element, answerId);
-                return (
-                  <ValidationLogicTextForm
-                    initialValues={validationLogic}
-                    onSubmit={(values) => {
-                      const answerValidation = buildTextValidationLogicFromForm(
-                        element.type,
-                        values.get('regex'),
-                      );
-                      const payload = updateValidationLogic(element, answerId, {
-                        text: answerValidation,
-                      });
-                      update(payload);
-                    }}
-                    onCancel={closePanel}
-                  />
-                );
+              switch (element.type) {
+                case 'text': {
+                  const validationLogic = getTextValidationLogic(element, answerId);
+                  return (
+                    <ValidationLogicTextForm
+                      initialValues={validationLogic}
+                      onSubmit={(values) => {
+                        const answerValidation = buildTextValidationLogicFromForm(
+                          element.type,
+                          values.get('regex'),
+                        );
+                        const payload = updateValidationLogic(element, answerId, {
+                          text: answerValidation,
+                        });
+                        update(payload);
+                      }}
+                      onCancel={closePanel}
+                    />
+                  );
+                }
+                case 'number': {
+                  const validationLogic = getNumericValidationLogic(element, answerId, 'number');
+                  return (
+                    <ValidationLogicNumericForm
+                      initialValues={validationLogic}
+                      onSubmit={(values) => {
+                        const answerValidation = buildValidationLogicFromForm(
+                          'number',
+                          values.toJS(),
+                        );
+                        const payload = updateValidationLogic(element, answerId, {
+                          number: answerValidation,
+                        });
+                        update(payload);
+                      }}
+                      onCancel={closePanel}
+                    />
+                  );
+                }
+                case 'uom': {
+                  const validationLogic = getNumericValidationLogic(element, answerId, 'uom1');
+                  return (
+                    <ValidationLogicNumericForm
+                      initialValues={validationLogic}
+                      onSubmit={(values) => {
+                        const answerValidation = buildValidationLogicFromForm(
+                          'uom1',
+                          values.toJS(),
+                        );
+                        const payload = updateValidationLogic(element, answerId, {
+                          uom1: answerValidation,
+                        });
+                        update(payload);
+                      }}
+                      onCancel={closePanel}
+                    />
+                  );
+                }
+                case 'uoms': {
+                  const validationLogic = {
+                    uom1: getNumericValidationLogic(element, answerId, 'uom1') || {},
+                    uom2: getNumericValidationLogic(element, answerId, 'uom2') || {},
+                  };
+                  return (
+                    <ValidationLogicUOMsForm
+                      initialValues={validationLogic}
+                      onSubmit={(values) => {
+                        const answerValidationUom1 = buildValidationLogicFromForm(
+                          'uom1',
+                          values.get('uom1').toJS(),
+                        );
+                        const answerValidationUom2 = buildValidationLogicFromForm(
+                          'uom2',
+                          values.get('uom2').toJS(),
+                        );
+                        const payload = updateValidationLogic(element, answerId, {
+                          uom1: answerValidationUom1,
+                          uom2: answerValidationUom2,
+                        });
+                        update(payload);
+                      }}
+                      onCancel={closePanel}
+                    />
+                  );
+                }
+                default:
+                  return <div>ERROR: The element type is not supported to add validations.</div>;
               }
-
-              // element.type === 'number'
-              const validationLogic = getNumericValidationLogic(element, answerId);
-              return (
-                <ValidationLogicNumericForm
-                  initialValues={validationLogic}
-                  onSubmit={(values) => {
-                    const answerValidation = buildValidationLogicFromForm(
-                      element.type,
-                      values.toJS(),
-                    );
-                    const payload = updateValidationLogic(element, answerId, {
-                      number: answerValidation,
-                    });
-                    update(payload);
-                  }}
-                  onCancel={closePanel}
-                />
-              );
             }}
           />
         );

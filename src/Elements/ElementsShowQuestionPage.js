@@ -44,17 +44,16 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
         state: { modal: true },
       },
     },
+    ...(['number', 'text', 'uom', 'uoms'].includes(type) && [
+      {
+        content: 'Add validation',
+        to: {
+          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/add-validation`,
+          state: { modal: true },
+        },
+      },
+    ]),
   ];
-
-  const validationAction = {
-    content: 'Add validation',
-    to: {
-      pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/add-validation`,
-      state: { modal: true },
-    },
-  };
-
-  if (type === 'number' || type === 'text') actions.push(validationAction);
 
   return actions;
 };
@@ -100,6 +99,8 @@ const renderProperty = (propertyName, value, element) => {
     case 'isItalic':
     case 'closed':
     case 'displayLogic':
+    case 'position':
+    case 'index':
       return null;
     case 'matrix':
       if (element.type !== 'matrix') {
