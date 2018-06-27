@@ -45,7 +45,7 @@ const getDefaultAnswer = (type) => {
     case 'autoComplete':
       return {
         id: cuid(),
-        datasource: '',
+        datasources: '',
         concepts: [],
       };
     default:
@@ -134,7 +134,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         <Uomfields name="answers.0.uom2" change={change} label="Unit of Measurement 2" />
       </div>
     )}
-    {type === 'autoComplete' && <OntologyFields required name="answers.0.datasource" />}
+    {type === 'autoComplete' && <OntologyFields required multiple name="answers.0.datasources" />}
     {questionOptions.length > 0 && (
       <div>
         <Divider />
