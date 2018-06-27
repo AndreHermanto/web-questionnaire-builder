@@ -7,7 +7,7 @@ import { reduxForm } from 'redux-form/immutable';
 const ValidationLogicTextForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Field Validation</Heading>
-    <Fields.Text name="regex" label="Regex" required />
+    <Fields.Text name="regex" label="Regex" />
 
     <Buttons
       actions={[

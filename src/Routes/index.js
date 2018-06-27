@@ -50,6 +50,7 @@ import ElementsAddSource from '../Elements/ElementsAddSource';
 import ElementsAddTrait from '../Elements/ElementsAddTrait';
 import ElementsLogicEdit from '../Elements/ElementsLogicEdit';
 import ValidationLogic from '../Elements/Forms/ValidationLogic';
+import DeleteValidationLogic from '../Elements/Forms/DeleteValidationLogic';
 import ElementsAddHeader from '../Elements/ElementsAddHeader';
 import ElementsOntologyTagging from '../Elements/OntologyTagging/ElementsOntologyTagging';
 import AnswersAddImage from '../Elements/AnswersAddImage';
@@ -327,6 +328,10 @@ class Routes extends Component {
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/add-validation"
             component={ValidationLogic}
+          />
+          <SidePanelRoute
+            path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/delete-validation"
+            component={DeleteValidationLogic}
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/elements/:elementId/answers/:answerId/ontology-tagging"

@@ -5,7 +5,7 @@ import { Buttons, Heading, Breadcrumbs, DefinitionList, Helpers, Table } from 'w
 
 const isQuestion = type => !(type === 'section' || type === 'start' || type === 'end');
 
-const getTableActions = ({ id, elementId, type, questionnaireId }) => {
+const getTableActions = ({ id, elementId, type, questionnaireId, validationLogic }) => {
   const actions = [
     {
       content: 'Add image',
@@ -53,6 +53,15 @@ const getTableActions = ({ id, elementId, type, questionnaireId }) => {
         },
       },
     ]),
+    ...(validationLogic !== undefined && [
+      {
+        content: 'Delete validation',
+        to: {
+          pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/delete-validation`,
+          state: { modal: true },
+        },
+      },
+    ]),
   ];
 
   return actions;
@@ -79,10 +88,14 @@ const headerRow = [
   },
 ];
 
-const renderBodyRow = ({ elementId, type, questionnaireId }) => ({ id, text }) => ({
+const renderBodyRow = ({ elementId, type, questionnaireId }) => ({
+  id,
+  text,
+  validationLogic,
+}) => ({
   key: id,
   cells: [Helpers.renderContent('text', text), Helpers.renderContent('type', type)],
-  actions: getTableActions({ elementId, type, id, questionnaireId }),
+  actions: getTableActions({ elementId, type, id, questionnaireId, validationLogic }),
 });
 
 const renderProperty = (propertyName, value, element) => {
@@ -127,6 +140,7 @@ class ElementsShowQuestionPage extends React.Component {
   };
   render() {
     const { questionnaireId, questionnaire, element, elementId } = this.props;
+
     return (
       <div>
         <Breadcrumbs
