@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import cuid from 'cuid';
 import { connect } from 'react-redux';
 import Uomfields from './Fields/Uomfields';
+import OntologyFields from './Fields/OntologyFields';
 
 const getDefaultAnswer = (type) => {
   switch (type) {
@@ -39,6 +40,12 @@ const getDefaultAnswer = (type) => {
         id: cuid(),
         uom1: {},
         uom2: {},
+        concepts: [],
+      };
+    case 'autoComplete':
+      return {
+        id: cuid(),
+        datasource: '',
         concepts: [],
       };
     default:
@@ -74,6 +81,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         'matrix',
         'uom',
         'uoms',
+        'autoComplete',
       ].map((value) => {
         if (value === 'text') {
           return {
@@ -126,7 +134,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         <Uomfields name="answers.0.uom2" change={change} label="Unit of Measurement 2" />
       </div>
     )}
-
+    {type === 'autoComplete' && <OntologyFields required name="answers.0.datasource" />}
     {questionOptions.length > 0 && (
       <div>
         <Divider />
