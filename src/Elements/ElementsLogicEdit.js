@@ -31,7 +31,9 @@ const ElementsLogicEdit = (props) => {
                 <ElementsLogicForm
                   form={'element-logic-edit'}
                   initialValues={element}
-                  onSubmit={update}
+                  onSubmit={(values) => {
+                    update(values.delete('answerLogic').delete('questionLogic'));
+                  }}
                   questions={version.body}
                   onCancel={closePanel}
                 />
