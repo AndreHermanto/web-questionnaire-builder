@@ -74,7 +74,7 @@ class QuestionnairesList extends React.Component {
       <Buttons
         actions={[
           {
-            content: 'New Questionnaire',
+            content: 'New questionnaire',
             to: {
               pathname: '/questionnaires/create',
               state: { modal: true },
@@ -89,7 +89,7 @@ class QuestionnairesList extends React.Component {
             to: '/questionnaires/import-file',
           },
           {
-            content: 'New Folder',
+            content: 'New folder',
             to: {
               pathname: '/folders/create',
               state: { modal: true },

@@ -69,7 +69,7 @@ class QuestionnaireFoldersList extends React.Component {
       <Buttons
         actions={[
           {
-            content: 'New Questionnaire',
+            content: 'New questionnaire',
             to: {
               pathname: '/#',
               state: { modal: true },
