@@ -16,6 +16,9 @@ set -ex
 # Real Sandbox (from develop branch)
 ./scripts/build-from-develop.sh
 
+# Sanford Test
+./scripts/build-from-sanford-test.sh
+
 # Release Candidates
 ./scripts/build-from-release.sh
 
