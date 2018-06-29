@@ -69,13 +69,6 @@ class QuestionnaireFoldersList extends React.Component {
       <Buttons
         actions={[
           {
-            content: 'New Questionnaire',
-            to: {
-              pathname: '/#',
-              state: { modal: true },
-            },
-          },
-          {
             content: 'Edit folder',
             to: {
               pathname: `/folders/${folderId}/edit`,
