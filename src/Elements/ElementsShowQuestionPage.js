@@ -187,6 +187,7 @@ class ElementsShowQuestionPage extends React.Component {
                     content: 'Add Validated Source',
                     to: {
                       pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
+                      state: { modal: true },
                     },
                   },
                   {

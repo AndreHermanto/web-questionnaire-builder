@@ -159,17 +159,25 @@ class ontologiesShow extends React.Component {
                           actions={[
                             {
                               content: 'Edit',
-                              to: `/ontologies/${ontology.id}/Edit`,
+                              to: {
+                                pathname: `/ontologies/${ontology.id}/Edit`,
+                                state: { modal: true },
+                              },
                             },
                             {
                               content: 'Delete',
-                              to: `/ontologies/${ontology.id}/Delete`,
+                              to: {
+                                pathname: `/ontologies/${ontology.id}/Delete`,
+                                state: { modal: true },
+                              },
                             },
                             ...(ontology.managementType === 'OFFLINE' && [
                               {
                                 content: 'Upload new version',
-                                to: `/ontologies/${ontology.id}/upload`,
-                                state: { modal: true },
+                                to: {
+                                  pathname: `/ontologies/${ontology.id}/upload`,
+                                  state: { modal: true },
+                                },
                               },
                             ]),
                           ]}
