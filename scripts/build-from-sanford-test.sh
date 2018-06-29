@@ -58,7 +58,7 @@ santized_branch_name="${branch_name/\//-}";
 # build any release branch
 # this should always work, beacuse we wont ever build old release branches
 # so this should work out fine
-if [ "$branch_name" = "master" ]; then
+if [ "$branch_name" = "env/sanford-test" ]; then
   rm -rf build
 
   REACT_APP_ENABLE_LOGS=false npm run build:gateway 2> >(tee build.txt >&2)
