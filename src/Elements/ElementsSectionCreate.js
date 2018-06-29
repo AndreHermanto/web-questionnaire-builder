@@ -28,7 +28,7 @@ const ElementSectionCreate = (props) => {
               return (
                 <ElementsSectionForm
                   form={'elements-section-form'}
-                  onSubmit={value => create(value, version.body.length)}
+                  onSubmit={value => create(value.set('type', 'section'), version.body.length)}
                   onCancel={closePanel}
                 />
               );
