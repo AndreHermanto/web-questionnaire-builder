@@ -81,10 +81,6 @@ class QuestionnairesList extends React.Component {
             },
           },
           {
-            content: 'Import',
-            to: '/#',
-          },
-          {
             content: 'Import from file',
             to: '/questionnaires/import-file',
           },
