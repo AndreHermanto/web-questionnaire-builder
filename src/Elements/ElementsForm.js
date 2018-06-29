@@ -42,7 +42,7 @@ const getDefaultAnswer = (type) => {
         uom2: {},
         concepts: [],
       };
-    case 'autoComplete':
+    case 'ontologyBased':
       return {
         id: cuid(),
         datasources: '',
@@ -81,7 +81,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         'matrix',
         'uom',
         'uoms',
-        'autoComplete',
+        'ontologyBased',
       ].map((value) => {
         if (value === 'text') {
           return {
@@ -134,7 +134,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         <Uomfields name="answers.0.uom2" change={change} label="Unit of Measurement 2" />
       </div>
     )}
-    {type === 'autoComplete' && <OntologyFields required multiple name="answers.0.datasources" />}
+    {type === 'ontologyBased' && <OntologyFields required multiple name="answers.0.datasources" />}
     {questionOptions.length > 0 && (
       <div>
         <Divider />
