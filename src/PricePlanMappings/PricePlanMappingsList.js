@@ -36,14 +36,14 @@ class PricePlansList extends React.Component {
       <Buttons
         actions={[
           {
-            content: 'New Price Plan Mapping',
+            content: 'New price plan mapping',
             to: {
               pathname: '/price-plan-mappings/create',
               state: { modal: true },
             },
           },
           {
-            content: 'View Price Plans',
+            content: 'View price plans',
             onClick: () => {
               window.location.assign(
                 `${process.env.REACT_APP_PAYMENTS_URL}/admin?jwt=${rest.getAccessToken()}`,

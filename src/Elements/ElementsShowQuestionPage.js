@@ -15,7 +15,7 @@ const getTableActions = ({ id, elementId, type, questionnaireId, validationLogic
       },
     },
     {
-      content: 'Follow Up Question',
+      content: 'Follow up question',
       to: {
         pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/answers/${id}/follow-up`,
         state: { modal: true },
@@ -169,7 +169,7 @@ class ElementsShowQuestionPage extends React.Component {
                   },
                 },
                 {
-                  content: 'Edit Visibility Logic',
+                  content: 'Edit visibility logic',
                   to: {
                     pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/edit-logic`,
                     state: { modal: true },
@@ -177,21 +177,21 @@ class ElementsShowQuestionPage extends React.Component {
                 },
                 ...(element.type !== 'section' && [
                   {
-                    content: 'Add Image',
+                    content: 'Add image',
                     to: {
                       pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-image`,
                       state: { modal: true },
                     },
                   },
                   {
-                    content: 'Add Validated Source',
+                    content: 'Add validated source',
                     to: {
                       pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/add-source`,
                       state: { modal: true },
                     },
                   },
                   {
-                    content: 'Add Trait',
+                    content: 'Add trait',
                     to: {
                       pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/trait`,
                       state: { modal: true },
@@ -199,7 +199,7 @@ class ElementsShowQuestionPage extends React.Component {
                   },
                 ]),
                 {
-                  content: 'Add Glossary Annotation',
+                  content: 'Add glossary annotation',
                   to: {
                     pathname: `/questionnaires/${questionnaireId}/elements/${elementId}/glossary-terms/create`,
                     state: { modal: true },

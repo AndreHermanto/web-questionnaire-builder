@@ -181,7 +181,7 @@ class QuestionnairesShow extends React.Component {
                           <Buttons
                             actions={[
                               {
-                                content: 'Preview as Patient',
+                                content: 'Preview as patient',
                                 to: {
                                   pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/user/${
                                     user.id
@@ -200,7 +200,7 @@ class QuestionnairesShow extends React.Component {
                                     },
                                   },
                                   {
-                                    content: 'Create Sections',
+                                    content: 'Create sections',
                                     to: {
                                       pathname: `/questionnaires/${questionnaireId}/elements/section/create`,
                                       state: { modal: true },
@@ -230,7 +230,7 @@ class QuestionnairesShow extends React.Component {
                                 name: 'Questionnaires',
                                 actions: [
                                   {
-                                    content: 'Edit Title',
+                                    content: 'Edit title',
                                     to: {
                                       pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/edit-title`,
                                       state: { modal: true },
@@ -244,14 +244,14 @@ class QuestionnairesShow extends React.Component {
                                     },
                                   },
                                   {
-                                    content: 'Add Tag',
+                                    content: 'Add tag',
                                     to: {
                                       pathname: `/questionnaires/${questionnaireId}/tags/add`,
                                       state: { modal: true },
                                     },
                                   },
                                   {
-                                    content: 'Move to Folder',
+                                    content: 'Move to folder',
                                     to: {
                                       pathname: `/questionnaires/${
                                         version.questionnaireId
@@ -277,7 +277,7 @@ class QuestionnairesShow extends React.Component {
                                       this.downloadQuestionnaire(questionnaireId, currentVersionId),
                                   },
                                   {
-                                    content: 'Export Current Version',
+                                    content: 'Export current version',
                                     to: {
                                       pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
                                       state: { modal: true },
