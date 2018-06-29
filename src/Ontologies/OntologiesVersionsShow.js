@@ -135,7 +135,11 @@ class OntologiesVersionsShow extends React.Component {
                           actions={[
                             {
                               content: 'Activate',
-                              to: `/ontologies/${ontologyId}/versions/${versionId}/activate/`,
+                              to: {
+                                pathname: `/ontologies/${ontologyId}/versions/${versionId}/activate/`,
+                                state: { modal: true },
+                              },
+
                               hidden: ontologyVersion.active,
                             },
                           ]}

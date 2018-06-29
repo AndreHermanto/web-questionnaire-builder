@@ -84,8 +84,10 @@ class QuestionnaireFoldersList extends React.Component {
           },
           {
             content: 'Delete folder',
-            to: `/folders/${folderId}/delete`,
-            state: { modal: true },
+            to: {
+              pathname: `/folders/${folderId}/delete`,
+              state: { modal: true },
+            },
           },
         ]}
       />

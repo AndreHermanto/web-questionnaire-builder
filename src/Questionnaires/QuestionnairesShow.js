@@ -92,7 +92,10 @@ class QuestionnairesShow extends React.Component {
       actions: [
         {
           content: 'Edit',
-          to: `/questionnaires/${questionnaireId}/elements/${id}/edit`,
+          to: {
+            pathname: `/questionnaires/${questionnaireId}/elements/${id}/edit`,
+            state: { modal: true },
+          },
         },
         {
           content: 'Delete',
@@ -106,6 +109,7 @@ class QuestionnairesShow extends React.Component {
             content: 'Re-Order',
             to: {
               pathname: `/questionnaires/${questionnaireId}/elements/${id}/reorder`,
+              state: { modal: true },
             },
           },
         ]),
@@ -227,25 +231,40 @@ class QuestionnairesShow extends React.Component {
                                 actions: [
                                   {
                                     content: 'Edit Title',
-                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/edit-title`,
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/edit-title`,
+                                      state: { modal: true },
+                                    },
                                   },
                                   {
                                     content: 'Delete',
-                                    to: `/questionnaires/${questionnaireId}/delete`,
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/delete`,
+                                      state: { modal: true },
+                                    },
                                   },
                                   {
                                     content: 'Add Tag',
-                                    to: `/questionnaires/${questionnaireId}/tags/add`,
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/tags/add`,
+                                      state: { modal: true },
+                                    },
                                   },
                                   {
                                     content: 'Move to Folder',
-                                    to: `/questionnaires/${version.questionnaireId}/versions/${
-                                      version.id
-                                    }/move-to-folder`,
+                                    to: {
+                                      pathname: `/questionnaires/${
+                                        version.questionnaireId
+                                      }/versions/${version.id}/move-to-folder`,
+                                      state: { modal: true },
+                                    },
                                   },
                                   {
                                     content: 'Duplicate',
-                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/duplicate`,
+                                      state: { modal: true },
+                                    },
                                   },
                                 ],
                               },
@@ -273,7 +292,10 @@ class QuestionnairesShow extends React.Component {
                                   },
                                   {
                                     content: 'Import new version',
-                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
+                                    to: {
+                                      pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/import-version`,
+                                      state: { modal: true },
+                                    },
                                   },
                                 ],
                               },
