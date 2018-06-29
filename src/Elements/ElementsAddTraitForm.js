@@ -9,7 +9,7 @@ const ElementsAddTraitForm = ({ handleSubmit, onCancel, traits, submitting }) =>
     return (
       <div>
         <Message negative>
-          <p>Sorry, this question type cant have traits associated with it.</p>
+          <p>Sorry, this question type can&apos;t have traits associated with it.</p>
         </Message>
         <Buttons
           actions={[
