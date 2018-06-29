@@ -33,7 +33,7 @@ let ElementsLogicForm = ({
       <Heading size="h1">Logic</Heading>
       {!isEmptyArr(questions) && (
         <Fields.Select
-          name="question"
+          name="questionLogic"
           label="Questions"
           options={questionOptions.map(value => ({
             key: value.id,
@@ -44,7 +44,7 @@ let ElementsLogicForm = ({
       )}
       {!isEmptyArr(answerOptions) && (
         <Fields.Select
-          name="answer"
+          name="answerLogic"
           label="Answers"
           options={answerOptions.map(value => ({
             key: value.id,
@@ -61,8 +61,8 @@ let ElementsLogicForm = ({
               selectedAnswer.text
             } / ${selectedQuestion.id} ${selectedAnswer.id}}`;
             change('logic', logic);
-            change('question', '');
-            change('answer', '');
+            change('questionLogic', '');
+            change('answerLogic', '');
           }}
         >
             Add logic{' '}
@@ -120,8 +120,8 @@ ElementsLogicForm.defaultProps = {
 
 ElementsLogicForm = connect((state) => {
   const selector = formValueSelector('element-logic-edit');
-  const selectedQuestion = selector(state, 'question');
-  const selectedAnswer = selector(state, 'answer');
+  const selectedQuestion = selector(state, 'questionLogic');
+  const selectedAnswer = selector(state, 'answerLogic');
   const exsitingLogic = selector(state, 'logic');
   return {
     selectedQuestion,
