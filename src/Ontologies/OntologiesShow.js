@@ -49,6 +49,7 @@ const renderBodyRow = ontologyId => ({ id, status, active, dateCreated }) => ({
 const renderProperty = (propertyName, value) => {
   switch (propertyName) {
     case 'activeVersion':
+    case 'lastUpdateBy':
       return null;
     case 'id':
       return {
