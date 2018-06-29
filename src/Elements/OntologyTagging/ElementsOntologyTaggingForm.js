@@ -15,14 +15,11 @@ const headerRow = [
   {
     propName: 'label',
   },
-  {
-    propName: 'type',
-  },
 ];
 
 const renderBodyRow = (ontology, onAddOntology) => ({
   key: ontology.uri,
-  cells: [ontology.uri || '', ontology.label || '', ontology.type || ''],
+  cells: [ontology.uri || '', ontology.displayLabel || ''],
   actions: [
     {
       content: 'Add',
