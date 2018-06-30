@@ -77,8 +77,8 @@ if [ "$branch_name" = "env/sanford-test" ]; then
   REGION="ap-southeast-2"
   REGISTRY="$ACCOUNT.dkr.ecr.$REGION.amazonaws.com"
   REPOSITORY="sanford-uat-$bamboo_planRepository_name"
-  TAG="v$PACKAGE_VERSION"
-  LATEST_TAG="latest-sanford-test "
+  TAG="sanford-uat-v$PACKAGE_VERSION"
+  LATEST_TAG="sanford-uat-latest"
 
   # create a docker file for aws ecr
   printf "FROM $REGISTRY/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
