@@ -85,7 +85,7 @@ if [ "$branch_name" = "env/sanford-test" ]; then
 
   # make the image
   echo "Creating Docker Image for Web Application $REPOSITORY with Tag:$TAG"
-  eval `aws ecr get-login --region $REGION --no-include-email --profile production`
+  eval `aws ecr get-login --region $REGION --no-include-email`
   docker build --force-rm=true --tag=$REGISTRY/$REPOSITORY:$TAG .
   docker push $REGISTRY/$REPOSITORY:$TAG
 
@@ -104,3 +104,8 @@ fi
 #     aws ecr batch-delete-image --repository-name sanford-uat-$bamboo_SERVICE_NAME --image-ids imageTag=latest-uat
 #     docker push 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/sanford-uat-$bamboo_SERVICE_NAME:latest-uat
 
+
+
+FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
+FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest
+30-Jun-2018 09:14:00    pull access denied for 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx, repository does not exist or may require 'docker login'
