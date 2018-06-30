@@ -95,17 +95,3 @@ if [ "$branch_name" = "env/sanford-test" ]; then
 
   rm Dockerfile
 fi
-
-
-# echo "Creating Docker Image for Web Application" $bamboo_SERVICE_NAME "with Tag:latest-uat"
-#     eval `aws ecr get-login --region ap-southeast-2`
-#     docker build --force-rm=true --tag=822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/sanford-uat-$bamboo_SERVICE_NAME:latest-uat .
-#     docker rmi $(docker images -f "dangling=true" -q)
-#     aws ecr batch-delete-image --repository-name sanford-uat-$bamboo_SERVICE_NAME --image-ids imageTag=latest-uat
-#     docker push 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/sanford-uat-$bamboo_SERVICE_NAME:latest-uat
-
-
-
-FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest\nADD build /usr/share/nginx/html" > Dockerfile
-FROM 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx:latest
-30-Jun-2018 09:14:00    pull access denied for 822459375388.dkr.ecr.ap-southeast-2.amazonaws.com/infra-nginx, repository does not exist or may require 'docker login'
