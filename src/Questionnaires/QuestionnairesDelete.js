@@ -25,7 +25,7 @@ const QuestionnairesDelete = (props) => {
           <Confirmation
             title="Delete Questionnaire?"
             content="Deleting a questionnaire will remove it from the system."
-            confirmLabel="Yes, Delete Questionnaire"
+            confirmLabel="Yes"
             cancelLabel="No"
             onConfirm={() => remove(id)}
             onCancel={closePanel}

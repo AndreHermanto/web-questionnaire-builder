@@ -24,8 +24,8 @@ const QuestionnaireTagsDelete = (props) => {
           <Confirmation
             title="Remove Tag?"
             content="Removing the tag stops the questionnaire from having this tag."
-            confirmLabel="Yes, Remove Tag"
-            cancelLabel="No, Keep Tag"
+            confirmLabel="Yes"
+            cancelLabel="No"
             onConfirm={() => remove(questionnaireTagId)}
             onCancel={closePanel}
           />
