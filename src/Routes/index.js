@@ -91,11 +91,6 @@ const sidebarGroups = [
     name: '',
     elements: [
       {
-        name: 'Dashboard',
-        url: '/dashboard',
-        icon: 'home',
-      },
-      {
         name: 'Questionnaires',
         url: '/questionnaires',
         icon: 'assignment',
