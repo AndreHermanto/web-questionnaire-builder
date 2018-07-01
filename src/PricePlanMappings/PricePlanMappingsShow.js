@@ -159,7 +159,7 @@ class PricePlanMappingsShow extends React.Component {
                       <Buttons
                         actions={[
                           {
-                            content: 'Preview Price Plan',
+                            content: 'Preview price plan',
                             onClick: () => {
                               window.location.assign(
                                 `${

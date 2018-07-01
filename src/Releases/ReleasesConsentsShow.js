@@ -83,7 +83,7 @@ class ReleasesShow extends React.Component {
                         },
                       },
                       {
-                        content: 'Generate URLs',
+                        content: 'Generate urls',
                         to: {
                           pathname: `/releases/${consentTypeId}/generate-urls`,
                           state: { modal: true },
