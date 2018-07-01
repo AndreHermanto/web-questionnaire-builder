@@ -12,6 +12,7 @@ let CreateEditFormBase = ({
   onCancel,
   submitting,
   managementType,
+  notificationActive,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Heading size="h1">Ontology</Heading>
@@ -39,9 +40,17 @@ let CreateEditFormBase = ({
       ]}
     />
 
-    {managementType === 'ONLINE' && <Fields.Text name="url" label="URL" />}
+    {managementType === 'ONLINE' && <Fields.Text required name="url" label="URL" />}
 
-    <Fields.Email name="notificationEmail" label="Notification email" />
+    <Fields.Radio
+      name="notificationActive"
+      label="Send Notifications"
+      required
+      options={[{ key: 'YES', text: 'Yes', value: true }, { key: 'NO', text: 'No', value: false }]}
+    />
+    {notificationActive && (
+      <Fields.Email name="notificationEmail" label="Notification email" required />
+    )}
 
     <div>
       <Buttons
@@ -79,8 +88,10 @@ CreateEditFormBase = reduxForm({
 CreateEditFormBase = connect((state, props) => {
   const selector = formValueSelector(props.form);
   const managementType = selector(state, 'managementType');
+  const notificationActive = selector(state, 'notificationActive');
   return {
     managementType,
+    notificationActive,
   };
 })(CreateEditFormBase);
 
