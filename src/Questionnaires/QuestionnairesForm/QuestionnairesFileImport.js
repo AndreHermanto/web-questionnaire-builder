@@ -1,101 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
-import { Button, Message } from 'semantic-ui-react';
-import styled from 'styled-components';
-import { Mutation, Resource } from 'web-components';
-import { questionnaireSchema, versionSchema, importedQuestionnaireSchema } from '../schemas';
+import { Mutation } from 'web-components';
+import { questionnaireSchema, versionSchema } from '../schemas';
 import QuestionnairesFileImportForm from './QuestionnairesFileImportForm';
 
-const CreateButton = styled(Button)`
-  background: ${props => props.theme.appColor} !important;
-  color: white !important;
-`;
-
-const createQuestionnaireVersion = (versionData, closePanel) => (
-  <Resource
-    resourceName="importedQuestionnaire"
-    render={({ importedQuestionnaire }) => {
-      if (!importedQuestionnaire.length) {
-        return <div>Error: imported questionnaire not found...</div>;
-      }
-      const questionnaire = importedQuestionnaire[0];
-      return (
-        <Mutation
-          resourceName="questionnaires"
-          url={`/questionnaires/${questionnaire.id}`}
-          schema={questionnaireSchema}
-          post={() => {
-            closePanel();
-          }}
-          render={({ update, loading: updatePending, error: updateVersion }) => {
-            if (updatePending) {
-              return <div>Importing questionnaire...</div>;
-            }
-            if (updateVersion) {
-              return <div>Error: {updateVersion}</div>;
-            }
-            return (
-              <Mutation
-                resourceName="versions"
-                url={`/questionnaires/${questionnaire.id}/versions`}
-                schema={versionSchema}
-                post={(mutationResponse) => {
-                  const version = get(
-                    mutationResponse.payload.entities.versions,
-                    mutationResponse.payload.result,
-                  );
-                  return update(
-                    Object.assign({}, questionnaire, {
-                      id: version.questionnaireId,
-                      currentTitle: version.title,
-                      currentVersionId: version.id,
-                    }),
-                  );
-                }}
-                render={({
-                  create: createVersion,
-                  loading: versionPending,
-                  error: versionError,
-                }) => {
-                  if (versionPending) {
-                    return <div>Importing questionnaire...</div>;
-                  }
-                  if (versionError) {
-                    return <div>Error: {versionError}</div>;
-                  }
-
-                  return (
-                    <CreateButton
-                      onClick={() =>
-                        createVersion(
-                          Object.assign({}, versionData, {
-                            questionnaireId: questionnaire.id,
-                          }),
-                        )
-                      }
-                    >
-                      Create Questionnaire
-                    </CreateButton>
-                  );
-                }}
-              />
-            );
-          }}
-        />
-      );
-    }}
-  />
-);
-export default function QuestionnairesFileImport({ closePanel }) {
+export default function QuestionnairesFileImport({ closePanel, history }) {
   let versionData;
 
   return (
     <div>
       <Mutation
-        resourceName="importedQuestionnaire"
+        resourceName="questionnaires"
         url={'/questionnaires'}
-        schema={importedQuestionnaireSchema}
+        schema={questionnaireSchema}
+        post={async (mutationResponse, actions) => {
+          const newQuestionnaire = get(
+            mutationResponse.payload.entities.questionnaires,
+            mutationResponse.payload.result,
+          );
+          const versionResponse = await actions.create(
+            {
+              url: `/questionnaires/${newQuestionnaire.id}/versions`,
+              schema: versionSchema,
+              resourceName: 'versions',
+            },
+            { ...versionData, questionnaireId: newQuestionnaire.id },
+          );
+
+          const version = get(
+            versionResponse.payload.entities.versions,
+            versionResponse.payload.result,
+          );
+
+          await actions.update(
+            {
+              url: `/questionnaires/${newQuestionnaire.id}`,
+              schema: questionnaireSchema,
+              resourceName: 'questionnaires',
+            },
+            {
+              ...versionData,
+              id: version.questionnaireId,
+              currentTitle: version.title,
+              currentVersionId: version.id,
+            },
+          );
+          return history.push(`/questionnaires/${newQuestionnaire.id}`);
+        }}
         render={({ create: createNewQuestionnaire, loading: pending, error }) => {
           if (pending) {
             return <div>Importing questionnaire...</div>;
@@ -104,14 +56,6 @@ export default function QuestionnairesFileImport({ closePanel }) {
             return <div>Error: {error}</div>;
           }
 
-          if (versionData) {
-            return (
-              <div>
-                <Message positive>Imported questionnaire</Message>
-                {createQuestionnaireVersion(versionData, closePanel)}
-              </div>
-            );
-          }
           return (
             <QuestionnairesFileImportForm
               onSubmit={(values) => {
@@ -129,5 +73,8 @@ export default function QuestionnairesFileImport({ closePanel }) {
 }
 
 QuestionnairesFileImport.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   closePanel: PropTypes.func.isRequired,
 };
