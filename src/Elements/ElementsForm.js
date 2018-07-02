@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Divider } from 'semantic-ui-react';
-import { Heading, Fields, Buttons, Helpers } from 'web-components';
+import { Heading, Fields, Buttons, Helpers, QueryResource } from 'web-components';
 import { reduxForm, formValueSelector } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
 import cuid from 'cuid';
 import { connect } from 'react-redux';
 import Uomfields from './Fields/Uomfields';
+import { ontologiesSchema } from '../Ontologies/schemas';
 
 const getDefaultAnswer = (type) => {
   switch (type) {
@@ -39,6 +40,12 @@ const getDefaultAnswer = (type) => {
         id: cuid(),
         uom1: {},
         uom2: {},
+        concepts: [],
+      };
+    case 'ontologyBased':
+      return {
+        id: cuid(),
+        datasources: '',
         concepts: [],
       };
     default:
@@ -74,6 +81,7 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         'matrix',
         'uom',
         'uoms',
+        'ontologyBased',
       ].map((value) => {
         if (value === 'text') {
           return {
@@ -125,6 +133,30 @@ let ElementsForm = ({ handleSubmit, onCancel, type, questionOptions, change }) =
         <Uomfields name="answers.0.uom1" change={change} label="Unit of Measurement 1" />
         <Uomfields name="answers.0.uom2" change={change} label="Unit of Measurement 2" />
       </div>
+    )}
+    {type === 'ontologyBased' && (
+      <QueryResource
+        queries={[
+          {
+            resourceName: 'ontologies',
+            url: '/datasources',
+            schema: ontologiesSchema,
+          },
+        ]}
+      >
+        {({ ontologies }) => (
+          <Fields.Select
+            multiple
+            name="answers.0.datasources"
+            label="Ontology"
+            options={ontologies.map(ontology => ({
+              key: ontology.id,
+              value: ontology.id,
+              text: ontology.title,
+            }))}
+          />
+        )}
+      </QueryResource>
     )}
 
     {questionOptions.length > 0 && (
