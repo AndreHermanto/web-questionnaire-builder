@@ -114,6 +114,7 @@ const renderProperty = (propertyName, value, element) => {
     case 'displayLogic':
     case 'position':
     case 'index':
+    case 'addSource':
       return null;
     case 'matrix':
       if (element.type !== 'matrix') {
