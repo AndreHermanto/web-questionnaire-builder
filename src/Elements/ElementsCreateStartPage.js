@@ -32,7 +32,15 @@ export default function ElementsCreateStartPage({
                       type: 'start',
                     }}
                     onCancel={closePanel}
-                    onSubmit={value => create(value, 0)}
+                    onSubmit={values =>
+                      create(
+                        values.set(
+                          'image',
+                          `${process.env.REACT_APP_BASE_URL}/download?id=${values.get('image').id}`,
+                        ),
+                        0,
+                      )
+                    }
                   />
                 );
               }}
