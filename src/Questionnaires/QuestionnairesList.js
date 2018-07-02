@@ -82,7 +82,10 @@ class QuestionnairesList extends React.Component {
           },
           {
             content: 'Import from file',
-            to: '/questionnaires/import-file',
+            to: {
+              pathname: '/questionnaires/import-file',
+              state: { modal: true },
+            },
           },
           {
             content: 'New folder',
