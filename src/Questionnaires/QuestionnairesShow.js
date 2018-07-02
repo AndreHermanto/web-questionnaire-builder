@@ -171,7 +171,7 @@ class QuestionnairesShow extends React.Component {
                           <DefinitionList listData={version} renderProperty={renderProperty} />
                           {version.body && (
                             <div>
-                              <Heading size="h2">Questions</Heading>
+                              <Heading size="h2">Question</Heading>
                               <Table
                                 headerRow={headerRow}
                                 renderBodyRow={props => renderBodyRow(props, currentVersionId)}
