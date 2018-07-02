@@ -32,7 +32,15 @@ export default function ElementsCreateEndPage({
                       type: 'end',
                     }}
                     onCancel={closePanel}
-                    onSubmit={value => create(value, version.body.length)}
+                    onSubmit={values =>
+                      create(
+                        values.set(
+                          'image',
+                          `${process.env.REACT_APP_BASE_URL}/download?id=${values.get('image').id}`,
+                        ),
+                        version.body.length,
+                      )
+                    }
                   />
                 );
               }}
