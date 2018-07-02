@@ -26,9 +26,9 @@ function OntologyDeleteForm({
           <Confirmation
             title="Ontology"
             content="Are you sure you want to delete this questionnaire (including all versions)?"
-            confirmLabel="Delete"
+            confirmLabel="Yes"
             cancelLabel="No"
-            onConfirm={() => remove()}
+            onConfirm={() => remove(ontologyId)}
             onCancel={closePanel}
           />
         );
