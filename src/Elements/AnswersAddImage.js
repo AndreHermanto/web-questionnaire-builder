@@ -8,17 +8,18 @@ const AnswersAddImage = (props) => {
   const {
     closePanel,
     match: {
-      params: { questionnaireId, elementId, id },
+      params: { questionnaireId, elementId, answerId },
     },
   } = props;
-  const handleSubmit = (update, values, element, answerId) => {
-    const answer = element.answers.filter(ans => ans.id === answerId);
+  const handleSubmit = (update, values, element, ansId) => {
+    const answer = element.answers.filter(ans => ans.id === ansId);
+
     const newAnswer = Object.assign(answer[0], {
       image: `${process.env.REACT_APP_BASE_URL}/download?id=${values.get('file').id}`,
     });
 
     const newElementAnswers = element.answers.map((ans) => {
-      if (answerId === ans.id) {
+      if (ansId === ans.id) {
         return newAnswer;
       }
       return ans;
@@ -46,7 +47,7 @@ const AnswersAddImage = (props) => {
               }
               return (
                 <ElementsAddImageForm
-                  onSubmit={values => handleSubmit(update, values, element, id)}
+                  onSubmit={values => handleSubmit(update, values, element, answerId)}
                   onCancel={closePanel}
                 />
               );
