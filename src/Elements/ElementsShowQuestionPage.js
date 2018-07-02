@@ -227,6 +227,7 @@ class ElementsShowQuestionPage extends React.Component {
         {isQuestion(element.type) && (
           <Grid>
             <Grid.Column width={12}>
+              <Heading size="h2">Answers</Heading>
               <Table
                 headerRow={headerRow}
                 renderBodyRow={renderBodyRow({

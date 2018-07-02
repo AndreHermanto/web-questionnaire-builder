@@ -170,11 +170,14 @@ class QuestionnairesShow extends React.Component {
                         <Grid.Column width={12}>
                           <DefinitionList listData={version} renderProperty={renderProperty} />
                           {version.body && (
-                            <Table
-                              headerRow={headerRow}
-                              renderBodyRow={props => renderBodyRow(props, currentVersionId)}
-                              tableData={version.body}
-                            />
+                            <div>
+                              <Heading size="h2">Question</Heading>
+                              <Table
+                                headerRow={headerRow}
+                                renderBodyRow={props => renderBodyRow(props, currentVersionId)}
+                                tableData={version.body}
+                              />
+                            </div>
                           )}
                         </Grid.Column>
                         <Grid.Column width={4}>
