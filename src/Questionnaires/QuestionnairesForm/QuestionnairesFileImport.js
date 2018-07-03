@@ -59,7 +59,7 @@ export default function QuestionnairesFileImport({ closePanel, history }) {
           return (
             <QuestionnairesFileImportForm
               onSubmit={(values) => {
-                versionData = values.get('fileJsonData');
+                versionData = { ...values.get('fileJsonData'), title: values.get('title') };
                 delete versionData.id;
                 createNewQuestionnaire({ currentTitle: 'New Questionnaire' });
               }}

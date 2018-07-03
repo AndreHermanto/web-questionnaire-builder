@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import puppeteer from 'puppeteer';
 
 let browser;
