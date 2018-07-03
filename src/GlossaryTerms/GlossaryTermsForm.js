@@ -51,7 +51,7 @@ let GlossaryTermsForm = ({ initialValues, handleSubmit, onCancel, submitting }) 
       <Buttons
         actions={[
           {
-            content: `${initialValues ? 'Update' : 'Create'}`,
+            content: 'Save',
             onClick: () => {},
             disabled: submitting,
           },
