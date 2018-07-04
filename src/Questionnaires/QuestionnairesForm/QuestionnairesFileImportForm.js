@@ -32,6 +32,7 @@ let QuestionnairesFileImportForm = ({
   errorMessage,
   fileName,
   fileContent,
+  title,
 }) => {
   const cleanFile = () => {
     change('fileContent', undefined);
@@ -45,9 +46,11 @@ let QuestionnairesFileImportForm = ({
 
   const convertYamlToObject = (data) => {
     const jsonData = yamlJS.safeLoad(data);
+
     if (typeof jsonData === 'object') {
       setError(false, '');
       change('fileJsonData', jsonData);
+      change('title', jsonData.title ? jsonData.title : 'New questionnaire');
     } else {
       setError(true, 'Please check your yaml data');
       cleanFile();
@@ -114,6 +117,7 @@ let QuestionnairesFileImportForm = ({
           <p>Supported file type: yml.</p>
         </Message>
       )}
+      {title && <Fields.Text name="title" />}
       {fileContent && (
         <div>
           <Fields.TextArea
@@ -151,6 +155,7 @@ QuestionnairesFileImportForm.propTypes = {
   errorMessage: PropTypes.string,
   fileName: PropTypes.string,
   fileContent: PropTypes.string,
+  title: PropTypes.string,
 };
 
 QuestionnairesFileImportForm.defaultProps = {
@@ -158,6 +163,7 @@ QuestionnairesFileImportForm.defaultProps = {
   errorMessage: undefined,
   fileName: undefined,
   fileContent: undefined,
+  title: undefined,
 };
 
 const form = 'file-import-form';
@@ -172,6 +178,7 @@ QuestionnairesFileImportForm = connect(state => ({
   errorMessage: selector(state, 'errorMessage'),
   fileContent: selector(state, 'fileContent'),
   fileName: selector(state, 'fileName'),
+  title: selector(state, 'title'),
 }))(QuestionnairesFileImportForm);
 
 export default QuestionnairesFileImportForm;
