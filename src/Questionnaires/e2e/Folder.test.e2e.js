@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import cuid from 'cuid';
 import { jwt, appUrl, getNewPage, closePage } from '../../e2e/Browser';
 
 let page;
@@ -11,8 +12,8 @@ afterAll(() => {
   closePage(page);
 });
 
-let folders = [];
-let questionnaires = [];
+const folderTitle = `e2e folder ${cuid()}`;
+const questionnaireTitle = `e2e questionnaire ${cuid()}`;
 const baseUrl = 'http://localhost:4000';
 
 describe('Questionnaire Create Edit Delete', () => {
@@ -24,19 +25,17 @@ describe('Questionnaire Create Edit Delete', () => {
   it(
     'Create Folder',
     async () => {
-      const title = 'e2e folder';
       await page.waitForSelector('a[href="#/folders/create"]');
       await page.click('a[href="#/folders/create"]');
-      await page.type('input[name=title]', title, { delay: 1 });
+      await page.type('input[name=title]', folderTitle, { delay: 1 });
       await page.click('button[type=submit]');
 
       const response = await fetch(`${baseUrl}/folders`, {
         headers: { jwt },
       });
-      const { data } = await response.json();
-      folders = data;
+      const { data: folders } = await response.json();
 
-      expect(folders[folders.length - 1].title).toBe(title);
+      expect(!!folders.find(f => f.title === folderTitle)).toBe(true);
     },
     16000,
   );
@@ -44,19 +43,16 @@ describe('Questionnaire Create Edit Delete', () => {
   it(
     'Create Questionnaire',
     async () => {
-      const currentTitle = 'e2e questionnaire';
       await page.waitForSelector('a[href="#/questionnaires/create"]');
       await page.click('a[href="#/questionnaires/create"]');
-      await page.type('input[name=currentTitle]', currentTitle, { delay: 1 });
+      await page.type('input[name=currentTitle]', questionnaireTitle, { delay: 1 });
       await page.click('button[type=submit]');
 
       const response = await fetch(`${baseUrl}/questionnaires`, {
         headers: { jwt },
       });
-      const { data } = await response.json();
-      questionnaires = data;
-
-      expect(questionnaires[questionnaires.length - 1].currentTitle).toBe(currentTitle);
+      const { data: questionnaires } = await response.json();
+      expect(!!questionnaires.find(q => q.currentTitle === questionnaireTitle)).toBe(true);
     },
     16000,
   );
@@ -68,17 +64,17 @@ describe('Questionnaire Create Edit Delete', () => {
         headers: { jwt },
       });
       const jsonObj = await response.json();
-      const results = jsonObj.data;
-      questionnaires = results;
+      const questionnaires = jsonObj.data;
+      const questionnaire = questionnaires.find(q => q.currentTitle === questionnaireTitle);
 
       await page.waitForSelector(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}/versions/${
-          questionnaires[questionnaires.length - 1].currentVersionId
+        `a[href='#/questionnaires/${questionnaire.id}/versions/${
+          questionnaire.currentVersionId
         }/move-to-folder']`,
       );
       await page.click(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}/versions/${
-          questionnaires[questionnaires.length - 1].currentVersionId
+        `a[href='#/questionnaires/${questionnaire.id}/versions/${
+          questionnaire.currentVersionId
         }/move-to-folder']`,
       );
       await page.waitForSelector('#folder');
@@ -97,17 +93,17 @@ describe('Questionnaire Create Edit Delete', () => {
         headers: { jwt },
       });
       const jsonObj = await response.json();
-      const results = jsonObj.data;
-      questionnaires = results;
+      const questionnaires = jsonObj.data;
+      const questionnaire = questionnaires.find(q => q.currentTitle === questionnaireTitle);
 
       await page.waitForSelector(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}/versions/${
-          questionnaires[questionnaires.length - 1].currentVersionId
+        `a[href='#/questionnaires/${questionnaire.id}/versions/${
+          questionnaire.currentVersionId
         }/move-to-folder']`,
       );
       await page.click(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}/versions/${
-          questionnaires[questionnaires.length - 1].currentVersionId
+        `a[href='#/questionnaires/${questionnaire.id}/versions/${
+          questionnaire.currentVersionId
         }/move-to-folder']`,
       );
       await page.waitForSelector('#folder');
@@ -126,13 +122,14 @@ describe('Questionnaire Create Edit Delete', () => {
         headers: { jwt },
       });
       let jsonObj = await response.json();
-      let results = jsonObj.data;
-      folders = results;
+      const folders = jsonObj.data;
+      const folder = folders.find(f => f.title === folderTitle);
       await page.waitForSelector('a[href="#/questionnaires"]');
       await page.click('a[href="#/questionnaires"]');
-      await page.click(`a[href='#/folders/${folders[folders.length - 1].id}']`);
-      await page.waitForSelector(`a[href='#/folders/${folders[folders.length - 1].id}/delete']`);
-      await page.click(`a[href='#/folders/${folders[folders.length - 1].id}/delete']`);
+      await page.click(`a[href='#/folders/${folder.id}']`);
+      await page.waitForSelector(`a[href='#/folders/${folder.id}/delete']`);
+      await page.click(`a[href='#/folders/${folder.id}/delete']`);
+      await page.waitForSelector('button[type="submit"]');
       await page.click('button[type="submit"]');
       await page.waitForSelector('h1');
 
@@ -140,13 +137,10 @@ describe('Questionnaire Create Edit Delete', () => {
         headers: { jwt },
       });
       jsonObj = await response.json();
-      results = jsonObj.data;
-      const newFolders = results;
+      const newFolders = jsonObj.data;
 
       expect(newFolders.length).toEqual(folders.length - 1);
-      expect(
-        newFolders.filter(newFolder => newFolder.id === folders[folders.length - 1].id),
-      ).toEqual([]);
+      expect(newFolders.filter(newFolder => newFolder.id === folder.id)).toEqual([]);
     },
     16000,
   );
@@ -158,21 +152,14 @@ describe('Questionnaire Create Edit Delete', () => {
         headers: { jwt },
       });
       let jsonObj = await response.json();
-      let results = jsonObj.data;
-      questionnaires = results;
+      const questionnaires = jsonObj.data;
+      const questionnaire = questionnaires.find(q => q.currentTitle === questionnaireTitle);
 
-      await page.waitForSelector(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}']`,
-      );
-      await page.click(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}']`,
-      );
-      await page.waitForSelector(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}/delete']`,
-      );
-      await page.click(
-        `a[href='#/questionnaires/${questionnaires[questionnaires.length - 1].id}/delete']`,
-      );
+      await page.waitForSelector(`a[href='#/questionnaires/${questionnaire.id}']`);
+      await page.click(`a[href='#/questionnaires/${questionnaire.id}']`);
+      await page.waitForSelector(`a[href='#/questionnaires/${questionnaire.id}/delete']`);
+      await page.click(`a[href='#/questionnaires/${questionnaire.id}/delete']`);
+      await page.waitForSelector('button[type="submit"]');
       await page.click('button[type="submit"]');
       await page.waitForSelector('h1');
 
@@ -180,14 +167,11 @@ describe('Questionnaire Create Edit Delete', () => {
         headers: { jwt },
       });
       jsonObj = await response.json();
-      results = jsonObj.data;
-      const newQuestionnaires = results;
+      const newQuestionnaires = jsonObj.data;
 
       expect(newQuestionnaires.length).toEqual(questionnaires.length - 1);
       expect(
-        newQuestionnaires.filter(
-          newQuestionnaire => newQuestionnaire.id === questionnaires[questionnaires.length - 1].id,
-        ),
+        newQuestionnaires.filter(newQuestionnaire => newQuestionnaire.id === questionnaire.id),
       ).toEqual([]);
     },
     16000,
