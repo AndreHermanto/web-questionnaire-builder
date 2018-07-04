@@ -35,11 +35,11 @@ const resourceReducers = Helpers.makeResourceReducers([
   'applications',
   'context',
 ]);
-const exampleReducer = combineReducers({
+const reducer = combineReducers({
   form: formReducer,
   resources: combineReducers(resourceReducers),
   authentication: authReducer,
   appNavigation: appNavigationReducer,
 });
 
-export default exampleReducer;
+export default reducer;
