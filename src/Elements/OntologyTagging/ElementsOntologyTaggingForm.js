@@ -1,123 +1,103 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Loader, Message } from 'semantic-ui-react';
-import { Heading, Fields, Buttons, Table, Query, Resource } from 'web-components';
-import { reduxForm, formValueSelector } from 'redux-form/immutable';
+import styled from 'styled-components';
+import { Form, Icon } from 'semantic-ui-react';
+import { Heading, Fields, Buttons, Resource, resourceActions } from 'web-components';
+import { reduxForm } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import { prefixTermsSchema, conceptsSchema } from '../schemas';
+import { bindActionCreators } from 'redux';
+import { conceptsSchema } from '../schemas';
 
-/* eslint-disable */
-const headerRow = [
-  {
-    propName: 'uri',
-    label: 'Uri',
-  },
-  {
-    propName: 'label',
-  },
-];
+export const HPO = styled.label`
+  margin-right: 4px;
+  margin-bottom: 5px;
+  display: -webkit-inline-box !important;
+  padding: 8px !important;
+  font-weight: 300 !important;
+  background-color: #fff !important;
+  color: #333 !important;
+  border: 1px solid #eee;
+`;
 
-const renderBodyRow = (ontology, onAddOntology) => ({
-  key: ontology.uri,
-  cells: [ontology.uri || '', ontology.displayLabel || ''],
-  actions: [
-    {
-      content: 'Add',
-      onClick: () => onAddOntology(ontology),
-    },
-  ],
-});
-
-const displayOntology = (ontologies, onAddOntology) => {
-  return (
-    <Table
-      headerRow={headerRow}
-      renderBodyRow={props => renderBodyRow(props, onAddOntology)}
-      tableData={ontologies}
-    />
-  );
-};
-const getOntologyTermById = (conceptId, onAddOntology) => {
-  return (
-    <Query
-      url={`/concepts/${conceptId}`}
-      schema={conceptsSchema}
-      render={({ loading, error, loaders }) => (
-        <Resource
-          resourceName="conceptTerms"
-          filter={{ id: conceptId }}
-          render={({ conceptTerms }) => {
-            if (loading) {
-              return <Loader inline="centered" content="Loading ontology" active={loading} />;
-            }
-            if (error) {
-              return <div>Error: {error}</div>;
-            }
-
-            if (conceptTerms.length <= 0) {
-              return (
-                <Message negative>
-                  <Message.Header>Ontology not found.</Message.Header>
-                  <p>Concept Id: {conceptId}</p>
-                </Message>
-              );
-            }
-
-            return displayOntology(conceptTerms, onAddOntology);
-          }}
-        />
-      )}
-    />
-  );
-};
-
-const getOntologyTermsStartingWith = (prefix, category, onAddOntology) => {
-  return (
-    <Query
-      url={`/prefix-search/concepts?prefix=${prefix}&category=${category}`}
-      schema={prefixTermsSchema}
-      render={({ loading, error, loaders }) => (
-        <Resource
-          resourceName="prefixTerms"
-          render={({ prefixTerms }) => {
-            if (loading) {
-              return <Loader inline="centered" content="Loading ontology" active={loading} />;
-            }
-            if (error) {
-              return <div>Error: {error}</div>;
-            }
-
-            if (prefixTerms.length <= 0) {
-              return (
-                <Message negative>
-                  <Message.Header>Ontology not found.</Message.Header>
-                  <p>Prefix text: {prefix}</p>
-                </Message>
-              );
-            }
-
-            return displayOntology(prefixTerms, onAddOntology);
-          }}
-        />
-      )}
-    />
-  );
-};
-
-let ElementsOntologyTaggingForm = ({ onAddOntology, onCancel, concept }) => {
-  const getTypeOfSearching = concept => {
-    if (concept.slice(0, 3) === 'HP:' || concept.slice(0, 3) === 'hp:') {
-      return getOntologyTermById(concept.toUpperCase(), onAddOntology);
-    } else return getOntologyTermsStartingWith(concept, 'PHENOTYPING', onAddOntology);
+export const TrashButton = styled(Icon)`
+  margin-left: 6px !important;
+  color: #d66 !important;
+  cursor: pointer;
+`;
+// eslint-disable-next-line import/no-mutable-exports
+let ElementsOntologyTaggingForm = ({
+  onCancel,
+  onDelete,
+  fetchResource,
+  handleSubmit,
+  initialValues,
+}) => {
+  const renderConcept = (label, id) => {
+    if (label && label.length <= 35) {
+      return `${label} (${id})`;
+    }
+    return `${label.substring(0, 35).concat('...')} (${id})`;
   };
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Heading size="h1">Find a Concept</Heading>
-      <Fields.Text name="concept" label="Concept ID (e.g. HPO ID)" required />
-      {concept && concept !== '' && getTypeOfSearching(concept)}
+      <Resource
+        resources={[
+          {
+            resourceName: 'conceptTerms',
+            schema: conceptsSchema,
+          },
+        ]}
+        render={({ conceptTerms }) => {
+          const setTypeOfSearching = (e, { searchQuery }) => {
+            const url =
+              searchQuery.slice(0, 3) === 'HP:' || searchQuery.slice(0, 3) === 'hp:'
+                ? `/concepts/${searchQuery.toUpperCase()}`
+                : `/prefix-search/concepts?prefix=${searchQuery}&category=PHENOTYPING`;
+
+            return fetchResource({
+              url,
+              resourceName: 'conceptTerms',
+              schema: conceptsSchema,
+            });
+          };
+
+          return (
+            <Fields.Select
+              label="Search ontology"
+              name="concepts"
+              options={conceptTerms.map(concept => ({
+                key: concept.uri,
+                value: concept,
+                text: `${concept.displayLabel || concept.label} (${concept.uri})`,
+              }))}
+              onSearchChange={setTypeOfSearching}
+              multiple
+              search
+              required
+              placeholder="Concept ID (e.g. HPO ID)"
+            />
+          );
+        }}
+      />
+      {initialValues &&
+        initialValues.get('concepts').size > 0 && (
+        <div>
+          {initialValues.get('concepts').map(concept => (
+            <HPO key={concept.get('id')}>
+              {renderConcept(concept.get('label'), concept.get('id'))}
+              <TrashButton name="trash" onClick={() => onDelete(concept.get('id'))} />
+            </HPO>
+          ))}
+        </div>
+      )}
 
       <Buttons
         actions={[
+          {
+            content: 'Save',
+            type: 'submit',
+          },
           {
             content: 'Cancel',
             onClick: onCancel,
@@ -130,8 +110,18 @@ let ElementsOntologyTaggingForm = ({ onAddOntology, onCancel, concept }) => {
 };
 
 ElementsOntologyTaggingForm.propTypes = {
-  onAddOntology: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  fetchResource: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
+    concepts: PropTypes.arrayOf({
+      id: PropTypes.string.isRequired,
+      displayLabel: PropTypes.string.isRequired,
+    }).isRequired,
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 ElementsOntologyTaggingForm = reduxForm({
@@ -139,12 +129,9 @@ ElementsOntologyTaggingForm = reduxForm({
   form: 'ontology-tagging-form',
 })(ElementsOntologyTaggingForm);
 
-ElementsOntologyTaggingForm = connect((state, props) => {
-  const selector = formValueSelector('ontology-tagging-form');
-  const concept = selector(state, 'concept');
-  return {
-    concept,
-  };
-})(ElementsOntologyTaggingForm);
+ElementsOntologyTaggingForm = connect(
+  () => {},
+  dispatch => bindActionCreators(resourceActions, dispatch),
+)(ElementsOntologyTaggingForm);
 
 export default ElementsOntologyTaggingForm;
