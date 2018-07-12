@@ -34,6 +34,7 @@ const resourceReducers = Helpers.makeResourceReducers([
   'tags',
   'applications',
   'context',
+  'stats',
 ]);
 const reducer = combineReducers({
   form: formReducer,
