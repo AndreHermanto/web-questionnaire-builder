@@ -14,7 +14,7 @@ const renderNumericStats = (stats) => {
 };
 
 const renderGraphs = stats =>
-  [...stats.responses].map(item => <DualGraphDisplay key={item.title} {...item} />);
+  [...stats.responses].map(item => <DualGraphDisplay color="#143963" key={item.title} {...item} />);
 
 class Dashboard extends React.Component {
   render() {
