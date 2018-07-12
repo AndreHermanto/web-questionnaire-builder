@@ -85,11 +85,17 @@ import GlossaryTermsDelete from '../GlossaryTerms/GlossaryTermsDelete';
 import TagsCreate from '../Tags/TagsCreate';
 import WorkingGroupsList from '../WorkingGroups/WorkingGroupsList';
 import WorkingGroupsSwitch from '../WorkingGroups/WorkingGroupsSwitch';
+import Dashboard from '../Dashboard';
 
 const sidebarGroups = [
   {
     name: '',
     elements: [
+      {
+        name: 'Dashboard',
+        url: '/dashboard',
+        icon: 'dashboard',
+      },
       {
         name: 'Questionnaires',
         url: '/questionnaires',
@@ -173,7 +179,8 @@ class Routes extends Component {
             {/* Regular Content */}
             <Content>
               <Switch location={location}>
-                <Redirect exact from="/" to="/questionnaires" />
+                <Redirect exact from="/" to="/dashboard" />
+                <Route path="/dashboard" component={Dashboard} />
                 <Route
                   path="/questionnaires/:questionnaireId/elements/:elementId"
                   component={ElementsShow}
