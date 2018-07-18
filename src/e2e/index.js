@@ -13,6 +13,13 @@ export const goto = async (myPage, url) => {
   await myPage.goto(url);
   return myPage.waitForSelector('h1');
 };
+export const selectDropdownWithFieldAndText = async (myPage, fieldName, text) => {
+  await (await myPage.$x('//div[@name="category"]'))[0].click();
+  const options = await myPage.$x(
+    `//div[@name="${fieldName}"]//div[@role="option" and contains(., "${text}")]`,
+  );
+  return options[0].click();
+};
 
 export const findUncheckedCheckboxesWithField = async (myPage, fieldName) => {
   const checkboxes = await myPage.$x(

@@ -1,5 +1,17 @@
-import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
 import { jwt, appUrl, getNewPage, closePage } from '../e2e/Browser';
+import {
+  timeout,
+  typeInField,
+  findElementWithText,
+  waitForSidePanelClosed,
+  goto,
+  clickLinkWithText,
+  clickButtonWithText,
+  clickLinkInTable,
+  selectDropdownWithFieldAndText,
+  clearTextField,
+} from '../e2e';
 
 let page;
 
@@ -10,137 +22,72 @@ afterAll(() => {
   closePage(page);
 });
 
-let examples = [];
-const baseUrl = 'http://localhost:4000';
-
-describe('Example List', () => {
+describe('CRUD for invitation', () => {
   beforeAll(async () => {
-    // call backend to get examples
-    const response = await fetch(`${baseUrl}/examples`, { headers: { jwt } });
-    const {
-      data: { results },
-    } = await response.json();
-    examples = results;
-
-    // now we have the examples we expect to see
-    await page.goto(`${appUrl}/?jwt=${jwt}`);
+    // wait for app to load
+    await goto(page, `${appUrl}/?jwt=${jwt}`);
     await page.waitForSelector('h1');
   });
-  it('api returned data', () => {
-    expect(!!examples.length).toBe(true);
-  });
-  it(
-    'Heading is "Examples"',
-    async () => {
-      const mainTitleText = await page.$eval('h1', el => el.textContent);
-      expect(mainTitleText).toEqual('Examples');
-    },
-    16000,
-  );
-  it(
-    'Lists the examples in a table',
-    async () => {
-      const table = await page.$eval('table', el => !!el);
-      expect(table).toBe(true);
-    },
-    16000,
-  );
-  it(
-    'displays a list of examples, where the first one Hello',
-    async () => {
-      const linkHandler = (await page.$x(`//a[contains(text(), "${examples[0].id}")]`))[0];
-      expect(!!linkHandler).toBe(true);
 
-      await linkHandler.click();
+  it(
+    'create Example',
+    async () => {
+      // setup
+      // need at least 2 patients for this to pass
+      const title = `Example${new Date().getTime()}`;
+      await goto(page, `${appUrl}/examples`);
+
+      await clickLinkWithText(page, 'Add Example');
+
+      await typeInField(page, 'title', title);
+      await typeInField(page, 'age', '1');
+      await selectDropdownWithFieldAndText(page, 'category', 'Patient');
+
+      await clickButtonWithText(page, 'Create Example');
+      await waitForSidePanelClosed(page);
+
+      // results
+      expect(await findElementWithText(page, title)).toBeTruthy();
+      await clickLinkWithText(page, 'archiveExample');
       await page.waitForSelector('h1');
-      // check that the heading matches on the new page
-      const mainTitleText = await page.$eval('h1', el => el.textContent);
-      expect(mainTitleText).toEqual(examples[0].title);
-      expect(page.url().indexOf(examples[0].id) >= 0).toBe(true);
+      expect(await findElementWithText(page, title)).toBeTruthy();
     },
-    16000,
+    timeout * 500,
   );
-});
 
-describe('Example Create Edit Delete', () => {
-  beforeAll(async () => {
-    await page.goto(`${appUrl}/?jwt=${jwt}`);
-    await page.waitForSelector('h1');
-  });
   it(
-    'create example',
+    'update Example',
     async () => {
-      await page.waitForSelector('[data-test=add-example-button]');
-      await page.click('[data-test=add-example-button]');
-      await page.type('input[name=title]', 'e2e', { delay: 1 });
-      await page.type('input[name=age]', '10', { delay: 1 });
-      await page.click('#category > i');
-      await page.click('#category > div.visible.menu.transition > div.selected.item > span');
-      await page.click('[data-test=submit-example-button]');
+      await goto(page, `${appUrl}/examples`);
 
-      const response = await fetch(`${baseUrl}/examples?page=1&itemsPerPage=10`, {
-        headers: { jwt },
-      });
-      const {
-        data: { results },
-      } = await response.json();
-      examples = results;
+      const title = `Example${new Date().getTime()}`;
+      await clickLinkInTable(page, 0);
+      await clickLinkWithText(page, 'Edit');
 
-      expect(examples[examples.length - 1].title).toBe('e2e');
+      await clearTextField(page, 'title');
+      await typeInField(page, 'title', title);
+      await clickButtonWithText(page, 'Update Example');
+      await waitForSidePanelClosed(page);
+
+      expect(await findElementWithText(page, title)).toBeTruthy();
     },
-    16000,
+    timeout,
   );
+
   it(
-    'edit example',
+    'deletes an Example',
     async () => {
-      let response = await fetch(`${baseUrl}/examples?page=1&itemsPerPage=10`, {
-        headers: { jwt },
-      });
-      let jsonObj = await response.json();
-      let results = jsonObj.data.results;
-      examples = results;
+      // setup
+      // requires at least 1 invitation to exist
+      await goto(page, `${appUrl}/examples`);
 
-      await page.click(`a[href='#/examples/${examples[examples.length - 1].id}']`);
-      await page.click('[data-test=edit-example-button');
-      await page.type('input[name=title]', ' updated', { delay: 1 });
-      await page.click('[data-test=submit-example-button]');
-
-      response = await fetch(`${baseUrl}/examples?page=1&itemsPerPage=10`, {
-        headers: { jwt },
-      });
-      jsonObj = await response.json();
-      results = jsonObj.data.results;
-      examples = results;
-
-      expect(examples[examples.length - 1].title).toBe('e2e updated');
+      // change the name
+      const exampleName = await clickLinkInTable(page, 0);
+      await clickLinkWithText(page, 'Delete');
+      await clickButtonWithText(page, 'Yes, Delete Example');
+      await waitForSidePanelClosed(page);
+      expect(await findElementWithText(page, exampleName)).toBeUndefined();
     },
-    16000,
-  );
-  it(
-    'delete example',
-    async () => {
-      let response = await fetch(`${baseUrl}/examples?page=1&itemsPerPage=10`, {
-        headers: { jwt },
-      });
-      let jsonObj = await response.json();
-      let results = jsonObj.data.results;
-      examples = results;
-
-      await page.click('[data-test=delete-example-button');
-      await page.click('button[type="submit"]');
-
-      response = await fetch(`${baseUrl}/examples?page=1&itemsPerPage=10`, {
-        headers: { jwt },
-      });
-      jsonObj = await response.json();
-      results = jsonObj.data.results;
-      const newExamples = results;
-
-      expect(newExamples.length).toEqual(examples.length - 1);
-      expect(
-        newExamples.filter(example => example.id === examples[examples.length - 1].id),
-      ).toEqual([]);
-    },
-    16000,
+    timeout,
   );
 });
