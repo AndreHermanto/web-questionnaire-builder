@@ -6,19 +6,19 @@ import { examplesSchema } from './schemas';
 
 const headerRow = [
   {
-    sortBy: 'id',
+    propName: 'id',
   },
   {
-    sortBy: 'title',
+    propName: 'title',
   },
   {
-    sortBy: 'age',
+    propName: 'age',
   },
   {
-    sortBy: 'category',
+    propName: 'category',
   },
   {
-    sortBy: 'timestamp',
+    propName: 'timestamp',
   },
 ];
 
