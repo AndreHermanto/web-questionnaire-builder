@@ -6,19 +6,19 @@ import { examplesSchema } from './schemas';
 
 const headerRow = [
   {
-    propName: 'id',
+    sortBy: 'id',
   },
   {
-    propName: 'title',
+    sortBy: 'title',
   },
   {
-    propName: 'age',
+    sortBy: 'age',
   },
   {
-    propName: 'category',
+    sortBy: 'category',
   },
   {
-    propName: 'timestamp',
+    sortBy: 'timestamp',
   },
 ];
 
@@ -49,7 +49,12 @@ class ExamplesList extends React.Component {
             },
           ]}
         >
-          {({ examples, paginator: { examples: { LoadMoreButton } } }) => (
+          {({
+            examples,
+            paginator: {
+              examples: { LoadMoreButton },
+            },
+          }) => (
             <div>
               <Heading size="h1">Examples</Heading>
               <Grid>
