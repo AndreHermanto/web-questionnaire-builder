@@ -50,7 +50,8 @@
     "eslint": "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js src/",
     "release:start": "./scripts/release-start.sh",
     "release:finish": "./scripts/release-finish.sh",
-    "upstream": "git checkout develop && git pull && git fetch upstream && git merge upstream/master"
+    "upstream": "git checkout develop && git pull && git fetch upstream && git merge upstream/master",
+    "env-sanford-test": "git checkout develop && git pull && git checkout env/sanford-test && git pull && git merge develop && git push"
   },
   "devDependencies": {
     "puppeteer": "^1.5.0",
