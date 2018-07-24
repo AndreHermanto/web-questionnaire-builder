@@ -8,6 +8,7 @@ import { releasesSchema, consentTypesSchema } from './schemas';
 const headerRow = [
   {
     propName: 'dateCreated',
+    defaultSortDirection: 'desc',
   },
   {
     propName: 'creatorName',
