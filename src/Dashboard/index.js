@@ -1,6 +1,6 @@
 import React from 'react';
-import { QueryResource, StatisticsRow, DualGraphDisplay } from 'web-components';
-import { Container } from 'semantic-ui-react';
+import { QueryResource, StatisticsRow, DualGraphDisplay, Buttons } from 'web-components';
+import { Grid } from 'semantic-ui-react';
 import statSchema from './schemas';
 
 const renderNumericStats = (stats) => {
@@ -31,10 +31,22 @@ class Dashboard extends React.Component {
         ]}
       >
         {({ stats }) => (
-          <Container>
-            {renderNumericStats(stats)}
-            {renderGraphs(stats)}
-          </Container>
+          <Grid>
+            <Grid.Column width={12}>
+              {renderNumericStats(stats)}
+              {renderGraphs(stats)}
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <Buttons
+                actions={[
+                  {
+                    content: 'Download',
+                    href: `${process.env.REACT_APP_BASE_URL}/download-stats`,
+                  },
+                ]}
+              />
+            </Grid.Column>
+          </Grid>
         )}
       </QueryResource>
     );
