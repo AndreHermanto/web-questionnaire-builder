@@ -82,9 +82,11 @@ const headerRow = [
   },
   {
     propName: 'concepts',
+    sortBy: element => element.concepts.map(c => c.label).join(', '),
   },
   {
     propName: 'followUp',
+    sortBy: element => element.followUp.question,
   },
 ];
 
