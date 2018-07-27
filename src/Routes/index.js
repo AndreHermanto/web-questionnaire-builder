@@ -25,6 +25,7 @@ import QuestionnairesDuplicate from '../Questionnaires/QuestionnairesForm/Questi
 import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/QuestionnairesExport';
 import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
+import QuestionnaireResponsesReportList from '../Questionnaires/QuestionnaireResponsesReportList';
 import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
 import QuestionnairesPreviewAsPatient from '../Questionnaires/QuestionnairesForm/QuestionnairesPreviewAsPatient';
 import QuestionnairesEditTitle from '../Questionnaires/QuestionnairesForm/QuestionnairesEditTitle';
@@ -185,7 +186,10 @@ class Routes extends Component {
                   path="/questionnaires/:questionnaireId/elements/:elementId"
                   component={ElementsShow}
                 />
-
+                <Route
+                  path="/questionnaires/:questionnaireId/versions/:currentVersionId/view-responses-report"
+                  component={QuestionnaireResponsesReportList}
+                />
                 <Route path="/questionnaires/:questionnaireId" component={QuestionnairesShow} />
                 <Route path="/questionnaires" component={QuestionnairesList} />
                 <Route path="/releases/consents/:consentTypeId" component={ReleasesConsentsShow} />

@@ -11,7 +11,7 @@ import {
   Buttons,
   QueryResource,
 } from 'web-components';
-import { userSchema, questionnaireTagsSchema } from './schemas';
+import { userSchema, questionnaireTagsSchema, responsesSchema } from './schemas';
 import QuestionnaireQueryResource from './QuestionnaireQueryResource';
 import { tagsSchema } from '../Tags/schemas';
 
@@ -29,6 +29,7 @@ const renderProperty = (propertyName, value, questionnaire) => {
               pathname: `/questionnaires/${questionnaire.id}/tags/${questionnaireTags.id}/delete`,
               state: { modal: true },
             }}
+            key={questionnaireTags.id}
           >
             {!!index && ', '}
             {Helpers.renderContent('tag', questionnaireTags.tag)}
@@ -67,6 +68,7 @@ class QuestionnairesShow extends React.Component {
       }).isRequired,
     }).isRequired,
   };
+
   downloadQuestionnaire = (questionnaireId, currentVersionId) => {
     window.open(
       `${
@@ -75,6 +77,7 @@ class QuestionnairesShow extends React.Component {
       '_blank',
     );
   };
+
   render() {
     const {
       match: {
@@ -140,6 +143,11 @@ class QuestionnairesShow extends React.Component {
                     url: '/tags',
                     schema: tagsSchema,
                   },
+                  {
+                    resourceName: 'responses',
+                    url: `/download/responses/${questionnaireId}`,
+                    schema: responsesSchema,
+                  },
                 ]}
               >
                 {({ users, questionnaireTags, tags }) => {
@@ -156,7 +164,6 @@ class QuestionnairesShow extends React.Component {
                   if (questionnaireTagsWithTag.length) {
                     version.questionnaireTags = questionnaireTagsWithTag;
                   }
-
                   return (
                     <div>
                       <Breadcrumbs
@@ -272,6 +279,15 @@ class QuestionnairesShow extends React.Component {
                                 ],
                               },
                               {
+                                name: 'Responses',
+                                actions: [
+                                  {
+                                    content: 'View responses report',
+                                    to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/view-responses-report`,
+                                  },
+                                ],
+                              },
+                              {
                                 name: 'Import / Export',
                                 actions: [
                                   {
@@ -283,13 +299,6 @@ class QuestionnairesShow extends React.Component {
                                     content: 'Export current version',
                                     to: {
                                       pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/export`,
-                                      state: { modal: true },
-                                    },
-                                  },
-                                  {
-                                    content: 'Generate responses report',
-                                    to: {
-                                      pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
                                       state: { modal: true },
                                     },
                                   },
