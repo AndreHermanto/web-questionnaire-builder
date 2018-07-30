@@ -26,7 +26,7 @@ const renderBodyRow = ({ url }) => ({
     <CopyToClipboard text={url}>
       <Button circular icon="clipboard" />
     </CopyToClipboard>,
-    <a href={url} target="_blank">
+    <a href={url} target="_blank" rel="noopener noreferrer">
       <Icon name="external" />
     </a>,
   ],
