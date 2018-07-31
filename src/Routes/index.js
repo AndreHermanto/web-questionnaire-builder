@@ -148,12 +148,7 @@ const sidebarGroups = [
 
 const appName = 'Questionnaires Builder';
 class Routes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      location: this.props.location,
-    };
-  }
+  // eslint-disable-next-line react/sort-comp
   static getDerivedStateFromProps(props) {
     // set location if props.location is not modal
     if (!get(props, 'location.state.modal', false)) {
@@ -162,6 +157,12 @@ class Routes extends Component {
       };
     }
     return null;
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: this.props.location,
+    };
   }
 
   renderWithAuthorization = ({ me }) => {
