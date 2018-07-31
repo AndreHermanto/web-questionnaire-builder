@@ -26,9 +26,12 @@ export const encryptedTokenSchema = new schema.Entity(
 export const questionnaireTagSchema = new schema.Entity('questionnaireTags');
 export const questionnaireTagsSchema = [questionnaireTagSchema];
 
-export const responseSchema = new schema.Entity(
-  'responses',
+export const responseCollectionSchema = new schema.Entity(
+  'responseCollections',
   {},
   { idAttribute: 'downloadResponseId' },
 );
+export const responseCollectionsSchema = [responseCollectionSchema];
+
+export const responseSchema = new schema.Entity('responses');
 export const responsesSchema = [responseSchema];

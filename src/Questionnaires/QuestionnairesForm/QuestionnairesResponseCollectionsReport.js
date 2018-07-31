@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { rest } from 'web-components';
 import QuestionnairesResponsesReportForm from './QuestionnairesResponsesReportForm';
 
-export default function QuestionnairesResponsesReport({
+export default function QuestionnairesResponseCollectionsReport({
   closePanel,
   match: {
     params: { questionnaireId },
@@ -51,7 +51,7 @@ export default function QuestionnairesResponsesReport({
   );
 }
 
-QuestionnairesResponsesReport.propTypes = {
+QuestionnairesResponseCollectionsReport.propTypes = {
   closePanel: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
