@@ -83,6 +83,9 @@ class ReportsShow extends React.Component {
               responses: { LoadMoreButton },
             },
           }) => {
+            if (!report) {
+              return <div>Unable to find report</div>;
+            }
             const reportResponses = responses.filter(response =>
               report.responses.includes(response.id),
             );
