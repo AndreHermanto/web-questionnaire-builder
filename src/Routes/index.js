@@ -26,7 +26,7 @@ import QuestionnairesExport from '../Questionnaires/QuestionnairesForm/Questionn
 import QuestionnairesCreate from '../Questionnaires/QuestionnairesForm/QuestionnairesCreate';
 import QuestionnairesMoveToFolder from '../Questionnaires/QuestionnairesForm/QuestionnairesMoveToFolder';
 import QuestionnaireResponsesReportList from '../Questionnaires/QuestionnaireResponsesReportList';
-import QuestionnairesResponsesReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponsesReport';
+import QuestionnairesResponseCollectionsReport from '../Questionnaires/QuestionnairesForm/QuestionnairesResponseCollectionsReport';
 import QuestionnairesPreviewAsPatient from '../Questionnaires/QuestionnairesForm/QuestionnairesPreviewAsPatient';
 import QuestionnairesEditTitle from '../Questionnaires/QuestionnairesForm/QuestionnairesEditTitle';
 import ConsentTypesList from '../Releases/ConsentTypesList';
@@ -87,6 +87,8 @@ import TagsCreate from '../Tags/TagsCreate';
 import WorkingGroupsList from '../WorkingGroups/WorkingGroupsList';
 import WorkingGroupsSwitch from '../WorkingGroups/WorkingGroupsSwitch';
 import Dashboard from '../Dashboard';
+import ReportsCreate from '../Reports/ReportsCreate';
+import ReportsShow from '../Reports/ReportsShow';
 
 const sidebarGroups = [
   {
@@ -121,6 +123,11 @@ const sidebarGroups = [
         name: 'Glossary terms',
         url: '/glossary-terms',
         icon: 'speaker_notes',
+      },
+      {
+        name: 'Response Reports',
+        url: '/response-reports',
+        icon: 'assignment',
       },
     ],
   },
@@ -229,6 +236,11 @@ class Routes extends Component {
                 <Route path="/glossary-terms/:glossaryTermId" component={GlossaryTermsShow} />
                 <Route path="/glossary-terms" component={GlossaryTermsList} />
                 <Route path="/working-groups" component={WorkingGroupsList} />
+
+                {/* Reports */}
+                <Route path="/response-reports/:responseReportId" component={ReportsShow} />
+                <Route path="/response-reports" component={ReportsCreate} />
+
                 <Route component={Page404} />
               </Switch>
             </Content>
@@ -373,7 +385,7 @@ class Routes extends Component {
           />
           <SidePanelRoute
             path="/questionnaires/:questionnaireId/versions/:currentVersionId/generate-responses-report"
-            component={QuestionnairesResponsesReport}
+            component={QuestionnairesResponseCollectionsReport}
           />
           <SidePanelRoute path="/folders/create" component={QuestionnaireFoldersCreate} />
           <SidePanelRoute path="/folders/:folderId/edit" component={QuestionnaireFoldersEdit} />

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { Heading, Breadcrumbs, Table, Buttons, QueryResource, Helpers } from 'web-components';
-import { responsesSchema } from './schemas';
+import { responseCollectionsSchema } from './schemas';
 import QuestionnaireQueryResource from './QuestionnaireQueryResource';
 
-const responsesHeaderRow = [
+const responseCollectionsHeaderRow = [
   {
     propName: 'fileName',
   },
@@ -49,7 +49,7 @@ class QuestionnairesResponsesReportList extends React.Component {
         params: { questionnaireId },
       },
     } = this.props;
-    const renderResponsesBodyRow = response => ({
+    const renderResponseCollectionsBodyRow = response => ({
       key: response.downloadResponseId,
       cells: [
         response.fileName,
@@ -77,13 +77,13 @@ class QuestionnairesResponsesReportList extends React.Component {
               <QueryResource
                 queries={[
                   {
-                    resourceName: 'responses',
+                    resourceName: 'responseCollections',
                     url: `/download/responses/${questionnaireId}`,
-                    schema: responsesSchema,
+                    schema: responseCollectionsSchema,
                   },
                 ]}
               >
-                {({ responses }) => {
+                {({ responseCollections }) => {
                   const currentVersionId = version.id;
 
                   return (
@@ -92,23 +92,23 @@ class QuestionnairesResponsesReportList extends React.Component {
                         sections={[
                           { content: 'Questionnaires', to: '/questionnaires' },
                           { content: version.title, to: `/questionnaires/${questionnaireId}` },
-                          { content: 'Response reports' },
+                          { content: 'Response Collections' },
                         ]}
                       />
-                      <Heading size="h1">Responses</Heading>
+                      <Heading size="h1">Response Collections</Heading>
                       <Grid>
                         <Grid.Column width={12}>
                           <Table
-                            headerRow={responsesHeaderRow}
-                            renderBodyRow={renderResponsesBodyRow}
-                            tableData={responses}
+                            headerRow={responseCollectionsHeaderRow}
+                            renderBodyRow={renderResponseCollectionsBodyRow}
+                            tableData={responseCollections}
                           />
                         </Grid.Column>
                         <Grid.Column width={4}>
                           <Buttons
                             actions={[
                               {
-                                content: 'Generate responses report',
+                                content: 'Generate response collection',
                                 to: {
                                   pathname: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/generate-responses-report`,
                                   state: { modal: true },

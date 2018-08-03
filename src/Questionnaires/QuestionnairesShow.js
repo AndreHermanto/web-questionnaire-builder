@@ -11,7 +11,7 @@ import {
   Buttons,
   QueryResource,
 } from 'web-components';
-import { userSchema, questionnaireTagsSchema, responsesSchema } from './schemas';
+import { userSchema, questionnaireTagsSchema } from './schemas';
 import QuestionnaireQueryResource from './QuestionnaireQueryResource';
 import { tagsSchema } from '../Tags/schemas';
 
@@ -142,11 +142,6 @@ class QuestionnairesShow extends React.Component {
                     resourceName: 'tags',
                     url: '/tags',
                     schema: tagsSchema,
-                  },
-                  {
-                    resourceName: 'responses',
-                    url: `/download/responses/${questionnaireId}`,
-                    schema: responsesSchema,
                   },
                 ]}
               >
@@ -282,7 +277,7 @@ class QuestionnairesShow extends React.Component {
                                 name: 'Responses',
                                 actions: [
                                   {
-                                    content: 'View responses report',
+                                    content: 'View response collections',
                                     to: `/questionnaires/${questionnaireId}/versions/${currentVersionId}/view-responses-report`,
                                   },
                                 ],

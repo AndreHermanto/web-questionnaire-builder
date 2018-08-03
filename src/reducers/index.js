@@ -36,6 +36,8 @@ const resourceReducers = Helpers.makeResourceReducers([
   'context',
   'stats',
   'responses',
+  'responseCollections', // the periodic output of responses to download
+  'responseReports', // a report that is about querying for certain responses
 ]);
 const reducer = combineReducers({
   form: formReducer,
